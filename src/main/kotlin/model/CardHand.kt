@@ -5,7 +5,7 @@ enum class Rank {
     STRAIGHT_FLUSH, ROYAL_FLUSH
 }
 
-class CardHand(val cards: List<Card>) {
+class CardHand(val cards: List<Card>) : Comparable<CardHand> {
     /**
      * Normalise hand into a 15-element List, with index 0 representing the presence of a flush
      * (0 = false, 1 = true) and indices 1 to 14 representing the amount of cards with a pip
@@ -77,6 +77,25 @@ class CardHand(val cards: List<Card>) {
             ranks[Rank.HIGH_CARD.ordinal].maxOrNull()!!
         )
         return ranks
+    }
+
+    override fun compareTo(other: CardHand): Int {
+        val thisRanked = rankHand()
+        val otherRanked = other.rankHand()
+        for (i in 9 downTo 1) {
+            val thisRank = thisRanked[i]
+            val otherRank = otherRanked[i]
+            if (thisRank.isEmpty() && otherRank.isEmpty()) continue
+            if (thisRank.isEmpty()) return -1
+            if (otherRank.isEmpty()) return 1
+            if (thisRank.single() == otherRank.single()) continue
+            return if (thisRank.single() < otherRank.single()) -1 else 1
+        }
+        for (j in thisRanked[0].lastIndex downTo 0) {
+            if (thisRanked[0][j] == otherRanked[0][j]) continue
+            return if (thisRanked[0][j] < otherRanked[0][j]) -1 else 1
+        }
+        return 0
     }
 }
 

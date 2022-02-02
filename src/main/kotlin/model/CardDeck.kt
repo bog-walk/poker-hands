@@ -1,5 +1,9 @@
 package model
 
+enum class Winner {
+    PLAYER1, PLAYER2, TIE
+}
+
 fun deal(): Pair<CardHand, CardHand> {
     var hand1: CardHand
     var hand2: CardHand
@@ -13,4 +17,13 @@ fun deal(): Pair<CardHand, CardHand> {
         hand2 = CardHand(this.slice(5..9))
     }
     return hand1 to hand2
+}
+
+fun play(): Winner {
+    val (player1Hand, player2Hand) = deal()
+    return when {
+        player1Hand < player2Hand -> Winner.PLAYER2
+        player1Hand > player2Hand -> Winner.PLAYER1
+        else -> Winner.TIE
+    }
 }
