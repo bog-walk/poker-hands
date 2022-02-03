@@ -1,3 +1,4 @@
+import model.Card
 import model.CardHand
 import model.getCard
 import java.io.File
@@ -53,4 +54,9 @@ fun convertTestGame(input: List<String>): Triple<CardHand, CardHand, Int> {
     val player2 = CardHand(input.slice(5..9).map(::getCard))
     val winner = input.last().toInt()
     return Triple(player1, player2, winner)
+}
+
+fun Pair<CardHand, CardHand>.checkValid(): Set<Card>? {
+    val uniqueCards = first.cards.toSet() + second.cards.toSet()
+    return if (uniqueCards.size == 10) uniqueCards else null
 }
