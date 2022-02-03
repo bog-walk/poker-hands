@@ -11,9 +11,8 @@ internal class CardTest {
     private lateinit var entireDeck: List<Card>
 
     @BeforeAll
-    fun `setup deck`() {
-        entireDeck = getTestResource("src/test/resources/deck_cards").map { line ->
-            val args = line.split(" ")
+    fun setUp() {
+        entireDeck = getTestResource("src/test/resources/deck_cards").map { args ->
             Card(args[0].toInt(), args[1], Suit.valueOf(args[2]))
         }
     }

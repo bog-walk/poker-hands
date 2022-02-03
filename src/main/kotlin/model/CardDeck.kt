@@ -19,8 +19,8 @@ fun deal(): Pair<CardHand, CardHand> {
     return hand1 to hand2
 }
 
-fun play(): Winner {
-    val (player1Hand, player2Hand) = deal()
+fun findWinner(hands: Pair<CardHand, CardHand>): Winner {
+    val (player1Hand, player2Hand) = hands
     return when {
         player1Hand < player2Hand -> Winner.PLAYER2
         player1Hand > player2Hand -> Winner.PLAYER1

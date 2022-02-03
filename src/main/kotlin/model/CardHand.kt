@@ -32,7 +32,7 @@ class CardHand(val cards: List<Card>) : Comparable<CardHand> {
         var streak = 0
         var pair = 0
         var triple = 0
-        for (i in 14 downTo 1) {
+        for (i in 14 downTo 2) {
             when (cardCount[i]) {
                 0 -> { // no cards of this pip
                     streak = 0
@@ -91,7 +91,7 @@ class CardHand(val cards: List<Card>) : Comparable<CardHand> {
             if (thisRank.single() == otherRank.single()) continue
             return if (thisRank.single() < otherRank.single()) -1 else 1
         }
-        for (j in thisRanked[0].lastIndex downTo 0) {
+        for (j in thisRanked[0].indices) {
             if (thisRanked[0][j] == otherRanked[0][j]) continue
             return if (thisRanked[0][j] < otherRanked[0][j]) -1 else 1
         }
