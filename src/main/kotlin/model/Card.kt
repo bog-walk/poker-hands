@@ -63,3 +63,11 @@ fun getCard(input: String): Card {
     val suit = Suit.fromChar(input.last().toString())!!
     return Card(pip, value, suit)
 }
+
+val previewCards = listOf(
+    Card(14, "A", Suit.HEART),
+    Card(3, "3", Suit.DIAMOND),
+    Card(13, "K", Suit.HEART),
+    Card(10, "10", Suit.SPADE),
+    Card(14, "A", Suit.CLUB),
+)

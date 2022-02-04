@@ -99,7 +99,4 @@ class CardHand(val cards: List<Card>) : Comparable<CardHand> {
     }
 }
 
-
-
-
-
+val previewHand = CardHand(previewCards)
