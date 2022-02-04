@@ -21,13 +21,12 @@ internal class CardDeckTest {
     @Test
     fun `deal does not return identical cards`() {
         val dealt = mutableSetOf<Card>()
-        repeat(10) {
+        repeat(30) {
             deal().checkValid()?.let { cardsDealt ->
                 assertNotNull(cardsDealt, "Invalid deal: $cardsDealt")
                 dealt.addAll(cardsDealt)
             }
             if (dealt.size == 52) println("All cards seen at iteration ${it + 1}")
-            if (it == 9) println("Cards seen by last deal = ${dealt.size}")
         }
     }
 
@@ -47,7 +46,7 @@ internal class CardDeckTest {
     @Test
     fun `findWinner correct for huge samples resource`() {
         val winOptions = Winner.values()
-        val expectedWins = intArrayOf(367, 633, 0) // player1, player2, tie
+        val expectedWins = intArrayOf(384, 634, 7) // player1, player2, tie
         val actualWins = IntArray(3)
         for ((i, sample) in samples.withIndex()) {
             val winner = findWinner(sample.first to sample.second)

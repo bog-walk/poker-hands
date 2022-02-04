@@ -26,7 +26,11 @@ enum class Court(val abbreviation: String) {
 }
 
 @Immutable
-data class Card(val pip: Int, val value: String, val suit: Suit)
+data class Card(val pip: Int, val value: String, val suit: Suit) {
+    override fun toString(): String {
+        return "$value${suit.abbreviation}"
+    }
+}
 
 /**
  * Convert a random number in [1, 52] to a Card.
