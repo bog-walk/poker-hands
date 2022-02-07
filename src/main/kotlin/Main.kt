@@ -7,9 +7,10 @@ import ui.PokerHandsApp
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
-        state = WindowState(size = DpSize(800.dp, 500.dp)),
+        state = WindowState(size = DpSize(1000.dp, 500.dp)),
         title = "Poker Hands",
-        icon = painterResource("heart_black_24.png")
+        icon = painterResource("heart_black_24.png"),
+        resizable = false
     ) {
         PokerHandsApp()
     }

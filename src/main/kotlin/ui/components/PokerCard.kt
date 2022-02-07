@@ -36,22 +36,27 @@ fun PokerCard(card: Card) {
         contentColor = valueColor,
         elevation = 5.dp
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize().padding(10.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = card.value,
-                modifier = Modifier.padding(bottom = 5.dp),
-                fontSize = 30.sp
-            )
-            Image(
-                painter = painterResource(suitPath),
-                contentDescription = "heart",
-                modifier = Modifier.width(40.dp)
-            )
-        }
+        PokerFace(suitPath, card.value)
+    }
+}
+
+@Composable
+fun PokerFace(suitPath: String, value: String) {
+    Column(
+        modifier = Modifier.fillMaxSize().padding(10.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = value,
+            modifier = Modifier.padding(bottom = 5.dp),
+            fontSize = 30.sp
+        )
+        Image(
+            painter = painterResource(suitPath),
+            contentDescription = "heart",
+            modifier = Modifier.width(40.dp)
+        )
     }
 }
 

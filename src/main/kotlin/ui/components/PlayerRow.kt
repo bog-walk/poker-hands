@@ -7,23 +7,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import model.CardHand
+import model.Winner
 import model.previewHand
 
 @Composable
-fun PokerHand(hand: CardHand) {
+fun PlayerRow(player: Winner, hand: CardHand) {
     Row(
-        modifier = Modifier.padding(horizontal = 15.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
+        modifier = Modifier.padding(15.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        repeat(5) {
-            PokerCard(hand.cards[it])
-        }
+        PokerHand(hand)
+        PlayerOptions(player)
     }
 }
 
 @Preview
 @Composable
-fun PokerHandPreview() {
-    PokerHand(previewHand)
+fun PlayerRowPreview() {
+    PlayerRow(Winner.PLAYER1, previewHand)
 }
