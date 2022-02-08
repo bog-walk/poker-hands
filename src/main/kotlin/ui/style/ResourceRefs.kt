@@ -5,6 +5,7 @@ import androidx.compose.ui.unit.dp
 const val headerAppText = "CHOOSE THE WINNING HAND"
 const val playerButtonText = "PLAYER "
 const val dealButtonText = "DEAL"
+const val cardSemanticsDescr = "was dealt"
 
 val componentPadding = 15.dp
 val outlineButtonBorder = 3.dp

@@ -1,19 +1,20 @@
 package model
 
 import getTestResource
-import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.TestInstance
+import org.junit.BeforeClass
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class CardTest {
-    private lateinit var entireDeck: List<Card>
+    companion object {
+        lateinit var entireDeck: List<Card>
 
-    @BeforeAll
-    fun setUp() {
-        entireDeck = getTestResource("src/test/resources/deck_cards").map { args ->
-            Card(args[0].toInt(), args[1], Suit.valueOf(args[2]))
+        @BeforeClass
+        @JvmStatic
+        fun setUp() {
+            entireDeck = getTestResource("src/test/resources/deck_cards").map { args ->
+                Card(args[0].toInt(), args[1], Suit.valueOf(args[2]))
+            }
         }
     }
 

@@ -3,19 +3,20 @@ package model
 import checkValid
 import convertTestGame
 import getTestResource
-import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.TestInstance
+import org.junit.BeforeClass
 import kotlin.test.*
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class CardDeckTest {
-    private lateinit var samples: List<Triple<CardHand, CardHand, Int>>
+    companion object {
+        lateinit var samples: List<Triple<CardHand, CardHand, Int>>
 
-    @BeforeAll
-    fun setUP() {
-        samples = getTestResource(
-            "src/test/resources/poker_hands_sample"
-        ).map(::convertTestGame)
+        @BeforeClass
+        @JvmStatic
+        fun setUP() {
+            samples = getTestResource(
+                "src/test/resources/poker_hands_sample"
+            ).map(::convertTestGame)
+        }
     }
 
     @Test

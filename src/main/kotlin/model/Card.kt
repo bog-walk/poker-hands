@@ -4,7 +4,9 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 data class Card(val pip: Int, val value: String, val suit: Suit) {
-    override fun toString() = "$value${suit.abbreviation}"
+    override fun toString(): String {
+        return "${if (pip >= 10) Court.values()[pip-10].name else value} of ${suit.name}S"
+    }
 }
 
 /**

@@ -9,6 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.stateDescription
 import model.Card
 import model.previewCards
 import ui.style.*
@@ -16,7 +19,13 @@ import ui.style.*
 @Composable
 fun PokerCard(card: Card) {
     Card(
-        modifier = Modifier.size(cardWidth, cardHeight).padding(cardPadding),
+        modifier = Modifier
+            .size(cardWidth, cardHeight)
+            .padding(cardPadding)
+            .clearAndSetSemantics {
+                contentDescription = "$card"
+                stateDescription = cardSemanticsDescr
+            },
         contentColor = card.suit.color,
         elevation = cardElevation
     ) {

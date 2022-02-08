@@ -2,25 +2,26 @@ package model
 
 import convertTestRanked
 import getTestResource
-import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.TestInstance
+import org.junit.BeforeClass
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertTrue
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class CardHandTest {
-    private lateinit var exampleHands: Map<Rank, CardHand>
-    private lateinit var examplesRanked: Map<Rank, List<List<Int>>>
+    companion object {
+        lateinit var exampleHands: Map<Rank, CardHand>
+        lateinit var examplesRanked: Map<Rank, List<List<Int>>>
 
-    @BeforeAll
-    fun setUp() {
-        val hands = getTestResource("src/test/resources/all_rank_hands")
-        exampleHands = hands.associate { args ->
-            Rank.valueOf(args.first()) to CardHand(args.slice(1..5).map(::getCard))
-        }
-        examplesRanked = hands.associate { args ->
-            Rank.valueOf(args.first()) to convertTestRanked(args[6])
+        @BeforeClass
+        @JvmStatic
+        fun setUp() {
+            val hands = getTestResource("src/test/resources/all_rank_hands")
+            exampleHands = hands.associate { args ->
+                Rank.valueOf(args.first()) to CardHand(args.slice(1..5).map(::getCard))
+            }
+            examplesRanked = hands.associate { args ->
+                Rank.valueOf(args.first()) to convertTestRanked(args[6])
+            }
         }
     }
 
