@@ -12,7 +12,7 @@ internal class PokerHandTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun `pokerHand creates 5 pokerCard components`() {
+    fun `PokerHand creates 5 PokerCard components`() {
         composeTestRule.setContent {
             PokerHand(previewHand)
         }
