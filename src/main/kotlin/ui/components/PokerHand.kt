@@ -5,14 +5,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import model.CardHand
 import model.previewHand
+import ui.style.componentPadding
 
 @Composable
 fun PokerHand(hand: CardHand) {
     Row(
-        modifier = Modifier.padding(horizontal = 15.dp),
+        modifier = Modifier.padding(componentPadding),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {

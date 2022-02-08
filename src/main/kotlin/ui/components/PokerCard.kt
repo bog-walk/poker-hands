@@ -1,61 +1,52 @@
 package ui.components
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import model.Card
 import model.Suit
 import model.previewCards
+import ui.style.*
 
 @Composable
 fun PokerCard(card: Card) {
-    val suitPath = when (card.suit) {
-        Suit.CLUB -> "club.svg"
-        Suit.DIAMOND -> "diamond.svg"
-        Suit.HEART -> "heart.svg"
-        Suit.SPADE -> "spade.svg"
-    }
-    val valueColor = when (card.suit) {
-        Suit.CLUB, Suit.SPADE -> Color.Black
-        Suit.HEART, Suit.DIAMOND -> Color.Red
+    val (suitPath, suitDescr, suitColor) = when (card.suit) {
+        Suit.CLUB -> clubSuit
+        Suit.DIAMOND -> diamondSuit
+        Suit.HEART -> heartSuit
+        Suit.SPADE -> spadeSuit
     }
     Card(
-        modifier = Modifier.size(100.dp, 140.dp).padding(10.dp),
-        shape = MaterialTheme.shapes.medium,
-        backgroundColor = Color.White,
-        contentColor = valueColor,
-        elevation = 5.dp
+        modifier = Modifier.size(cardWidth, cardHeight).padding(cardPadding),
+        contentColor = suitColor,
+        elevation = cardElevation
     ) {
-        PokerFace(suitPath, card.value)
+        PokerFace(suitPath, suitDescr, card.value)
     }
 }
 
 @Composable
-fun PokerFace(suitPath: String, value: String) {
+fun PokerFace(suitPath: String, suitDescr: String, value: String) {
     Column(
-        modifier = Modifier.fillMaxSize().padding(10.dp),
+        modifier = Modifier.fillMaxSize().padding(cardPadding),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = value,
-            modifier = Modifier.padding(bottom = 5.dp),
-            fontSize = 30.sp
+            style = PokerHandsTheme.typography.h1
         )
-        Image(
+        Spacer(modifier = Modifier.height(intraCardSpacer))
+        Icon(
             painter = painterResource(suitPath),
-            contentDescription = "heart",
-            modifier = Modifier.width(40.dp)
+            contentDescription = suitDescr,
+            modifier = Modifier.size(iconSize)
         )
     }
 }
@@ -64,16 +55,25 @@ fun PokerFace(suitPath: String, value: String) {
 @Composable
 fun PokerCardPreview() {
     Column(
-        verticalArrangement = Arrangement.SpaceBetween
+        verticalArrangement = Arrangement.Center
     ) {
-        for (sample in previewCards) {
-            PokerCard(sample)
+        PokerHandsTheme {
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                for (sample in previewCards) {
+                    PokerCard(sample)
+                }
+            }
+        }
+        PokerHandsTheme(darkMode = true) {
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                for (sample in previewCards) {
+                    PokerCard(sample)
+                }
+            }
         }
     }
 }
-
-
-
-
-
-

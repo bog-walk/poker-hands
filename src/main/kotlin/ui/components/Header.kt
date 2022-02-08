@@ -6,22 +6,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import ui.style.PokerHandsTheme
+import ui.style.componentPadding
+import ui.style.headerAppText
 
 @Composable
 fun HeaderText() {
     Text(
-        text = "CHOOSE THE WINNING HAND",
-        modifier = Modifier.fillMaxWidth().padding(vertical = 15.dp),
-        color = Color.DarkGray,
-        fontSize = 30.sp,
-        fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.Center,
-        lineHeight = 40.sp
+        text = headerAppText,
+        modifier = Modifier.fillMaxWidth().padding(componentPadding),
+        style = PokerHandsTheme.typography.h1
     )
 }
 
