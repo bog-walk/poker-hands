@@ -11,19 +11,24 @@ import model.previewHand
 import ui.style.componentPadding
 
 @Composable
-fun PlayerRow(player: Winner, hand: CardHand, onPlayerChosen: () -> Unit) {
+fun PlayerRow(
+    player: Winner,
+    hand: CardHand,
+    chosenHand: Winner?,
+    isCorrectChoice: Boolean?,
+    onPlayerChosen: (Winner) -> Unit) {
     Row(
         modifier = Modifier.padding(componentPadding),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
         PokerHand(hand)
-        PlayerOptions(player, onPlayerChosen)
+        PlayerOptions(player, chosenHand, isCorrectChoice, onPlayerChosen)
     }
 }
 
 @Preview
 @Composable
 fun PlayerRowPreview() {
-    PlayerRow(Winner.PLAYER1, previewHand) { TODO() }
+    PlayerRow(Winner.PLAYER1, previewHand, null, null) { TODO() }
 }

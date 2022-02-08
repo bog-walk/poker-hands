@@ -14,11 +14,11 @@ import ui.style.dealButtonText
 import ui.style.outlineButtonBorder
 
 @Composable
-fun PokerButton(isEnabled: Boolean, buttonText: String, onButtonClick: () -> Unit) {
+fun DealButton(choiceMade: Boolean, onDealRequest: () -> Unit) {
     OutlinedButton(
-        onClick = { onButtonClick() },
+        onClick = { onDealRequest() },
         modifier = Modifier.padding(componentPadding),
-        enabled = isEnabled,
+        enabled = choiceMade,
         border = BorderStroke(outlineButtonBorder, PokerHandsTheme.lightColors.primary),
         colors = ButtonDefaults.outlinedButtonColors(
             backgroundColor = PokerHandsTheme.lightColors.background,
@@ -26,21 +26,16 @@ fun PokerButton(isEnabled: Boolean, buttonText: String, onButtonClick: () -> Uni
         )
     ) {
         Text(
-            text = buttonText,
+            text = dealButtonText,
             style = PokerHandsTheme.typography.button
         )
     }
-}
-
-@Composable
-fun DealButton(onDealRequest: () -> Unit) {
-    PokerButton(true, dealButtonText, onDealRequest)
 }
 
 @Preview
 @Composable
 fun DealButtonPreview() {
     PokerHandsTheme {
-        DealButton { TODO() }
+        DealButton(true) { TODO() }
     }
 }

@@ -11,7 +11,7 @@ import androidx.compose.ui.res.painterResource
 import ui.style.*
 
 @Composable
-fun HotStreak(count: Int = 0) {
+fun HotStreak(count: Int) {
     Row(
         modifier = Modifier.padding(componentPadding),
         horizontalArrangement = Arrangement.Center,
@@ -21,7 +21,11 @@ fun HotStreak(count: Int = 0) {
             painter = painterResource(hotStreakIcon),
             contentDescription = hotStreakDescr,
             modifier = Modifier.requiredSize(iconSize),
-            tint = PokerHandsTheme.lightColors.secondaryVariant
+            tint = if (count == 0) {
+                PokerHandsTheme.lightColors.onSecondary
+            } else {
+                PokerHandsTheme.lightColors.secondaryVariant
+            }
         )
         Spacer(modifier = Modifier.width(componentPadding))
         Text(
