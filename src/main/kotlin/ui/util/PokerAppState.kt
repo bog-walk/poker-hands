@@ -1,36 +1,38 @@
 package ui.util
 
 import androidx.compose.runtime.*
+import model.CardHand
 import model.Winner
 import model.deal
 import model.findWinner
 
-class PokerAppState {
-    var newHands = deal()
-    var hand1 by remember { mutableStateOf(newHands.first) }
-    var hand2 by remember { mutableStateOf(newHands.second) }
-    var expectedWinner = findWinner(newHands)
+@Composable
+fun rememberPokerAppState() = remember { PokerAppState().apply { reset() } }
 
-    var chosenHand: Winner? by remember { mutableStateOf(null) }
-    var isCorrectChoice: Boolean? by remember { mutableStateOf(null)}
-    var streak by remember { mutableStateOf(0) }
+class PokerAppState {
+    lateinit var hand1: MutableState<CardHand>
+    lateinit var hand2: MutableState<CardHand>
+    lateinit var chosenHand: MutableState<Winner?>
+    lateinit var isCorrectChoice: MutableState<Boolean?>
+    lateinit var streak: MutableState<Int>
+    lateinit var expectedWinner: Winner
 
     fun assessChoice(player: Winner) {
-        chosenHand = player
-        isCorrectChoice = chosenHand!! == expectedWinner
-        if (isCorrectChoice == true) {
-            streak++
+        chosenHand.value = player
+        isCorrectChoice.value = chosenHand.value == expectedWinner
+        if (isCorrectChoice.value == true) {
+            streak.value++
         } else {
-            streak = 0
+            streak.value = 0
         }
     }
 
     fun reset() {
-        newHands = deal()
-        hand1 = newHands.first
-        hand2 = newHands.second
+        val newHands = deal()
+        hand1.value = newHands.first
+        hand2.value = newHands.second
         expectedWinner = findWinner(newHands)
-        chosenHand = null
-        isCorrectChoice = null
+        chosenHand.value = null
+        isCorrectChoice.value = null
     }
 }

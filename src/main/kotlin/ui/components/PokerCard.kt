@@ -10,24 +10,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import model.Card
-import model.Suit
 import model.previewCards
 import ui.style.*
 
 @Composable
 fun PokerCard(card: Card) {
-    val (suitPath, suitDescr, suitColor) = when (card.suit) {
-        Suit.CLUB -> clubSuit
-        Suit.DIAMOND -> diamondSuit
-        Suit.HEART -> heartSuit
-        Suit.SPADE -> spadeSuit
-    }
     Card(
         modifier = Modifier.size(cardWidth, cardHeight).padding(cardPadding),
-        contentColor = suitColor,
+        contentColor = card.suit.color,
         elevation = cardElevation
     ) {
-        PokerFace(suitPath, suitDescr, card.value)
+        PokerFace(card.suit.svgPath, card.suit.description, card.value)
     }
 }
 

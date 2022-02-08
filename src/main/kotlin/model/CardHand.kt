@@ -1,11 +1,11 @@
 package model
 
-enum class Rank {
-    HIGH_CARD, ONE_PAIR, TWO_PAIR, THREE_KIND, STRAIGHT, FLUSH, FULL_HOUSE, FOUR_KIND,
-    STRAIGHT_FLUSH, ROYAL_FLUSH
-}
+import androidx.compose.runtime.Immutable
 
+@Immutable
 class CardHand(val cards: List<Card>) : Comparable<CardHand> {
+    val ranked: List<List<Int>> = rankHand()
+
     /**
      * Normalise hand into a 15-element List, with index 0 representing the presence of a flush
      * (0 = false, 1 = true) and indices 1 to 14 representing the amount of cards with a pip
@@ -16,7 +16,7 @@ class CardHand(val cards: List<Card>) : Comparable<CardHand> {
      * e.g. [0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0] represents a hand with 2 fives, 1 six,
      * 1 seven, and 1 King, without a suit flush.
      */
-    fun normalise(): List<Int> {
+    private fun normalise(): List<Int> {
         val normalised = MutableList(15) { 0 }
         if (cards.map(Card::suit).toSet().size == 1) normalised[0] = 1
         for (card in cards) {
@@ -26,7 +26,7 @@ class CardHand(val cards: List<Card>) : Comparable<CardHand> {
         return normalised
     }
 
-    fun rankHand(): List<List<Int>> {
+    private fun rankHand(): List<List<Int>> {
         val ranks = MutableList(10) { emptyList<Int>() }
         val cardCount = normalise()
         var streak = 0
@@ -80,20 +80,18 @@ class CardHand(val cards: List<Card>) : Comparable<CardHand> {
     }
 
     override fun compareTo(other: CardHand): Int {
-        val thisRanked = rankHand()
-        val otherRanked = other.rankHand()
         for (i in 9 downTo 1) {
-            val thisRank = thisRanked[i]
-            val otherRank = otherRanked[i]
+            val thisRank = ranked[i]
+            val otherRank = other.ranked[i]
             if (thisRank.isEmpty() && otherRank.isEmpty()) continue
             if (thisRank.isEmpty()) return -1
             if (otherRank.isEmpty()) return 1
             if (thisRank.single() == otherRank.single()) continue
             return if (thisRank.single() < otherRank.single()) -1 else 1
         }
-        for (j in thisRanked[0].indices) {
-            if (thisRanked[0][j] == otherRanked[0][j]) continue
-            return if (thisRanked[0][j] < otherRanked[0][j]) -1 else 1
+        for (j in ranked[0].indices) {
+            if (ranked[0][j] == other.ranked[0][j]) continue
+            return if (ranked[0][j] < other.ranked[0][j]) -1 else 1
         }
         return 0
     }

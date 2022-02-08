@@ -19,7 +19,7 @@ fun getTestResource(
 
 /**
  * Converts test resource hand ranking into a List<List<Int>>, as would be returned by
- * CardHand.rankHand().
+ * CardHand.ranked.
  *
  * Input contains 10 elements each representing a rank, with 0 indicating that the rank is not
  * present and should become an emptyList. The first element will be wrapped in parentheses if
@@ -47,7 +47,7 @@ fun convertTestRanked(input: String): List<List<Int>> {
  * Converts test resource into 2 CardHand instances for comparison.
  *
  * The final element in the input list represents the expected winner as an integer in [0, 2],
- * which corresponds to the ordinal position in the Winner enum class.
+ * which corresponds to the ordinal positions of the Winner enum class.
  */
 fun convertTestGame(input: List<String>): Triple<CardHand, CardHand, Int> {
     val player1 = CardHand(input.slice(0..4).map(::getCard))

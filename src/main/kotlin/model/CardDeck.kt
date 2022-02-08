@@ -1,9 +1,5 @@
 package model
 
-enum class Winner {
-    PLAYER1, PLAYER2, TIE
-}
-
 fun deal(): Pair<CardHand, CardHand> {
     var hand1: CardHand
     var hand2: CardHand

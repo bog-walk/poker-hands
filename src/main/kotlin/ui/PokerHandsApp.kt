@@ -8,47 +8,44 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import model.Winner
 import ui.components.*
-import ui.style.PokerHandsTheme
 import ui.style.componentPadding
-import ui.util.PokerAppState
+import ui.util.rememberPokerAppState
 
 @Composable
 @Preview
 fun PokerHandsApp() {
-    val pokerAppState = PokerAppState()
-    PokerHandsTheme {
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+    val pokerAppState = rememberPokerAppState()
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        HeaderText()
+        PlayerRow(
+            Winner.PLAYER1,
+            pokerAppState.hand1.value,
+            pokerAppState.chosenHand.value,
+            pokerAppState.isCorrectChoice.value
         ) {
-            HeaderText()
-            PlayerRow(
-                Winner.PLAYER1,
-                pokerAppState.hand1,
-                pokerAppState.chosenHand,
-                pokerAppState.isCorrectChoice
-            ) {
-                pokerAppState.assessChoice(it)
+            pokerAppState.assessChoice(it)
+        }
+        Row(
+            modifier = Modifier.padding(componentPadding),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            DealButton(pokerAppState.chosenHand.value != null) {
+                pokerAppState.reset()
             }
-            Row(
-                modifier = Modifier.padding(componentPadding),
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                DealButton(pokerAppState.chosenHand != null) {
-                    pokerAppState.reset()
-                }
-                Spacer(modifier = Modifier.width(80.dp))
-                HotStreak(pokerAppState.streak)
-            }
-            PlayerRow(
-                Winner.PLAYER2,
-                pokerAppState.hand2,
-                pokerAppState.chosenHand,
-                pokerAppState.isCorrectChoice
-            ) {
-                pokerAppState.assessChoice(it)
-            }
+            Spacer(modifier = Modifier.width(80.dp))
+            HotStreak(pokerAppState.streak.value)
+        }
+        PlayerRow(
+            Winner.PLAYER2,
+            pokerAppState.hand2.value,
+            pokerAppState.chosenHand.value,
+            pokerAppState.isCorrectChoice.value
+        ) {
+            pokerAppState.assessChoice(it)
         }
     }
 }

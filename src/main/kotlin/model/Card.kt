@@ -2,34 +2,9 @@ package model
 
 import androidx.compose.runtime.Immutable
 
-enum class Suit(val abbreviation: String) {
-    CLUB("C"),
-    DIAMOND("D"),
-    HEART("H"),
-    SPADE("S");
-
-    companion object {
-        fun fromChar(char: String): Suit? = values().find { it.abbreviation == char }
-    }
-}
-
-enum class Court(val abbreviation: String) {
-    TEN("T"),
-    JACK("J"),
-    QUEEN("Q"),
-    KING("K"),
-    ACE("A");
-
-    companion object {
-        fun ordOf(char: String): Int? = values().find { it.abbreviation == char }?.ordinal
-    }
-}
-
 @Immutable
 data class Card(val pip: Int, val value: String, val suit: Suit) {
-    override fun toString(): String {
-        return "$value${suit.abbreviation}"
-    }
+    override fun toString() = "$value${suit.abbreviation}"
 }
 
 /**

@@ -21,12 +21,16 @@ internal class CardDeckTest {
     @Test
     fun `deal does not return identical cards`() {
         val dealt = mutableSetOf<Card>()
+        var allCardsNotSeen = true
         repeat(30) {
-            deal().checkValid()?.let { cardsDealt ->
+            deal().checkValid().let { cardsDealt ->
                 assertNotNull(cardsDealt, "Invalid deal: $cardsDealt")
                 dealt.addAll(cardsDealt)
             }
-            if (dealt.size == 52) println("All cards seen at iteration ${it + 1}")
+            if (allCardsNotSeen && dealt.size == 52) {
+                println("All cards seen at iteration ${it + 1}")
+                allCardsNotSeen = false
+            }
         }
     }
 
@@ -34,7 +38,7 @@ internal class CardDeckTest {
     fun `samples resource does not have invalid hands or duplicate plays`() {
         val uniquePlays = mutableSetOf<Set<Card>>()
         for ((hand1, hand2, _) in samples) {
-            (hand1 to hand2).checkValid()?.let { cardsDealt ->
+            (hand1 to hand2).checkValid().let { cardsDealt ->
                 assertNotNull(cardsDealt, "Invalid deal: $hand1 $hand2")
                 assertTrue("Duplicate found: $cardsDealt") {
                     uniquePlays.add(cardsDealt)
@@ -55,6 +59,7 @@ internal class CardDeckTest {
                 Winner.PLAYER1 -> actualWins[0]++
                 Winner.PLAYER2 -> actualWins[1]++
                 Winner.TIE -> actualWins[2]++
+                Winner.UNDECIDED -> continue // sample winner will never be this value
             }
         }
         assertContentEquals(expectedWins, actualWins)

@@ -11,7 +11,6 @@ import kotlin.test.assertTrue
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class CardHandTest {
     private lateinit var exampleHands: Map<Rank, CardHand>
-    private lateinit var exampleNorms: Map<Rank, List<Int>>
     private lateinit var examplesRanked: Map<Rank, List<List<Int>>>
 
     @BeforeAll
@@ -20,25 +19,15 @@ internal class CardHandTest {
         exampleHands = hands.associate { args ->
             Rank.valueOf(args.first()) to CardHand(args.slice(1..5).map(::getCard))
         }
-        exampleNorms = hands.associate { args ->
-            Rank.valueOf(args.first()) to args[6].map(Char::digitToInt)
-        }
         examplesRanked = hands.associate { args ->
-            Rank.valueOf(args.first()) to convertTestRanked(args[7])
-        }
-    }
-
-    @Test
-    fun `normalise correct for all rank examples`() {
-        for ((rank, hand) in exampleHands) {
-            assertContentEquals(exampleNorms[rank], hand.normalise())
+            Rank.valueOf(args.first()) to convertTestRanked(args[6])
         }
     }
 
     @Test
     fun `rankHand correct for all rank examples`() {
         for ((rank, hand) in exampleHands) {
-            assertContentEquals(examplesRanked[rank], hand.rankHand())
+            assertContentEquals(examplesRanked[rank], hand.ranked)
         }
     }
 
