@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import model.CardHand
 import model.Winner
 import model.previewHand
+import ui.style.PokerHandsTheme
 import ui.style.componentPadding
 
 @Composable
@@ -30,5 +31,7 @@ fun PlayerRow(
 @Preview
 @Composable
 fun PlayerRowPreview() {
-    PlayerRow(Winner.PLAYER1, previewHand, null, null) { TODO() }
+    PokerHandsTheme {
+        PlayerRow(Winner.PLAYER1, previewHand, null, null) { }
+    }
 }

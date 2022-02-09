@@ -22,15 +22,15 @@ fun HotStreak(count: Int) {
             contentDescription = hotStreakDescr,
             modifier = Modifier.requiredSize(iconSize),
             tint = if (count == 0) {
-                PokerHandsTheme.lightColors.onSecondary
+                PokerHandsTheme.colors.onSurface
             } else {
-                PokerHandsTheme.lightColors.secondaryVariant
+                PokerHandsTheme.colors.secondaryVariant
             }
         )
         Spacer(modifier = Modifier.width(componentPadding))
         Text(
             text = count.toString(),
-            style = PokerHandsTheme.typography.h6
+            style = PokerHandsTheme.typography.body1
         )
     }
 }

@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import model.Winner
 import ui.components.*
+import ui.style.PokerHandsTheme
 import ui.style.componentPadding
 import ui.util.rememberPokerAppState
 
@@ -53,5 +54,7 @@ fun PokerHandsApp() {
 @Preview
 @Composable
 fun PokerHandsAppPreview() {
-    PokerHandsApp()
+    PokerHandsTheme {
+        PokerHandsApp()
+    }
 }

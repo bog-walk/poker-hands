@@ -1,7 +1,6 @@
 package ui.components
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -38,30 +37,11 @@ fun PickButton(
     isCorrectChoice: Boolean?,
     onPlayerChosen: (Winner) -> Unit
 ) {
-    val buttonColor = if (chosenHand == null) {
-        ButtonDefaults.outlinedButtonColors(
-            backgroundColor = PokerHandsTheme.lightColors.background,
-            contentColor = PokerHandsTheme.lightColors.primary
-        )
-    } else {
-        if (isCorrectChoice!!) {
-            ButtonDefaults.outlinedButtonColors(
-                backgroundColor = PokerHandsTheme.lightColors.secondary,
-                contentColor = PokerHandsTheme.lightColors.onPrimary
-            )
-        } else {
-            ButtonDefaults.outlinedButtonColors(
-                backgroundColor = PokerHandsTheme.lightColors.error,
-                contentColor = PokerHandsTheme.lightColors.onError
-            )
-        }
-    }
-    OutlinedButton(
+    Button(
         onClick = { onPlayerChosen(player) },
         modifier = Modifier.padding(componentPadding),
         enabled = chosenHand == null,
-        border = BorderStroke(outlineButtonBorder, PokerHandsTheme.lightColors.primary),
-        colors = buttonColor
+        colors = if (chosenHand != null && !isCorrectChoice!!) buttonColorError else buttonColor
     ) {
         Text(
             text = "$playerButtonText${(player.ordinal + 1)}",
@@ -77,12 +57,12 @@ fun InfoButton(choseCorrectly: Boolean) {
         modifier = Modifier.requiredSize(iconSize)
     ) {
         Icon(
-            painterResource(infoOutlineIcon),
-            contentDescription = infoOutlineDescr,
+            painterResource(infoIcon),
+            contentDescription = infoDescr,
             tint = if (choseCorrectly) {
-                PokerHandsTheme.lightColors.secondary
+                PokerHandsTheme.colors.secondary
             } else {
-                PokerHandsTheme.lightColors.error
+                PokerHandsTheme.colors.error
             }
         )
     }
@@ -91,7 +71,9 @@ fun InfoButton(choseCorrectly: Boolean) {
 @Preview
 @Composable
 fun PlayerOptionsPreview() {
-    PlayerOptions(Winner.PLAYER1, null, null) { TODO() }
+    PokerHandsTheme {
+        PlayerOptions(Winner.PLAYER1, null, null) { }
+    }
 }
 
 

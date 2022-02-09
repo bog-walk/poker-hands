@@ -7,6 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import model.CardHand
 import model.previewHand
+import ui.style.PokerHandsTheme
 import ui.style.componentPadding
 
 @Composable
@@ -25,5 +26,7 @@ fun PokerHand(hand: CardHand) {
 @Preview
 @Composable
 fun PokerHandPreview() {
-    PokerHand(previewHand)
+    PokerHandsTheme {
+        PokerHand(previewHand)
+    }
 }

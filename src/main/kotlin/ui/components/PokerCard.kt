@@ -29,52 +29,38 @@ fun PokerCard(card: Card) {
         contentColor = card.suit.color,
         elevation = cardElevation
     ) {
-        PokerFace(card.suit.svgPath, card.suit.description, card.value)
-    }
-}
-
-@Composable
-fun PokerFace(suitPath: String, suitDescr: String, value: String) {
-    Column(
-        modifier = Modifier.fillMaxSize().padding(cardPadding),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = value,
-            style = PokerHandsTheme.typography.h1
-        )
-        Spacer(modifier = Modifier.height(intraCardSpacer))
-        Icon(
-            painter = painterResource(suitPath),
-            contentDescription = suitDescr,
-            modifier = Modifier.size(iconSize)
-        )
+        // no point in separating to another composable to reduce recomposition, as Column is
+        // an inline function that does not get its own recompose scope.
+        // so if changed state causes recomposition, the invalidated scope will be the entire
+        // Card content lambda, not just the Column content lambda.
+        Column(
+            modifier = Modifier.fillMaxSize().padding(cardPadding),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = card.value,
+                style = PokerHandsTheme.typography.h1
+            )
+            Spacer(modifier = Modifier.height(intraCardSpacer))
+            Icon(
+                painter = painterResource(card.suit.svgPath),
+                contentDescription = card.suit.description,
+                modifier = Modifier.size(iconSize)
+            )
+        }
     }
 }
 
 @Preview
 @Composable
 fun PokerCardPreview() {
-    Column(
-        verticalArrangement = Arrangement.Center
-    ) {
-        PokerHandsTheme {
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                for (sample in previewCards) {
-                    PokerCard(sample)
-                }
-            }
-        }
-        PokerHandsTheme(darkMode = true) {
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                for (sample in previewCards) {
-                    PokerCard(sample)
-                }
+    PokerHandsTheme {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            for (sample in previewCards) {
+                PokerCard(sample)
             }
         }
     }

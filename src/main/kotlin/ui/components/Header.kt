@@ -15,7 +15,7 @@ fun HeaderText() {
     Text(
         text = headerAppText,
         modifier = Modifier.fillMaxWidth().padding(componentPadding),
-        style = PokerHandsTheme.typography.h1
+        style = PokerHandsTheme.typography.h4
     )
 }
 
