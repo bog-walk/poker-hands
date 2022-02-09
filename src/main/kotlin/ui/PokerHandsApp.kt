@@ -5,11 +5,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import model.Winner
 import ui.components.*
 import ui.style.PokerHandsTheme
-import ui.style.componentPadding
 import ui.util.rememberPokerAppState
 
 @Composable
@@ -17,10 +15,14 @@ import ui.util.rememberPokerAppState
 fun PokerHandsApp() {
     val pokerAppState = rememberPokerAppState()
     Column(
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.Start
     ) {
-        HeaderText()
+        Header(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            pokerAppState.streak.value
+        )
         PlayerRow(
             Winner.PLAYER1,
             pokerAppState.hand1.value,
@@ -29,17 +31,6 @@ fun PokerHandsApp() {
         ) {
             pokerAppState.assessChoice(it)
         }
-        Row(
-            modifier = Modifier.padding(componentPadding),
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            DealButton(pokerAppState.chosenHand.value != null) {
-                pokerAppState.reset()
-            }
-            Spacer(modifier = Modifier.width(80.dp))
-            HotStreak(pokerAppState.streak.value)
-        }
         PlayerRow(
             Winner.PLAYER2,
             pokerAppState.hand2.value,
@@ -47,6 +38,12 @@ fun PokerHandsApp() {
             pokerAppState.isCorrectChoice.value
         ) {
             pokerAppState.assessChoice(it)
+        }
+        DealButton(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            pokerAppState.shouldAllowDeal
+        ) {
+            pokerAppState.reset()
         }
     }
 }

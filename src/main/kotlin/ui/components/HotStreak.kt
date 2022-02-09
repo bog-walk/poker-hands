@@ -21,11 +21,7 @@ fun HotStreak(count: Int) {
             painter = painterResource(hotStreakIcon),
             contentDescription = hotStreakDescr,
             modifier = Modifier.requiredSize(iconSize),
-            tint = if (count == 0) {
-                PokerHandsTheme.colors.onSurface
-            } else {
-                PokerHandsTheme.colors.secondaryVariant
-            }
+            tint = PokerHandsTheme.colors.secondaryVariant
         )
         Spacer(modifier = Modifier.width(componentPadding))
         Text(
@@ -38,7 +34,9 @@ fun HotStreak(count: Int) {
 @Preview
 @Composable
 fun HotStreakPreview() {
-    HotStreak(5)
+    PokerHandsTheme {
+        HotStreak(5)
+    }
 }
 
 

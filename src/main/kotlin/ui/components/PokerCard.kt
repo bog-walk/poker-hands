@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
@@ -26,6 +27,7 @@ fun PokerCard(card: Card) {
                 contentDescription = "$card"
                 stateDescription = cardSemanticsDescr
             },
+        backgroundColor = Color.White,
         contentColor = card.suit.color,
         elevation = cardElevation
     ) {
@@ -40,7 +42,7 @@ fun PokerCard(card: Card) {
         ) {
             Text(
                 text = card.value,
-                style = PokerHandsTheme.typography.h1
+                style = PokerHandsTheme.typography.h4
             )
             Spacer(modifier = Modifier.height(intraCardSpacer))
             Icon(

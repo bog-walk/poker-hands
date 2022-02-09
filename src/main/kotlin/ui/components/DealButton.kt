@@ -1,7 +1,7 @@
 package ui.components
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -11,10 +11,10 @@ import ui.style.componentPadding
 import ui.style.dealButtonText
 
 @Composable
-fun DealButton(choiceMade: Boolean, onDealRequest: () -> Unit) {
+fun DealButton(modifier: Modifier, choiceMade: Boolean, onDealRequest: () -> Unit) {
     Button(
         onClick = { onDealRequest() },
-        modifier = Modifier.padding(componentPadding),
+        modifier = modifier.padding(componentPadding),
         enabled = choiceMade
     ) {
         Text(
@@ -28,6 +28,9 @@ fun DealButton(choiceMade: Boolean, onDealRequest: () -> Unit) {
 @Composable
 fun DealButtonPreview() {
     PokerHandsTheme {
-        DealButton(true) { }
+        Row {
+            DealButton(Modifier, false) { }
+            DealButton(Modifier, true) { }
+        }
     }
 }

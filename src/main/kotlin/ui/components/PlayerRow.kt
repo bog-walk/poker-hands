@@ -10,16 +10,17 @@ import model.Winner
 import model.previewHand
 import ui.style.PokerHandsTheme
 import ui.style.componentPadding
+import ui.style.playerRowPadding
 
 @Composable
 fun PlayerRow(
     player: Winner,
     hand: CardHand,
-    chosenHand: Winner?,
+    chosenHand: Winner,
     isCorrectChoice: Boolean?,
     onPlayerChosen: (Winner) -> Unit) {
     Row(
-        modifier = Modifier.padding(componentPadding),
+        modifier = Modifier.padding(horizontal = playerRowPadding, vertical = componentPadding),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -32,6 +33,6 @@ fun PlayerRow(
 @Composable
 fun PlayerRowPreview() {
     PokerHandsTheme {
-        PlayerRow(Winner.PLAYER1, previewHand, null, null) { }
+        PlayerRow(Winner.PLAYER1, previewHand, Winner.UNDECIDED, null) { }
     }
 }

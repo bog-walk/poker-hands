@@ -5,7 +5,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import model.Winner
 import org.junit.Rule
 import org.junit.Test
-import ui.style.infoOutlineDescr
+import ui.style.infoDescr
 import ui.style.playerButtonText
 
 internal class PlayerOptionsTest {
@@ -22,7 +22,7 @@ internal class PlayerOptionsTest {
             .assertExists("PickButton not found")
             .assertIsEnabled()
         composeTestRule
-            .onNodeWithContentDescription(infoOutlineDescr)
+            .onNodeWithContentDescription(infoDescr)
             .assertDoesNotExist()
     }
 
@@ -35,7 +35,7 @@ internal class PlayerOptionsTest {
             .onNodeWithText("${playerButtonText}1")
             .assertIsNotEnabled()
         composeTestRule
-            .onNodeWithContentDescription(infoOutlineDescr)
+            .onNodeWithContentDescription(infoDescr)
             .assertDoesNotExist()
     }
 
@@ -48,7 +48,7 @@ internal class PlayerOptionsTest {
             .onNodeWithText("${playerButtonText}1")
             .assertIsNotEnabled()
         composeTestRule
-            .onNodeWithContentDescription(infoOutlineDescr)
+            .onNodeWithContentDescription(infoDescr)
             .assertExists()
             .assertIsEnabled()
     }
