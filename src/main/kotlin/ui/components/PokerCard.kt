@@ -1,6 +1,7 @@
 package ui.components
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
@@ -18,7 +19,7 @@ import model.previewCards
 import ui.style.*
 
 @Composable
-fun PokerCard(card: Card) {
+fun PokerCard(card: Card, highlight: Color?) {
     Card(
         modifier = Modifier
             .size(cardWidth, cardHeight)
@@ -29,6 +30,7 @@ fun PokerCard(card: Card) {
             },
         backgroundColor = Color.White,
         contentColor = card.suit.color,
+        border = highlight?.let { BorderStroke(cardBorder, highlight) },
         elevation = cardElevation
     ) {
         // no point in separating to another composable to reduce recomposition, as Column is
@@ -61,8 +63,8 @@ fun PokerCardPreview() {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            for (sample in previewCards) {
-                PokerCard(sample)
+            for ((i, sample) in previewCards.withIndex()) {
+                PokerCard(sample, if (i == 0 || i == 4) PokerHandsTheme.colors.secondary else null)
             }
         }
     }

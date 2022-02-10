@@ -1,5 +1,12 @@
 package ui.components
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -8,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.zIndex
 import model.Winner
 import ui.style.*
 
@@ -24,10 +32,24 @@ fun PlayerOptions(
         verticalAlignment = Alignment.CenterVertically
     ) {
         PickButton(player, chosenHand, isCorrectChoice, onPlayerChosen)
-        if (chosenHand != Winner.UNDECIDED && chosenHand == player) {
-            Spacer(modifier = Modifier.width(componentPadding))
-            InfoButton(isCorrectChoice!!)
+        AnimatedVisibility(
+            visible = chosenHand == player,
+            modifier = Modifier.padding(start = componentPadding).zIndex(0f),
+            enter = slideInHorizontally(
+                animationSpec = tween(100, easing = LinearOutSlowInEasing)
+            ) { contentWidth ->
+                -2 * contentWidth
+            },
+            exit = slideOutVertically(tween(100, easing = FastOutLinearInEasing))
+        ) {
+            // kept getting NPE compared to original code
+            // NEEDS TO BE FIXED
+            isCorrectChoice?.let { InfoButton(isCorrectChoice) }
         }
+        //if (chosenHand != Winner.UNDECIDED && chosenHand == player) {
+            //Spacer(modifier = Modifier.width(componentPadding))
+            //InfoButton(isCorrectChoice!!)
+        //}
     }
 }
 
@@ -40,6 +62,7 @@ fun PickButton(
 ) {
     Button(
         onClick = { onPlayerChosen(player) },
+        modifier = Modifier.zIndex(2f),
         enabled = chosenHand == Winner.UNDECIDED,
         colors = getButtonColors(player, chosenHand, isCorrectChoice)
     ) {

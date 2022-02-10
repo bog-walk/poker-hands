@@ -30,9 +30,17 @@ enum class Court(val abbreviation: String) {
     }
 }
 
-enum class Rank {
-    HIGH_CARD, ONE_PAIR, TWO_PAIR, THREE_KIND, STRAIGHT, FLUSH, FULL_HOUSE, FOUR_KIND,
-    STRAIGHT_FLUSH, ROYAL_FLUSH
+enum class Rank(val text: String) {
+    HIGH_CARD("HIGH CARD"),
+    ONE_PAIR("ONE PAIR"),
+    TWO_PAIR("TWO PAIR"),
+    THREE_KIND("THREE OF A KIND"),
+    STRAIGHT("STRAIGHT"),
+    FLUSH("FLUSH"),
+    FULL_HOUSE("FULL HOUSE"),
+    FOUR_KIND("FOUR OF A KIND"),
+    STRAIGHT_FLUSH("STRAIGHT FLUSH"),
+    ROYAL_FLUSH("ROYAL FLUSH")
 }
 
 enum class Winner {

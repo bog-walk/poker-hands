@@ -18,7 +18,7 @@ fun PokerHand(hand: CardHand) {
         horizontalArrangement = Arrangement.Center
     ) {
         repeat(5) {
-            PokerCard(hand.cards[it])
+            PokerCard(hand.cards[it], null)
         }
     }
 }

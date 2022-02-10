@@ -8,7 +8,7 @@ const val playerButtonText = "PLAYER "
 const val dealButtonText = "DEAL"
 const val cardSemanticsDescr = "was dealt"
 
-val windowWidth = 750.dp
+val windowWidth = 900.dp
 val windowHeight = 650.dp
 val headerSpacer = 35.dp
 val componentPadding = 15.dp
@@ -18,6 +18,7 @@ val cardPadding = 10.dp
 val cardWidth = 100.dp
 val cardHeight = 140.dp
 val cardElevation = 5.dp
+val cardBorder = 5.dp
 val intraCardSpacer = 5.dp
 
 const val pokerIcon = "heart_black_24.png"

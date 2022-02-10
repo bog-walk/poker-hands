@@ -27,7 +27,7 @@ private val PokerColors = darkColors(
     onSecondary = Color.White,
     onBackground = Color.White,
     onSurface = Color.White,
-    onError = Color.White
+    onError = Color.Gray
 )
 
 private val PokerTypography = Typography(
@@ -40,7 +40,6 @@ private val PokerTypography = Typography(
         lineHeight = 40.sp
     ),
     body1 = TextStyle(
-        color = PokerYellow,
         fontSize = 15.sp,
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.Center,

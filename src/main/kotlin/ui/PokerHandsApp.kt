@@ -14,36 +14,43 @@ import ui.util.rememberPokerAppState
 @Preview
 fun PokerHandsApp() {
     val pokerAppState = rememberPokerAppState()
-    Column(
+    Row(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.Start
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Header(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            pokerAppState.streak.value
-        )
-        PlayerRow(
-            Winner.PLAYER1,
-            pokerAppState.hand1.value,
-            pokerAppState.chosenHand.value,
-            pokerAppState.isCorrectChoice.value
+        InfoPanel(emptySet(), null)
+        Column(
+            modifier = Modifier.fillMaxHeight(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.Start
         ) {
-            pokerAppState.assessChoice(it)
-        }
-        PlayerRow(
-            Winner.PLAYER2,
-            pokerAppState.hand2.value,
-            pokerAppState.chosenHand.value,
-            pokerAppState.isCorrectChoice.value
-        ) {
-            pokerAppState.assessChoice(it)
-        }
-        DealButton(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            pokerAppState.shouldAllowDeal
-        ) {
-            pokerAppState.reset()
+            Header(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                pokerAppState.streak.value
+            )
+            PlayerRow(
+                Winner.PLAYER1,
+                pokerAppState.hand1.value,
+                pokerAppState.chosenHand.value,
+                pokerAppState.isCorrectChoice.value
+            ) {
+                pokerAppState.assessChoice(it)
+            }
+            PlayerRow(
+                Winner.PLAYER2,
+                pokerAppState.hand2.value,
+                pokerAppState.chosenHand.value,
+                pokerAppState.isCorrectChoice.value
+            ) {
+                pokerAppState.assessChoice(it)
+            }
+            DealButton(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                pokerAppState.shouldAllowDeal
+            ) {
+                pokerAppState.reset()
+            }
         }
     }
 }
