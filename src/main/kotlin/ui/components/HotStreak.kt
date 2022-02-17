@@ -18,7 +18,7 @@ import ui.style.*
 fun HotStreak(streak: Int) {
     val transition = updateTransition(targetState = streak)
     val streakColor by transition.animateColor(
-        transitionSpec = { tween(800, easing = FastOutSlowInEasing) }
+        transitionSpec = { tween(hotStreakDuration, easing = FastOutSlowInEasing) }
     ) { count ->
         when (count) {
             0 -> PokerHandsTheme.colors.onError
@@ -30,7 +30,7 @@ fun HotStreak(streak: Int) {
     val streakCount by transition.animateInt(
         transitionSpec = {
             if (targetState == 0) {
-                tween(800, easing = FastOutSlowInEasing)
+                tween(hotStreakDuration, easing = FastOutSlowInEasing)
             } else {
                 snap()
             }
@@ -38,7 +38,7 @@ fun HotStreak(streak: Int) {
     ) { it }
 
     Row(
-        modifier = Modifier.padding(componentPadding),
+        //modifier = Modifier.padding(componentPadding),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -77,13 +77,12 @@ fun HotStreak(streak: Int) {
 
 @Preview
 @Composable
-fun HotStreakPreview() {
+private fun HotStreakPreview() {
     PokerHandsTheme {
-        Column(
-            verticalArrangement = Arrangement.SpaceEvenly
-        ) {
+        Column {
             HotStreak(0)
             HotStreak(5)
+            HotStreak(100)
         }
     }
 }

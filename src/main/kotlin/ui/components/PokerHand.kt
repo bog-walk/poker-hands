@@ -25,7 +25,7 @@ fun PokerHand(hand: CardHand) {
 
 @Preview
 @Composable
-fun PokerHandPreview() {
+private fun PokerHandPreview() {
     PokerHandsTheme {
         PokerHand(previewHand)
     }

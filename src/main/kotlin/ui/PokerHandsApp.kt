@@ -26,7 +26,6 @@ fun PokerHandsApp() {
             horizontalAlignment = Alignment.Start
         ) {
             Header(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
                 pokerAppState.streak.value
             )
             PlayerRow(
@@ -46,7 +45,6 @@ fun PokerHandsApp() {
                 pokerAppState.assessChoice(it)
             }
             DealButton(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
                 pokerAppState.shouldAllowDeal
             ) {
                 pokerAppState.reset()
@@ -57,7 +55,7 @@ fun PokerHandsApp() {
 
 @Preview
 @Composable
-fun PokerHandsAppPreview() {
+private fun PokerHandsAppPreview() {
     PokerHandsTheme {
         PokerHandsApp()
     }

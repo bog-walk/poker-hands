@@ -5,32 +5,36 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import ui.style.PokerHandsTheme
-import ui.style.componentPadding
-import ui.style.dealButtonText
+import ui.style.*
 
 @Composable
-fun DealButton(modifier: Modifier, choiceMade: Boolean, onDealRequest: () -> Unit) {
-    Button(
-        onClick = { onDealRequest() },
-        modifier = modifier.padding(componentPadding),
-        enabled = choiceMade
+fun DealButton(choiceMade: Boolean, onDealRequest: () -> Unit) {
+    Row(
+        modifier = Modifier.padding(componentPadding).requiredWidth(headerFooterWidth),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(
-            text = dealButtonText,
-            style = PokerHandsTheme.typography.button
-        )
+        Button(
+            onClick = { onDealRequest() },
+            enabled = choiceMade
+        ) {
+            Text(
+                text = dealButtonText,
+                style = PokerHandsTheme.typography.button
+            )
+        }
     }
 }
 
 @Preview
 @Composable
-fun DealButtonPreview() {
+private fun DealButtonPreview() {
     PokerHandsTheme {
-        Row {
-            DealButton(Modifier, false) { }
-            DealButton(Modifier, true) { }
+        Column {
+            DealButton(false) { }
+            DealButton(true) { }
         }
     }
 }

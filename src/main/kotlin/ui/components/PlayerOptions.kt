@@ -2,7 +2,6 @@ package ui.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutLinearInEasing
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
@@ -27,8 +26,8 @@ fun PlayerOptions(
     onPlayerChosen: (Winner) -> Unit
 ) {
     Row(
-        modifier = Modifier.padding(componentPadding),
-        horizontalArrangement = Arrangement.Center,
+        modifier = Modifier.padding(horizontal = componentPadding).requiredWidth(playerOptionsWidth),
+        horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
         PickButton(player, chosenHand, isCorrectChoice, onPlayerChosen)
@@ -36,11 +35,11 @@ fun PlayerOptions(
             visible = chosenHand == player,
             modifier = Modifier.padding(start = componentPadding).zIndex(0f),
             enter = slideInHorizontally(
-                animationSpec = tween(100, easing = LinearOutSlowInEasing)
+                animationSpec = tween(infoAnimDuration, easing = LinearOutSlowInEasing)
             ) { contentWidth ->
                 -2 * contentWidth
             },
-            exit = slideOutVertically(tween(100, easing = FastOutLinearInEasing))
+            exit = slideOutVertically(tween(infoAnimDuration, easing = FastOutLinearInEasing))
         ) {
             // kept getting NPE compared to original code
             // NEEDS TO BE FIXED
@@ -54,7 +53,7 @@ fun PlayerOptions(
 }
 
 @Composable
-fun PickButton(
+private fun PickButton(
     player: Winner,
     chosenHand: Winner,
     isCorrectChoice: Boolean?,
@@ -74,7 +73,7 @@ fun PickButton(
 }
 
 @Composable
-fun InfoButton(choseCorrectly: Boolean) {
+private fun InfoButton(choseCorrectly: Boolean) {
     IconButton(
         onClick = {},
         modifier = Modifier.requiredSize(iconSize)
@@ -116,11 +115,9 @@ private fun getButtonColors(
 
 @Preview
 @Composable
-fun PlayerOptionsPreview() {
+private fun PlayerOptionsPreview() {
     PokerHandsTheme {
-        Column(
-            verticalArrangement = Arrangement.SpaceEvenly
-        ) {
+        Column {
             PlayerOptions(Winner.PLAYER1, Winner.UNDECIDED, null) { }
             PlayerOptions(Winner.PLAYER2, Winner.UNDECIDED, null) { }
             PlayerOptions(Winner.PLAYER1, Winner.PLAYER1, true) { }

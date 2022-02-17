@@ -22,13 +22,13 @@ import ui.style.*
 fun PokerCard(card: Card, highlight: Color?) {
     Card(
         modifier = Modifier
-            .size(cardWidth, cardHeight)
+            .requiredSize(cardWidth, cardHeight)
             .padding(cardPadding)
             .clearAndSetSemantics {
                 contentDescription = "$card"
                 stateDescription = cardSemanticsDescr
             },
-        backgroundColor = Color.White,
+        backgroundColor = PokerHandsTheme.colors.onSurface,
         contentColor = card.suit.color,
         border = highlight?.let { BorderStroke(cardBorder, highlight) },
         elevation = cardElevation
@@ -38,7 +38,7 @@ fun PokerCard(card: Card, highlight: Color?) {
         // so if changed state causes recomposition, the invalidated scope will be the entire
         // Card content lambda, not just the Column content lambda.
         Column(
-            modifier = Modifier.fillMaxSize().padding(cardPadding),
+            modifier = Modifier.padding(cardPadding).fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -46,7 +46,7 @@ fun PokerCard(card: Card, highlight: Color?) {
                 text = card.value,
                 style = PokerHandsTheme.typography.h4
             )
-            Spacer(modifier = Modifier.height(intraCardSpacer))
+            Spacer(modifier = Modifier.height(intraSpacer))
             Icon(
                 painter = painterResource(card.suit.svgPath),
                 contentDescription = card.suit.description,
@@ -60,9 +60,7 @@ fun PokerCard(card: Card, highlight: Color?) {
 @Composable
 fun PokerCardPreview() {
     PokerHandsTheme {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
+        Row {
             for ((i, sample) in previewCards.withIndex()) {
                 PokerCard(sample, if (i == 0 || i == 4) PokerHandsTheme.colors.secondary else null)
             }

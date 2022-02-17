@@ -20,7 +20,11 @@ fun PlayerRow(
     isCorrectChoice: Boolean?,
     onPlayerChosen: (Winner) -> Unit) {
     Row(
-        modifier = Modifier.padding(horizontal = playerRowPadding, vertical = componentPadding),
+        modifier = Modifier.padding(
+            start = playerRowPadding,
+            top = componentPadding,
+            bottom = componentPadding
+        ),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -31,8 +35,13 @@ fun PlayerRow(
 
 @Preview
 @Composable
-fun PlayerRowPreview() {
+private fun PlayerRowPreview() {
     PokerHandsTheme {
-        PlayerRow(Winner.PLAYER1, previewHand, Winner.UNDECIDED, null) { }
+        Column {
+            PlayerRow(Winner.PLAYER1, previewHand, Winner.UNDECIDED, null) { }
+            PlayerRow(Winner.PLAYER1, previewHand, Winner.PLAYER1, false) { }
+            PlayerRow(Winner.PLAYER2, previewHand, Winner.PLAYER2, true) { }
+            PlayerRow(Winner.PLAYER1, previewHand, Winner.PLAYER2, true) { }
+        }
     }
 }

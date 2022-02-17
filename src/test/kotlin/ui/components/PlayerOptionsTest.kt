@@ -15,7 +15,7 @@ internal class PlayerOptionsTest {
     @Test
     fun `PlayerOptions initial load only has enabled PickButton`() {
         composeTestRule.setContent {
-            PlayerOptions(Winner.PLAYER1, null, null) { }
+            PlayerOptions(Winner.PLAYER1, Winner.UNDECIDED, null) { }
         }
         composeTestRule
             .onNodeWithText("${playerButtonText}1")

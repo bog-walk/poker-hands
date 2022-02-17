@@ -6,37 +6,41 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import ui.style.PokerHandsTheme
-import ui.style.componentPadding
-import ui.style.headerAppText
-import ui.style.headerSpacer
+import androidx.compose.ui.text.style.TextAlign
+import ui.style.*
 
 @Composable
-fun Header(modifier: Modifier, streak: Int) {
+fun Header(streak: Int) {
     Row(
-        modifier = modifier.padding(componentPadding),
-        horizontalArrangement = Arrangement.SpaceAround,
+        modifier = Modifier.padding(componentPadding),
+        horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
         HeaderText()
-        Spacer(modifier = Modifier.width(headerSpacer))
+        Spacer(modifier = Modifier.width(intraSpacer))
         HotStreak(streak)
     }
 }
 
 @Composable
-fun HeaderText() {
+private fun HeaderText() {
     Text(
         text = headerAppText,
-        modifier = Modifier.padding(componentPadding),
+        modifier = Modifier.requiredWidth(headerFooterWidth),
+        textAlign = TextAlign.Center,
         style = PokerHandsTheme.typography.h4
     )
 }
 
 @Preview
 @Composable
-fun HeaderPreview() {
+private fun HeaderPreview() {
     PokerHandsTheme {
-        Header(Modifier, 5)
+        Column {
+            Header(0)
+            Header(5)
+            Header(12)
+            Header(100)
+        }
     }
 }

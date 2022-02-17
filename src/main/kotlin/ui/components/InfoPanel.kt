@@ -42,11 +42,9 @@ fun InfoPanel(highlighted: Set<Rank>, topRank: Rank?) {
 
 @Preview
 @Composable
-fun InfoPanelPreview() {
+private fun InfoPanelPreview() {
     PokerHandsTheme {
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
+        Row {
             InfoPanel(emptySet(), null)
             InfoPanel(setOf(Rank.FULL_HOUSE, Rank.ONE_PAIR), Rank.FULL_HOUSE)
             InfoPanel(setOf(Rank.FLUSH), Rank.FLUSH)
