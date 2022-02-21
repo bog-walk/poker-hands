@@ -32,7 +32,8 @@ fun PokerHandsApp() {
                 Winner.PLAYER1,
                 pokerAppState.hand1.value,
                 pokerAppState.chosenHand.value,
-                pokerAppState.isCorrectChoice.value
+                pokerAppState.isCorrectChoice.value,
+                pokerAppState::explain
             ) {
                 pokerAppState.assessChoice(it)
             }
@@ -40,7 +41,8 @@ fun PokerHandsApp() {
                 Winner.PLAYER2,
                 pokerAppState.hand2.value,
                 pokerAppState.chosenHand.value,
-                pokerAppState.isCorrectChoice.value
+                pokerAppState.isCorrectChoice.value,
+                pokerAppState::explain
             ) {
                 pokerAppState.assessChoice(it)
             }

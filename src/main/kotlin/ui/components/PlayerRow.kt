@@ -18,7 +18,9 @@ fun PlayerRow(
     hand: CardHand,
     chosenHand: Winner,
     isCorrectChoice: Boolean?,
-    onPlayerChosen: (Winner) -> Unit) {
+    onInfoRequest: () -> Unit,
+    onPlayerChosen: (Winner) -> Unit
+) {
     Row(
         modifier = Modifier.padding(
             start = playerRowPadding,
@@ -29,7 +31,7 @@ fun PlayerRow(
         verticalAlignment = Alignment.CenterVertically
     ) {
         PokerHand(hand)
-        PlayerOptions(player, chosenHand, isCorrectChoice, onPlayerChosen)
+        PlayerOptions(player, chosenHand, isCorrectChoice, onInfoRequest, onPlayerChosen)
     }
 }
 
@@ -38,10 +40,10 @@ fun PlayerRow(
 private fun PlayerRowPreview() {
     PokerHandsTheme {
         Column {
-            PlayerRow(Winner.PLAYER1, previewHand, Winner.UNDECIDED, null) { }
-            PlayerRow(Winner.PLAYER1, previewHand, Winner.PLAYER1, false) { }
-            PlayerRow(Winner.PLAYER2, previewHand, Winner.PLAYER2, true) { }
-            PlayerRow(Winner.PLAYER1, previewHand, Winner.PLAYER2, true) { }
+            PlayerRow(Winner.PLAYER1, previewHand, Winner.UNDECIDED, null, {}, {})
+            PlayerRow(Winner.PLAYER1, previewHand, Winner.PLAYER1, false, {}, {})
+            PlayerRow(Winner.PLAYER2, previewHand, Winner.PLAYER2, true, {}, {})
+            PlayerRow(Winner.PLAYER1, previewHand, Winner.PLAYER2, true, {}, {})
         }
     }
 }

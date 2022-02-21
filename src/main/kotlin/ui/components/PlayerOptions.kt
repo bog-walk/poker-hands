@@ -23,6 +23,7 @@ fun PlayerOptions(
     player: Winner,
     chosenHand: Winner,
     isCorrectChoice: Boolean?,
+    onInfoRequest: () -> Unit,
     onPlayerChosen: (Winner) -> Unit
 ) {
     Row(
@@ -43,7 +44,7 @@ fun PlayerOptions(
         ) {
             // kept getting NPE compared to original code
             // NEEDS TO BE FIXED
-            isCorrectChoice?.let { InfoButton(isCorrectChoice) }
+            isCorrectChoice?.let { InfoButton(isCorrectChoice, onInfoRequest) }
         }
         //if (chosenHand != Winner.UNDECIDED && chosenHand == player) {
             //Spacer(modifier = Modifier.width(componentPadding))
@@ -73,9 +74,12 @@ private fun PickButton(
 }
 
 @Composable
-private fun InfoButton(choseCorrectly: Boolean) {
+private fun InfoButton(
+    choseCorrectly: Boolean,
+    onInfoRequest: () -> Unit
+) {
     IconButton(
-        onClick = {},
+        onClick = { onInfoRequest() },
         modifier = Modifier.requiredSize(iconSize)
     ) {
         Icon(
@@ -118,12 +122,12 @@ private fun getButtonColors(
 private fun PlayerOptionsPreview() {
     PokerHandsTheme {
         Column {
-            PlayerOptions(Winner.PLAYER1, Winner.UNDECIDED, null) { }
-            PlayerOptions(Winner.PLAYER2, Winner.UNDECIDED, null) { }
-            PlayerOptions(Winner.PLAYER1, Winner.PLAYER1, true) { }
-            PlayerOptions(Winner.PLAYER2, Winner.PLAYER1, true) { }
-            PlayerOptions(Winner.PLAYER1, Winner.PLAYER1, false) { }
-            PlayerOptions(Winner.PLAYER2, Winner.PLAYER1, false) { }
+            PlayerOptions(Winner.PLAYER1, Winner.UNDECIDED, null, {}, {})
+            PlayerOptions(Winner.PLAYER2, Winner.UNDECIDED, null, {}, {})
+            PlayerOptions(Winner.PLAYER1, Winner.PLAYER1, true, {}, {})
+            PlayerOptions(Winner.PLAYER2, Winner.PLAYER1, true, {}, {})
+            PlayerOptions(Winner.PLAYER1, Winner.PLAYER1, false, {}, {})
+            PlayerOptions(Winner.PLAYER2, Winner.PLAYER1, false, {}, {})
         }
     }
 }

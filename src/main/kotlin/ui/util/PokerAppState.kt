@@ -25,6 +25,10 @@ class PokerAppState(
         }
     }
 
+    fun explain() {
+        TODO()
+    }
+
     fun reset() {
         val newHands = deal()
         hand1.value = newHands.first
