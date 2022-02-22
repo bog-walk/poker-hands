@@ -71,7 +71,12 @@ class CardHand(val cards: List<Card>) : Comparable<CardHand> {
                     listOf(i + 4)
                 }
                 if (cardCount[0] == 1) {
-                    ranks[Rank.STRAIGHT_FLUSH.ordinal] = listOf(i + 4)
+                    ranks[Rank.STRAIGHT_FLUSH.ordinal] = if (streak == 4) {
+                        // low Ace straight flush has high card 5
+                        listOf(5)
+                    } else {
+                        listOf(i + 4)
+                    }
                     if (i == 10) ranks[Rank.ROYAL_FLUSH.ordinal] = listOf(14)
                 }
                 break // no further cards if streak achieved
@@ -79,10 +84,12 @@ class CardHand(val cards: List<Card>) : Comparable<CardHand> {
         }
         // give the full house ranking the higher 3 of a kind value
         if (triple > 0 && pair > 0) ranks[Rank.FULL_HOUSE.ordinal] = listOf(triple)
-        // give flush ranking the highest card value
-        if (cardCount[0] == 1) ranks[Rank.FLUSH.ordinal] = listOf(
-            ranks[Rank.HIGH_CARD.ordinal].maxOrNull()!!
-        )
+        // give flush ranking the highest card value, unless it's a low Ace straight flush
+        if (cardCount[0] == 1) {
+            ranks[Rank.FLUSH.ordinal] = ranks[Rank.STRAIGHT_FLUSH.ordinal].ifEmpty {
+                listOf(ranks[Rank.HIGH_CARD.ordinal].maxOrNull()!!)
+            }
+        }
         return ranks
     }
 
