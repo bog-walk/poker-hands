@@ -2,6 +2,7 @@ package model
 
 import checkValid
 import convertTestGame
+import convertTestInfo
 import getTestResource
 import org.junit.BeforeClass
 import kotlin.test.*
@@ -9,6 +10,7 @@ import kotlin.test.*
 internal class CardDeckTest {
     companion object {
         lateinit var samples: List<Triple<CardHand, CardHand, Int>>
+        lateinit var sampleInfo: List<Triple<CardHand, CardHand, List<Triple<List<Int>, List<Int>, List<Int>>>>>
 
         @BeforeClass
         @JvmStatic
@@ -16,6 +18,7 @@ internal class CardDeckTest {
             samples = getTestResource(
                 "src/test/resources/poker_hands_sample"
             ).map(::convertTestGame)
+            sampleInfo = convertTestInfo(getTestResource("src/test/resources/poker_hands_info"))
         }
     }
 
@@ -64,5 +67,21 @@ internal class CardDeckTest {
             }
         }
         assertContentEquals(expectedWins, actualWins)
+    }
+
+    @Test
+    fun `generateRankInfo correct for sample info hands`() {
+        for (sample in sampleInfo) {
+            val hand1 = sample.first
+            val hand2 = sample.second
+            val expectedInfo = sample.third
+            val actualInfo = generateRankInfo(hand1 to hand2)
+            assertEquals(expectedInfo.size, actualInfo.size)
+            for ((i, expected) in expectedInfo.withIndex()) {
+                assertContentEquals(expected.first, actualInfo[i].first)
+                assertContentEquals(expected.second, actualInfo[i].second)
+                assertContentEquals(expected.third, actualInfo[i].third)
+            }
+        }
     }
 }

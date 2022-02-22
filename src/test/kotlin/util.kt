@@ -56,6 +56,33 @@ fun convertTestGame(input: List<String>): Triple<CardHand, CardHand, Int> {
     return Triple(player1, player2, winner)
 }
 
+/**
+ * Converts test resource into 2 CardHand instances for generation of rank info.
+ *
+ * The final element in the returned Triple represents the expected Triple of the highlighted
+ * cards in each hand, as well as the highlighted rank titles, for each tying rank in a play.
+ */
+fun convertTestInfo(
+    input: List<List<String>>
+): List<Triple<CardHand, CardHand, List<Triple<List<Int>, List<Int>, List<Int>>>>> {
+    val sampleInfo = mutableListOf<Triple<CardHand, CardHand, List<Triple<List<Int>, List<Int>, List<Int>>>>>()
+    var i = 0
+    while (i < input.size) {
+        val player1 = CardHand(input[i].slice(0..4).map(::getCard))
+        val player2 = CardHand(input[i].slice(5..9).map(::getCard))
+        val info = mutableListOf<Triple<List<Int>, List<Int>, List<Int>>>()
+        for (j in input[i+1].indices) {
+            val player1Ranks = input[i+1][j].split(",").map(String::toInt)
+            val player2Ranks = input[i+2][j].split(",").map(String::toInt)
+            val rankTitles = input[i+3][j].split(",").map(String::toInt)
+            info.add((Triple(player1Ranks, player2Ranks, rankTitles)))
+        }
+        sampleInfo.add(Triple(player1, player2, info))
+        i += 4
+    }
+    return sampleInfo
+}
+
 fun Pair<CardHand, CardHand>.checkValid(): Set<Card>? {
     val uniqueCards = first.cards.toSet() + second.cards.toSet()
     return if (uniqueCards.size == 10) uniqueCards else null

@@ -62,7 +62,14 @@ class CardHand(val cards: List<Card>) : Comparable<CardHand> {
             streak++
             if (streak == 5 || streak == 4 && i == 2 && cardCount[1] > 0) {
                 // low Ace straight has high card 5
-                ranks[Rank.STRAIGHT.ordinal] = if (streak == 4) listOf(5) else listOf(i + 4)
+                ranks[Rank.STRAIGHT.ordinal] = if (streak == 4) {
+                    // ensure 14 not at front of high card list since Ace is low in this case
+                    ranks[Rank.HIGH_CARD.ordinal] = ranks[Rank.HIGH_CARD.ordinal].drop(1) +
+                            listOf(14)
+                    listOf(5)
+                } else {
+                    listOf(i + 4)
+                }
                 if (cardCount[0] == 1) {
                     ranks[Rank.STRAIGHT_FLUSH.ordinal] = listOf(i + 4)
                     if (i == 10) ranks[Rank.ROYAL_FLUSH.ordinal] = listOf(14)
