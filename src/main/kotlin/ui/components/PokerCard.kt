@@ -9,7 +9,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
@@ -19,7 +18,7 @@ import model.previewCards
 import ui.style.*
 
 @Composable
-fun PokerCard(card: Card, highlight: Color?) {
+fun PokerCard(card: Card, highlight: Int) {
     Card(
         modifier = Modifier
             .requiredSize(cardWidth, cardHeight)
@@ -30,7 +29,11 @@ fun PokerCard(card: Card, highlight: Color?) {
             },
         backgroundColor = PokerHandsTheme.colors.onSurface,
         contentColor = card.suit.color,
-        border = highlight?.let { BorderStroke(cardBorder, highlight) },
+        border = when (highlight) {
+            -1 -> BorderStroke(cardBorder, PokerHandsTheme.colors.error)
+            1 -> BorderStroke(cardBorder, PokerHandsTheme.colors.secondary)
+            else -> null
+        },
         elevation = cardElevation
     ) {
         // no point in separating to another composable to reduce recomposition, as Column is
@@ -62,7 +65,7 @@ fun PokerCardPreview() {
     PokerHandsTheme {
         Row {
             for ((i, sample) in previewCards.withIndex()) {
-                PokerCard(sample, if (i == 0 || i == 4) PokerHandsTheme.colors.secondary else null)
+                PokerCard(sample, if (i == 0 || i == 4) -1 else 0)
             }
         }
     }

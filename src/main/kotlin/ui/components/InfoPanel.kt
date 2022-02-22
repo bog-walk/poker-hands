@@ -12,27 +12,24 @@ import ui.style.cardPadding
 import ui.style.componentPadding
 
 @Composable
-fun InfoPanel(highlighted: Set<Rank>, topRank: Rank?) {
+fun InfoPanel(highlighted: List<Int>) {
     Column(
         modifier = Modifier.fillMaxHeight(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        for (rank in Rank.values()) {
+        val allRanks = Rank.values()
+        for ((rank, switch) in highlighted.withIndex()) {
             Text(
-                text = rank.text,
+                text = allRanks[rank].text,
                 modifier = Modifier.padding(
                     horizontal = componentPadding,
                     vertical = cardPadding
                 ),
-                color = if (highlighted.isEmpty() || rank !in highlighted) {
-                    PokerHandsTheme.colors.onError
-                } else {
-                    if (rank == topRank) {
-                        PokerHandsTheme.colors.secondary
-                    } else {
-                        PokerHandsTheme.colors.error
-                    }
+                color = when (switch) {
+                    -1 -> PokerHandsTheme.colors.error
+                    1 -> PokerHandsTheme.colors.secondary
+                    else -> PokerHandsTheme.colors.onError
                 },
                 style = PokerHandsTheme.typography.body1
             )
@@ -45,9 +42,9 @@ fun InfoPanel(highlighted: Set<Rank>, topRank: Rank?) {
 private fun InfoPanelPreview() {
     PokerHandsTheme {
         Row {
-            InfoPanel(emptySet(), null)
-            InfoPanel(setOf(Rank.FULL_HOUSE, Rank.ONE_PAIR), Rank.FULL_HOUSE)
-            InfoPanel(setOf(Rank.FLUSH), Rank.FLUSH)
+            InfoPanel(listOf(0,0,0,0,0,0,0,0,0,0))
+            InfoPanel(listOf(0,0,-1,0,0,0,0,0,0,1))
+            InfoPanel(listOf(0,0,0,0,0,1,0,0,0,0))
         }
     }
 }

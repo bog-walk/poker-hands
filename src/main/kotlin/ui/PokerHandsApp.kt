@@ -19,30 +19,32 @@ fun PokerHandsApp() {
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        InfoPanel(emptySet(), null)
+        InfoPanel(pokerAppState.infoPanelHighlights)
         Column(
             modifier = Modifier.fillMaxHeight(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start
         ) {
             Header(
-                pokerAppState.streak.value
+                pokerAppState.streak
             )
             PlayerRow(
                 Winner.PLAYER1,
-                pokerAppState.hand1.value,
-                pokerAppState.chosenHand.value,
-                pokerAppState.isCorrectChoice.value,
-                pokerAppState::explain
+                pokerAppState.hand1,
+                pokerAppState.hand1Highlights,
+                pokerAppState.chosenHand,
+                pokerAppState.isCorrectChoice,
+                pokerAppState::explainWinner
             ) {
                 pokerAppState.assessChoice(it)
             }
             PlayerRow(
                 Winner.PLAYER2,
-                pokerAppState.hand2.value,
-                pokerAppState.chosenHand.value,
-                pokerAppState.isCorrectChoice.value,
-                pokerAppState::explain
+                pokerAppState.hand2,
+                pokerAppState.hand2Highlights,
+                pokerAppState.chosenHand,
+                pokerAppState.isCorrectChoice,
+                pokerAppState::explainWinner
             ) {
                 pokerAppState.assessChoice(it)
             }

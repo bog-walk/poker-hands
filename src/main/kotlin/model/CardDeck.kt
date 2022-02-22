@@ -44,61 +44,53 @@ fun generateRankInfo(
         val info = MutableList(10) { 0 }.apply { this[r] = 1 }
         var player1Info: List<Int>
         var player2Info: List<Int>
-        println("In main loop")
         if (p1R.isEmpty()) {
-            player2Info = getRankInfo(player2Hand, currentRank, p2R.single())
+            player2Info = getRankInfo(player2Hand, currentRank, p2R[0])
             val (p1Index, p1Top) = player1Ranked.withIndex().last { (i, rank) ->
                 rank.isNotEmpty() && i < r
             }
             player1Info = getRankInfo(
-                player1Hand, allRanks[p1Index], p1Top.single(), false
+                player1Hand, allRanks[p1Index], p1Top[0], false
             )
             info[p1Index] = -1
             rankInfo.add(Triple(player1Info, player2Info, info))
-            println(rankInfo)
             break@outer
         } else if (p2R.isEmpty()) {
-            player1Info = getRankInfo(player1Hand, currentRank, p1R.single())
+            player1Info = getRankInfo(player1Hand, currentRank, p1R[0])
             val (p2Index, p2Top) = player2Ranked.withIndex().last { (i, rank) ->
                 rank.isNotEmpty() && i < r
             }
             player2Info = getRankInfo(
-                player2Hand, allRanks[p2Index], p2Top.single(), false
+                player2Hand, allRanks[p2Index], p2Top[0], false
             )
             info[p2Index] = -1
             rankInfo.add(Triple(player1Info, player2Info, info))
-            println(rankInfo)
             break@outer
         } else {
             if (r in 0..3 || r == 7) {
                 for (i in p1R.indices) {
-                    println("In inner loop")
                     val p1RPip = p1R[i]
                     val p2RPip = p2R[i]
                     if (p1RPip > p2RPip) {
                         player1Info = getRankInfo(player1Hand, currentRank, p1RPip)
                         player2Info = getRankInfo(player2Hand, currentRank, p2RPip, false)
                         rankInfo.add(Triple(player1Info, player2Info, info))
-                        println(rankInfo)
                         break@outer
                     } else if (p2RPip > p1RPip) {
                         player1Info = getRankInfo(player1Hand, currentRank, p1RPip, false)
                         player2Info = getRankInfo(player2Hand, currentRank, p2RPip)
                         rankInfo.add(Triple(player1Info, player2Info, info))
-                        println(rankInfo)
                         break@outer
                     } else {
                         player1Info = getRankInfo(player1Hand, currentRank, p1RPip)
                         player2Info = getRankInfo(player2Hand, currentRank, p2RPip)
                         rankInfo.add(Triple(player1Info, player2Info, info))
-                        println(rankInfo)
                     }
                 }
             } else {
-                player1Info = getRankInfo(player1Hand, currentRank, p1R.single())
-                player2Info = getRankInfo(player2Hand, currentRank, p2R.single())
+                player1Info = getRankInfo(player1Hand, currentRank, p1R[0])
+                player2Info = getRankInfo(player2Hand, currentRank, p2R[0])
                 rankInfo.add(Triple(player1Info, player2Info, info))
-                println(rankInfo)
             }
             r = when (r) {
                 4, 5, 8 -> 0

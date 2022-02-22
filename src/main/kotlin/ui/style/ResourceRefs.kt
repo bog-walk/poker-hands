@@ -23,7 +23,7 @@ val cardBorder = 5.dp
 val intraSpacer = 5.dp
 
 const val hotStreakDuration = 800
-const val infoAnimDuration = 100
+const val infoAnimDuration = 500
 
 const val pokerIcon = "heart_black_24.png"
 

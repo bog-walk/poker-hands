@@ -38,7 +38,6 @@ fun HotStreak(streak: Int) {
     ) { it }
 
     Row(
-        //modifier = Modifier.padding(componentPadding),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {

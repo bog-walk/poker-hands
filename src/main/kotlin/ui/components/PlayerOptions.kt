@@ -1,11 +1,9 @@
 package ui.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -17,12 +15,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.zIndex
 import model.Winner
 import ui.style.*
+import ui.util.Choice
 
 @Composable
 fun PlayerOptions(
     player: Winner,
     chosenHand: Winner,
-    isCorrectChoice: Boolean?,
+    isCorrectChoice: Choice,
     onInfoRequest: () -> Unit,
     onPlayerChosen: (Winner) -> Unit
 ) {
@@ -34,22 +33,15 @@ fun PlayerOptions(
         PickButton(player, chosenHand, isCorrectChoice, onPlayerChosen)
         AnimatedVisibility(
             visible = chosenHand == player,
-            modifier = Modifier.padding(start = componentPadding).zIndex(0f),
+            modifier = Modifier.zIndex(0f),
             enter = slideInHorizontally(
                 animationSpec = tween(infoAnimDuration, easing = LinearOutSlowInEasing)
             ) { contentWidth ->
                 -2 * contentWidth
-            },
-            exit = slideOutVertically(tween(infoAnimDuration, easing = FastOutLinearInEasing))
+            }
         ) {
-            // kept getting NPE compared to original code
-            // NEEDS TO BE FIXED
-            isCorrectChoice?.let { InfoButton(isCorrectChoice, onInfoRequest) }
+            InfoButton(isCorrectChoice, onInfoRequest)
         }
-        //if (chosenHand != Winner.UNDECIDED && chosenHand == player) {
-            //Spacer(modifier = Modifier.width(componentPadding))
-            //InfoButton(isCorrectChoice!!)
-        //}
     }
 }
 
@@ -57,7 +49,7 @@ fun PlayerOptions(
 private fun PickButton(
     player: Winner,
     chosenHand: Winner,
-    isCorrectChoice: Boolean?,
+    isCorrectChoice: Choice,
     onPlayerChosen: (Winner) -> Unit
 ) {
     Button(
@@ -75,20 +67,20 @@ private fun PickButton(
 
 @Composable
 private fun InfoButton(
-    choseCorrectly: Boolean,
+    choseCorrectly: Choice,
     onInfoRequest: () -> Unit
 ) {
     IconButton(
         onClick = { onInfoRequest() },
-        modifier = Modifier.requiredSize(iconSize)
+        modifier = Modifier.padding(start = componentPadding).requiredSize(iconSize)
     ) {
         Icon(
             painterResource(infoIcon),
             contentDescription = infoDescr,
-            tint = if (choseCorrectly) {
-                PokerHandsTheme.colors.secondary
-            } else {
-                PokerHandsTheme.colors.error
+            tint = when (choseCorrectly) {
+                Choice.CORRECT -> PokerHandsTheme.colors.secondary
+                Choice.INCORRECT -> PokerHandsTheme.colors.error
+                Choice.NONE -> PokerHandsTheme.colors.surface
             }
         )
     }
@@ -98,12 +90,12 @@ private fun InfoButton(
 private fun getButtonColors(
     player: Winner,
     chosenHand: Winner,
-    isCorrectChoice: Boolean? = null
+    isCorrectChoice: Choice
 ): ButtonColors {
     return if (player != chosenHand) {
         ButtonDefaults.buttonColors()
     } else {
-        if (isCorrectChoice!!) {
+        if (isCorrectChoice == Choice.CORRECT) {
             ButtonDefaults.buttonColors(
                 disabledBackgroundColor = PokerHandsTheme.colors.secondary.copy(alpha = 0.12f)
                     .compositeOver(PokerHandsTheme.colors.surface)
@@ -122,12 +114,12 @@ private fun getButtonColors(
 private fun PlayerOptionsPreview() {
     PokerHandsTheme {
         Column {
-            PlayerOptions(Winner.PLAYER1, Winner.UNDECIDED, null, {}, {})
-            PlayerOptions(Winner.PLAYER2, Winner.UNDECIDED, null, {}, {})
-            PlayerOptions(Winner.PLAYER1, Winner.PLAYER1, true, {}, {})
-            PlayerOptions(Winner.PLAYER2, Winner.PLAYER1, true, {}, {})
-            PlayerOptions(Winner.PLAYER1, Winner.PLAYER1, false, {}, {})
-            PlayerOptions(Winner.PLAYER2, Winner.PLAYER1, false, {}, {})
+            PlayerOptions(Winner.PLAYER1, Winner.UNDECIDED, Choice.NONE, {}, {})
+            PlayerOptions(Winner.PLAYER2, Winner.UNDECIDED, Choice.NONE, {}, {})
+            PlayerOptions(Winner.PLAYER1, Winner.PLAYER1, Choice.CORRECT, {}, {})
+            PlayerOptions(Winner.PLAYER2, Winner.PLAYER1, Choice.CORRECT, {}, {})
+            PlayerOptions(Winner.PLAYER1, Winner.PLAYER1, Choice.INCORRECT, {}, {})
+            PlayerOptions(Winner.PLAYER2, Winner.PLAYER1, Choice.INCORRECT, {}, {})
         }
     }
 }

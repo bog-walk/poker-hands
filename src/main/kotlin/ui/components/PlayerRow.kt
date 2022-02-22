@@ -11,13 +11,15 @@ import model.previewHand
 import ui.style.PokerHandsTheme
 import ui.style.componentPadding
 import ui.style.playerRowPadding
+import ui.util.Choice
 
 @Composable
 fun PlayerRow(
     player: Winner,
     hand: CardHand,
+    highlighted: List<Int>,
     chosenHand: Winner,
-    isCorrectChoice: Boolean?,
+    isCorrectChoice: Choice,
     onInfoRequest: () -> Unit,
     onPlayerChosen: (Winner) -> Unit
 ) {
@@ -30,7 +32,7 @@ fun PlayerRow(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        PokerHand(hand)
+        PokerHand(hand, highlighted)
         PlayerOptions(player, chosenHand, isCorrectChoice, onInfoRequest, onPlayerChosen)
     }
 }
@@ -40,10 +42,22 @@ fun PlayerRow(
 private fun PlayerRowPreview() {
     PokerHandsTheme {
         Column {
-            PlayerRow(Winner.PLAYER1, previewHand, Winner.UNDECIDED, null, {}, {})
-            PlayerRow(Winner.PLAYER1, previewHand, Winner.PLAYER1, false, {}, {})
-            PlayerRow(Winner.PLAYER2, previewHand, Winner.PLAYER2, true, {}, {})
-            PlayerRow(Winner.PLAYER1, previewHand, Winner.PLAYER2, true, {}, {})
+            PlayerRow(
+                Winner.PLAYER1, previewHand, listOf(0,0,0,0,0), Winner.UNDECIDED, Choice.NONE,
+                {}, {}
+            )
+            PlayerRow(
+                Winner.PLAYER1, previewHand, listOf(0,-1,0,0,0), Winner.PLAYER1, Choice.INCORRECT,
+                {}, {}
+            )
+            PlayerRow(
+                Winner.PLAYER2, previewHand, listOf(0,0,0,1,1), Winner.PLAYER2, Choice.CORRECT,
+                {}, {}
+            )
+            PlayerRow(
+                Winner.PLAYER1, previewHand, listOf(0,0,1,0,0), Winner.PLAYER2, Choice.CORRECT,
+                {}, {}
+            )
         }
     }
 }

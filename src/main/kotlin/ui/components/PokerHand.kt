@@ -11,14 +11,14 @@ import ui.style.PokerHandsTheme
 import ui.style.componentPadding
 
 @Composable
-fun PokerHand(hand: CardHand) {
+fun PokerHand(hand: CardHand, highlighted: List<Int>) {
     Row(
         modifier = Modifier.padding(componentPadding),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
         repeat(5) {
-            PokerCard(hand.cards[it], null)
+            PokerCard(hand.cards[it], highlighted[it])
         }
     }
 }
@@ -27,6 +27,9 @@ fun PokerHand(hand: CardHand) {
 @Composable
 private fun PokerHandPreview() {
     PokerHandsTheme {
-        PokerHand(previewHand)
+        Column {
+            PokerHand(previewHand, listOf(0,0,0,0,0))
+            PokerHand(previewHand, listOf(1,0,-1,0,0))
+        }
     }
 }

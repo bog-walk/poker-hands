@@ -3,56 +3,58 @@ package ui.util
 import androidx.compose.runtime.*
 import model.*
 
-class PokerAppState(
-    val hand1: MutableState<CardHand>,
-    val hand2: MutableState<CardHand>,
-    val chosenHand: MutableState<Winner>,
-    val isCorrectChoice: MutableState<Boolean?>,
-    val streak: MutableState<Int>
-) {
-    private var expectedWinner: Winner = findWinner(hand1.value to hand2.value)
-
-    val shouldAllowDeal: Boolean
-        get() = chosenHand.value != Winner.UNDECIDED
-
-    fun assessChoice(player: Winner) {
-        chosenHand.value = player
-        isCorrectChoice.value = chosenHand.value == expectedWinner
-        if (isCorrectChoice.value == true) {
-            streak.value++
-        } else {
-            streak.value = 0
-        }
-    }
-
-    fun explain() {
-        TODO()
-    }
-
-    fun reset() {
-        val newHands = deal()
-        hand1.value = newHands.first
-        hand2.value = newHands.second
-        expectedWinner = findWinner(newHands)
-        chosenHand.value = Winner.UNDECIDED
-        isCorrectChoice.value = null
-    }
+enum class Choice {
+    NONE, CORRECT, INCORRECT
 }
 
 @Composable
-fun rememberPokerAppState(): PokerAppState {
-    val hands = deal()
-    return remember {
-        PokerAppState(
-            mutableStateOf(hands.first),
-            mutableStateOf(hands.second),
-            mutableStateOf(Winner.UNDECIDED),
-            mutableStateOf(null),
-            mutableStateOf(0)
-        )
+fun rememberPokerAppState() = remember { PokerAppState(deal()) }
+
+class PokerAppState(
+    private var hands: Pair<CardHand, CardHand>
+) {
+    private var expectedWinner = findWinner(hands)
+    var hand1 by mutableStateOf(hands.first)
+    var hand2 by mutableStateOf(hands.second)
+
+    var chosenHand by mutableStateOf(Winner.UNDECIDED)
+    var isCorrectChoice by mutableStateOf(Choice.NONE)
+    var streak by mutableStateOf(0)
+    var shouldAllowDeal by mutableStateOf(false)
+
+    var hand1Highlights by mutableStateOf(List(5) { 0 })
+    var hand2Highlights by mutableStateOf(List(5) { 0 })
+    var infoPanelHighlights by mutableStateOf(List(10) { 0 })
+
+    fun assessChoice(player: Winner) {
+        chosenHand = player
+        isCorrectChoice = if (expectedWinner == chosenHand) {
+            streak++
+            Choice.CORRECT
+        } else {
+            streak = 0
+            Choice.INCORRECT
+        }
+        shouldAllowDeal = true
+    }
+
+    fun explainWinner() {
+        val info = generateRankInfo(hands).first()
+        hand1Highlights = info.first
+        hand2Highlights = info.second
+        infoPanelHighlights = info.third
+    }
+
+    fun reset() {
+        hands = deal()
+        expectedWinner = findWinner(hands)
+        hand1 = hands.first
+        hand2 = hands.second
+        chosenHand = Winner.UNDECIDED
+        isCorrectChoice = Choice.NONE
+        shouldAllowDeal = false
+        hand1Highlights = List(5) { 0 }
+        hand2Highlights = List(5) { 0 }
+        infoPanelHighlights = List(10) { 0 }
     }
 }
-
-
-
-
