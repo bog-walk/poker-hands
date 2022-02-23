@@ -22,9 +22,9 @@ class PokerAppState(
     var streak by mutableStateOf(0)
     var shouldAllowDeal by mutableStateOf(false)
 
-    var hand1Highlights by mutableStateOf(List(5) { 0 })
-    var hand2Highlights by mutableStateOf(List(5) { 0 })
-    var infoPanelHighlights by mutableStateOf(List(10) { 0 })
+    var hand1Highlights by mutableStateOf(emptyList<List<Int>>())
+    var hand2Highlights by mutableStateOf(emptyList<List<Int>>())
+    var infoPanelHighlights by mutableStateOf(emptyList<List<Int>>())
 
     fun assessChoice(player: Winner) {
         chosenHand = player
@@ -39,10 +39,10 @@ class PokerAppState(
     }
 
     fun explainWinner() {
-        val info = generateRankInfo(hands).first()
-        hand1Highlights = info.first
-        hand2Highlights = info.second
-        infoPanelHighlights = info.third
+        val rankInfo = generateRankInfo(hands)
+        hand1Highlights = rankInfo.map { it.first }
+        hand2Highlights = rankInfo.map { it.second }
+        infoPanelHighlights = rankInfo.map { it.third }
     }
 
     fun reset() {
@@ -53,8 +53,8 @@ class PokerAppState(
         chosenHand = Winner.UNDECIDED
         isCorrectChoice = Choice.NONE
         shouldAllowDeal = false
-        hand1Highlights = List(5) { 0 }
-        hand2Highlights = List(5) { 0 }
-        infoPanelHighlights = List(10) { 0 }
+        hand1Highlights = emptyList()
+        hand2Highlights = emptyList()
+        infoPanelHighlights = emptyList()
     }
 }

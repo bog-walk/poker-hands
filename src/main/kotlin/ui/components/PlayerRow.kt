@@ -17,7 +17,7 @@ import ui.util.Choice
 fun PlayerRow(
     player: Winner,
     hand: CardHand,
-    highlighted: List<Int>,
+    infoList: List<List<Int>>,
     chosenHand: Winner,
     isCorrectChoice: Choice,
     onInfoRequest: () -> Unit,
@@ -32,7 +32,7 @@ fun PlayerRow(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        PokerHand(hand, highlighted)
+        PokerHand(hand, infoList)
         PlayerOptions(player, chosenHand, isCorrectChoice, onInfoRequest, onPlayerChosen)
     }
 }
@@ -43,19 +43,19 @@ private fun PlayerRowPreview() {
     PokerHandsTheme {
         Column {
             PlayerRow(
-                Winner.PLAYER1, previewHand, listOf(0,0,0,0,0), Winner.UNDECIDED, Choice.NONE,
+                Winner.PLAYER1, previewHand, emptyList(), Winner.UNDECIDED, Choice.NONE,
                 {}, {}
             )
             PlayerRow(
-                Winner.PLAYER1, previewHand, listOf(0,-1,0,0,0), Winner.PLAYER1, Choice.INCORRECT,
+                Winner.PLAYER1, previewHand, emptyList(), Winner.PLAYER1, Choice.INCORRECT,
                 {}, {}
             )
             PlayerRow(
-                Winner.PLAYER2, previewHand, listOf(0,0,0,1,1), Winner.PLAYER2, Choice.CORRECT,
+                Winner.PLAYER2, previewHand, emptyList(), Winner.PLAYER2, Choice.CORRECT,
                 {}, {}
             )
             PlayerRow(
-                Winner.PLAYER1, previewHand, listOf(0,0,1,0,0), Winner.PLAYER2, Choice.CORRECT,
+                Winner.PLAYER1, previewHand, emptyList(), Winner.PLAYER2, Choice.CORRECT,
                 {}, {}
             )
         }

@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
@@ -18,7 +19,7 @@ import model.previewCards
 import ui.style.*
 
 @Composable
-fun PokerCard(card: Card, highlight: Int) {
+fun PokerCard(card: Card, highlight: Color) {
     Card(
         modifier = Modifier
             .requiredSize(cardWidth, cardHeight)
@@ -30,9 +31,8 @@ fun PokerCard(card: Card, highlight: Int) {
         backgroundColor = PokerHandsTheme.colors.onSurface,
         contentColor = card.suit.color,
         border = when (highlight) {
-            -1 -> BorderStroke(cardBorder, PokerHandsTheme.colors.error)
-            1 -> BorderStroke(cardBorder, PokerHandsTheme.colors.secondary)
-            else -> null
+            Color.Transparent -> null
+            else -> BorderStroke(cardBorder, highlight)
         },
         elevation = cardElevation
     ) {
@@ -63,9 +63,10 @@ fun PokerCard(card: Card, highlight: Int) {
 @Composable
 fun PokerCardPreview() {
     PokerHandsTheme {
+        val color = PokerHandsTheme.colors.secondary
         Row {
             for ((i, sample) in previewCards.withIndex()) {
-                PokerCard(sample, if (i == 0 || i == 4) -1 else 0)
+                PokerCard(sample, if (i == 0 || i == 4) color else Color.Transparent)
             }
         }
     }

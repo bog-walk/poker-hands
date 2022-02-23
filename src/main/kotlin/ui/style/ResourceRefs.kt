@@ -24,6 +24,7 @@ val intraSpacer = 5.dp
 
 const val hotStreakDuration = 800
 const val infoAnimDuration = 500
+const val highlightDelay = 2000L
 
 const val pokerIcon = "heart_black_24.png"
 
