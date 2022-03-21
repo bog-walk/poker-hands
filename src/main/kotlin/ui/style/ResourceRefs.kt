@@ -7,6 +7,8 @@ const val headerAppText = "CHOOSE THE WINNING HAND"
 const val playerButtonText = "PLAYER "
 const val dealButtonText = "DEAL"
 const val cardSemanticsDescr = "was dealt"
+const val infoPanelTag = "rank titles"
+const val playerRowTag = "player row"
 
 val windowWidth = 950.dp
 val windowHeight = 650.dp

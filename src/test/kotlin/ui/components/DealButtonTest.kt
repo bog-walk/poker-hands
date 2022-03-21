@@ -13,7 +13,7 @@ internal class DealButtonTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun `DealButton initially loads it as disabled`() {
+    fun `DealButton initially loads as disabled`() {
         composeTestRule.setContent {
             DealButton(false) { }
         }
@@ -30,6 +30,7 @@ internal class DealButtonTest {
         }
         composeTestRule
             .onNodeWithText(dealButtonText)
+            .assertExists("DealButton not found")
             .assertIsEnabled()
     }
 }

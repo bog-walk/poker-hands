@@ -8,6 +8,10 @@ import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.compositeOver
@@ -70,9 +74,15 @@ private fun InfoButton(
     choseCorrectly: Choice,
     onInfoRequest: () -> Unit
 ) {
+    var alreadyClicked by remember { mutableStateOf(false) }
+
     IconButton(
-        onClick = { onInfoRequest() },
-        modifier = Modifier.padding(start = componentPadding).requiredSize(iconSize)
+        onClick = {
+            alreadyClicked = true
+            onInfoRequest()
+        },
+        modifier = Modifier.padding(start = componentPadding).requiredSize(iconSize),
+        enabled = !alreadyClicked
     ) {
         Icon(
             painterResource(infoIcon),

@@ -14,7 +14,7 @@ internal class PokerHandTest {
     @Test
     fun `PokerHand creates 5 PokerCard components`() {
         composeTestRule.setContent {
-            PokerHand(previewHand)
+            PokerHand(previewHand, emptyList())
         }
         composeTestRule
             .onAllNodes(hasStateDescription(cardSemanticsDescr))

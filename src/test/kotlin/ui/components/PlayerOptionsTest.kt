@@ -34,6 +34,7 @@ internal class PlayerOptionsTest {
         }
         composeTestRule
             .onNodeWithText("${playerButtonText}1")
+            .assertExists("PickButton not found")
             .assertIsNotEnabled()
         composeTestRule
             .onNodeWithContentDescription(infoDescr)
@@ -47,10 +48,35 @@ internal class PlayerOptionsTest {
         }
         composeTestRule
             .onNodeWithText("${playerButtonText}1")
+            .assertExists("PickButton not found")
             .assertIsNotEnabled()
         composeTestRule
             .onNodeWithContentDescription(infoDescr)
             .assertExists()
             .assertIsEnabled()
     }
+
+    @Test
+    fun `PlayerOptions disables InfoButton once clicked`() {
+        composeTestRule.setContent {
+            PlayerOptions(Winner.PLAYER1, Winner.PLAYER1, Choice.CORRECT, {}, {})
+        }
+        composeTestRule
+            .onNodeWithContentDescription(infoDescr)
+            .performClick()
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onNodeWithContentDescription(infoDescr)
+            .assertIsNotEnabled()
+    }
 }
+
+
+
+
+
+
+
+
+
+

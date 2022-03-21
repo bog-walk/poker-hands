@@ -5,12 +5,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import model.CardHand
 import model.Winner
 import model.previewHand
 import ui.style.PokerHandsTheme
 import ui.style.componentPadding
 import ui.style.playerRowPadding
+import ui.style.playerRowTag
 import ui.util.Choice
 
 @Composable
@@ -28,12 +30,14 @@ fun PlayerRow(
             start = playerRowPadding,
             top = componentPadding,
             bottom = componentPadding
-        ),
+        ).testTag(playerRowTag),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
         PokerHand(hand, infoList)
-        PlayerOptions(player, chosenHand, isCorrectChoice, onInfoRequest, onPlayerChosen)
+        PlayerOptions(
+            player, chosenHand, isCorrectChoice, onInfoRequest, onPlayerChosen
+        )
     }
 }
 

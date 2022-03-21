@@ -7,11 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import model.Rank
-import ui.style.PokerHandsTheme
-import ui.style.cardPadding
-import ui.style.componentPadding
-import ui.style.highlightDelay
+import ui.style.*
 import ui.util.produceHighlightState
 
 @Composable
@@ -21,7 +19,7 @@ fun InfoPanel(infoList: List<List<Int>>) {
     )
 
     Column(
-        modifier = Modifier.fillMaxHeight(),
+        modifier = Modifier.fillMaxHeight().testTag(infoPanelTag),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
