@@ -1,6 +1,10 @@
 package model
 
 import androidx.compose.ui.graphics.Color
+import ui.style.clubSvgPath
+import ui.style.diamondSvgPath
+import ui.style.heartSvgPath
+import ui.style.spadeSvgPath
 
 enum class Suit(
     val abbreviation: String,
@@ -8,10 +12,10 @@ enum class Suit(
     val svgPath: String,
     val color: Color
 ) {
-    CLUB("C", "Suit of clubs", "club.svg", Color.Black),
-    DIAMOND("D", "Suit of diamonds", "diamond.svg", Color.Red),
-    HEART("H", "Suit of hearts", "heart.svg", Color.Red),
-    SPADE("S", "Suit of spades", "spade.svg", Color.Black);
+    CLUB("C", "Suit of clubs", clubSvgPath, Color.Black),
+    DIAMOND("D", "Suit of diamonds", diamondSvgPath, Color.Red),
+    HEART("H", "Suit of hearts", heartSvgPath, Color.Red),
+    SPADE("S", "Suit of spades", spadeSvgPath, Color.Black);
 
     companion object {
         fun fromChar(char: String): Suit? = values().find { it.abbreviation == char }

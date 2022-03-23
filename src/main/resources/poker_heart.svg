@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+    <path
+            id="poker_heart"
+            fill="red"
+            d="M 0 10 A 10 10, 0 0 1, 20 10 A 10 10, 0 0 1, 40 10 C 40 20, 20 35, 20 40 C 20 35, 0 20, 0 10 Z"
+    />
+    <desc>"Poker suit heart symbol"</desc>
+</svg>

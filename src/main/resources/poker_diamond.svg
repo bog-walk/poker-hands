@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+    <path
+            id="poker_diamond"
+            fill="red"
+            d="M 0 20 Q 13 13, 20 0 Q 27 13, 40 20 Q 27 27, 20 40 Q 13 27, 0 20 Z"
+    />
+    <desc>"Poker suit diamond symbol"</desc>
+</svg>

@@ -54,7 +54,7 @@ fun PokerCard(card: Card, highlight: Color) {
             Icon(
                 painter = painterResource(card.suit.svgPath),
                 contentDescription = card.suit.description,
-                modifier = Modifier.size(iconSize)
+                modifier = Modifier.size(cardSuitSize)
             )
         }
     }

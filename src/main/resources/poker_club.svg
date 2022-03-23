@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+    <path
+            id="poker_club"
+            fill="black"
+            d="M 18.5 30 A 10 9, 0 1 1, 16 17 A 9 9, 0 1 1, 24 17 A 10 9, 0 1 1, 21.5 30 Q 20 37, 27 40 L 13 40 Q 20 37, 18.5 30 Z"/>
+    <desc>"Poker suit club symbol"</desc>
+</svg>

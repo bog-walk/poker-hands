@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+    <defs>
+        <path
+                id="poker_heart"
+                fill="red"
+                d="M 0 10 A 10 10, 0 0 1, 20 10 A 10 10, 0 0 1, 40 10 C 40 20, 20 35, 20 40 C 20 35, 0 20, 0 10 Z"
+        />
+        <path
+                id="poker_diamond"
+                fill="red"
+                d="M 0 20 Q 13 13, 20 0 Q 27 13, 40 20 Q 27 27, 20 40 Q 13 27, 0 20 Z"
+        />
+        <path
+                id="poker_spade"
+                fill="black"
+                d="M 18.5 30 A 10 10, 0 0 1, 0 25 C 0 10, 20 5, 20 0 C 20 5, 40 10, 40 25 A 10 10, 0 0 1, 21.5 30 Q 20 37, 27 40 L 13 40 Q 20 37, 18.5 30 Z"/>
+        <path
+                id="poker_club"
+                fill="black"
+                d="M 18.5 30 A 10 9, 0 1 1, 16 17 A 9 9, 0 1 1, 24 17 A 10 9, 0 1 1, 21.5 30 Q 20 37, 27 40 L 13 40 Q 20 37, 18.5 30 Z"/>
+    </defs>
+    <g id="poker_icon">
+        <use xlink:href="#poker_heart" x="0" y="0" transform="scale(0.3)"/>
+        <use xlink:href="#poker_club" x="40" y="0" transform="scale(0.3)"/>
+        <use xlink:href="#poker_spade" x="0" y="40" transform="scale(0.3)"/>
+        <use xlink:href="#poker_diamond" x="40" y="40" transform="scale(0.3)"/>
+    </g>
+</svg>

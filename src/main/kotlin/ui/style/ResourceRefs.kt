@@ -10,6 +10,11 @@ const val cardSemanticsDescr = "was dealt"
 const val infoPanelTag = "rank titles"
 const val playerRowTag = "player row"
 
+const val heartSvgPath = "poker_heart.svg"
+const val diamondSvgPath = "poker_diamond.svg"
+const val clubSvgPath = "poker_club.svg"
+const val spadeSvgPath = "poker_spade.svg"
+
 val windowWidth = 950.dp
 val windowHeight = 650.dp
 val headerFooterWidth = 550.dp
@@ -17,6 +22,7 @@ val componentPadding = 15.dp
 val playerRowPadding = 25.dp
 val iconSize = 35.dp
 val playerOptionsWidth = 150.dp
+val cardSuitSize = 40.dp
 val cardPadding = 10.dp
 val cardWidth = 100.dp
 val cardHeight = 140.dp
@@ -28,10 +34,10 @@ const val hotStreakDuration = 800
 const val infoAnimDuration = 500
 const val highlightDelay = 2000L
 
-const val pokerIcon = "heart_black_24.png"
+const val pokerIcon = "poker_icon.svg"
 
-const val hotStreakIcon = "hot_streak.svg"
+const val hotStreakIcon = "materials_fire_icon.svg"
 const val hotStreakDescr = "Hot streak icon"
 
-const val infoIcon = "info.svg"
+const val infoIcon = "materials_help_icon.svg"
 const val infoDescr = "Information icon"

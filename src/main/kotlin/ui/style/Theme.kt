@@ -29,7 +29,7 @@ private val PokerRed = Color(0xfffca5a5)
 private val PokerGreen = Color(0xffd4fa81)
 private val PokerYellow = Color(0xfffde047)
 
-private val PokerColors = darkColors(
+val PokerColors = darkColors(
     primary = PokerBlue,
     secondary = PokerGreen,
     secondaryVariant = PokerYellow,
@@ -46,7 +46,7 @@ private val PokerColors = darkColors(
 private val PokerTypography = Typography(
     defaultFontFamily = FontFamily.Monospace,
     h4 = TextStyle(
-        fontSize = 34.sp,
+        fontSize = 37.sp,
         fontWeight = FontWeight.Normal,
         letterSpacing = 0.5.sp,
         textAlign = TextAlign.Center,
