@@ -64,7 +64,7 @@ private fun PickButton(
     ) {
         Text(
             text = "$playerButtonText${(player.ordinal + 1)}",
-            style = PokerHandsTheme.typography.button
+            style = MaterialTheme.typography.button
         )
     }
 }
@@ -88,9 +88,9 @@ private fun InfoButton(
             painterResource(infoIcon),
             contentDescription = infoDescr,
             tint = when (choseCorrectly) {
-                Choice.CORRECT -> PokerHandsTheme.colors.secondary
-                Choice.INCORRECT -> PokerHandsTheme.colors.error
-                Choice.NONE -> PokerHandsTheme.colors.surface
+                Choice.CORRECT -> MaterialTheme.colors.secondary
+                Choice.INCORRECT -> MaterialTheme.colors.error
+                Choice.NONE -> MaterialTheme.colors.surface
             }
         )
     }
@@ -107,13 +107,13 @@ private fun getButtonColors(
     } else {
         if (isCorrectChoice == Choice.CORRECT) {
             ButtonDefaults.buttonColors(
-                disabledBackgroundColor = PokerHandsTheme.colors.secondary.copy(alpha = 0.12f)
-                    .compositeOver(PokerHandsTheme.colors.surface)
+                disabledBackgroundColor = MaterialTheme.colors.secondary.copy(alpha = 0.12f)
+                    .compositeOver(MaterialTheme.colors.surface)
             )
         } else {
             ButtonDefaults.buttonColors(
-                disabledBackgroundColor = PokerHandsTheme.colors.error.copy(alpha = 0.12f)
-                    .compositeOver(PokerHandsTheme.colors.surface)
+                disabledBackgroundColor = MaterialTheme.colors.error.copy(alpha = 0.12f)
+                    .compositeOver(MaterialTheme.colors.surface)
             )
         }
     }

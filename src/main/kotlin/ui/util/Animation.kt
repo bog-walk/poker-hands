@@ -1,11 +1,11 @@
 package ui.util
 
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.graphics.Color
 import kotlinx.coroutines.delay
-import ui.style.PokerHandsTheme
 
 @Composable
 fun produceHighlightState(
@@ -24,8 +24,8 @@ fun produceHighlightState(
             for (nested in key) {
                 value = nested.map { num ->
                     when (num) {
-                        -1 -> PokerHandsTheme.colors.error
-                        1 -> PokerHandsTheme.colors.secondary
+                        -1 -> MaterialTheme.colors.error
+                        1 -> MaterialTheme.colors.secondary
                         else -> defaultColor
                     }
                 }

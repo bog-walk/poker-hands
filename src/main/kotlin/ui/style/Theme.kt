@@ -11,10 +11,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-private val PokerBlue = Color(0xff8197fa)
-private val PokerRed = Color(0xfffaa881)
+// original palette
+//private val PokerBlue = Color(0xff8197fa)
+//private val PokerRed = Color(0xfffaa881)
+//private val PokerGreen = Color(0xffd4fa81)
+//private val PokerYellow = Color(0xfffae481)
+// 200-only palette (requires DarkGray on primary)
+//private val PokerBlue = Color(0xffbfdbfe)
+//private val PokerRed = Color(0xfffecaca)
+//private val PokerGreen = Color(0xffd9f99d)
+//private val PokerYellow = Color(0xfffef08a)
+// 300-only palette
+private val PokerBlue = Color(0xff93c5fd)
+private val PokerRed = Color(0xfffca5a5)
+// 300-green might be too saturated
+//private val PokerGreen = Color(0xffbef264)
 private val PokerGreen = Color(0xffd4fa81)
-private val PokerYellow = Color(0xfffae481)
+private val PokerYellow = Color(0xfffde047)
 
 private val PokerColors = darkColors(
     primary = PokerBlue,
@@ -55,12 +68,6 @@ private val PokerShapes = Shapes(
     small = RoundedCornerShape(50),
     medium = RoundedCornerShape(4.dp)
 )
-
-object PokerHandsTheme {
-    val colors = PokerColors
-    val typography = PokerTypography
-    val shapes = PokerShapes
-}
 
 @Composable
 fun PokerHandsTheme(

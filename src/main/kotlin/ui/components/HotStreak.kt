@@ -5,6 +5,7 @@ import androidx.compose.animation.core.*
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
@@ -21,8 +22,8 @@ fun HotStreak(streak: Int) {
         transitionSpec = { tween(hotStreakDuration, easing = FastOutSlowInEasing) }
     ) { count ->
         when (count) {
-            0 -> PokerHandsTheme.colors.onError
-            else -> PokerHandsTheme.colors.secondaryVariant
+            0 -> MaterialTheme.colors.onError
+            else -> MaterialTheme.colors.secondaryVariant
         }
     }
     // AnimatedContent below uses this as targetState to force animation cycle through all
@@ -68,7 +69,7 @@ fun HotStreak(streak: Int) {
             Text(
                 text = targetStreak.toString(),
                 color = streakColor,
-                style = PokerHandsTheme.typography.body1
+                style = MaterialTheme.typography.body1
             )
         }
     }

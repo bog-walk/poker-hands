@@ -2,6 +2,7 @@ package ui.components
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
@@ -15,7 +16,7 @@ import ui.util.produceHighlightState
 @Composable
 fun InfoPanel(infoList: List<List<Int>>) {
     val highlights = produceHighlightState(
-        10, highlightDelay, infoList, PokerHandsTheme.colors.onError
+        10, highlightDelay, infoList, MaterialTheme.colors.onError
     )
 
     Column(
@@ -32,7 +33,7 @@ fun InfoPanel(infoList: List<List<Int>>) {
                         vertical = cardPadding
                     ),
                     color = highlights.value[rank.ordinal],
-                    style = PokerHandsTheme.typography.body1
+                    style = MaterialTheme.typography.body1
                 )
             }
         }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,7 +29,7 @@ fun PokerCard(card: Card, highlight: Color) {
                 contentDescription = "$card"
                 stateDescription = cardSemanticsDescr
             },
-        backgroundColor = PokerHandsTheme.colors.onSurface,
+        backgroundColor = MaterialTheme.colors.onSurface,
         contentColor = card.suit.color,
         border = when (highlight) {
             Color.Transparent -> null
@@ -47,7 +48,7 @@ fun PokerCard(card: Card, highlight: Color) {
         ) {
             Text(
                 text = card.value,
-                style = PokerHandsTheme.typography.h4
+                style = MaterialTheme.typography.h4
             )
             Spacer(modifier = Modifier.height(intraSpacer))
             Icon(
@@ -63,10 +64,13 @@ fun PokerCard(card: Card, highlight: Color) {
 @Composable
 fun PokerCardPreview() {
     PokerHandsTheme {
-        val color = PokerHandsTheme.colors.secondary
         Row {
             for ((i, sample) in previewCards.withIndex()) {
-                PokerCard(sample, if (i == 0 || i == 4) color else Color.Transparent)
+                PokerCard(sample, when (i) {
+                    0 -> MaterialTheme.colors.secondary
+                    4 -> MaterialTheme.colors.error
+                    else -> Color.Transparent
+                })
             }
         }
     }
