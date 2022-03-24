@@ -10,11 +10,6 @@ const val cardSemanticsDescr = "was dealt"
 const val infoPanelTag = "rank titles"
 const val playerRowTag = "player row"
 
-const val heartSvgPath = "poker_heart.svg"
-const val diamondSvgPath = "poker_diamond.svg"
-const val clubSvgPath = "poker_club.svg"
-const val spadeSvgPath = "poker_spade.svg"
-
 val windowWidth = 950.dp
 val windowHeight = 650.dp
 val headerFooterWidth = 550.dp

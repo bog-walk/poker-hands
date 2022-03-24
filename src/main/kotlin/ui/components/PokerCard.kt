@@ -16,7 +16,7 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.stateDescription
 import model.Card
-import model.previewCards
+import model.Suit
 import ui.style.*
 
 @Composable
@@ -30,7 +30,10 @@ fun PokerCard(card: Card, highlight: Color) {
                 stateDescription = cardSemanticsDescr
             },
         backgroundColor = MaterialTheme.colors.onSurface,
-        contentColor = card.suit.color,
+        contentColor = when (card.suit) {
+            Suit.CLUB, Suit.SPADE -> Color.Black
+            Suit.DIAMOND, Suit.HEART -> Color.Red
+        },
         border = when (highlight) {
             Color.Transparent -> null
             else -> BorderStroke(cardBorder, highlight)
@@ -63,6 +66,11 @@ fun PokerCard(card: Card, highlight: Color) {
 @Preview
 @Composable
 fun PokerCardPreview() {
+    val previewCards = listOf(
+        Card(14, "A", Suit.HEART), Card(3, "3", Suit.DIAMOND),
+        Card(13, "K", Suit.HEART), Card(10, "10", Suit.SPADE),
+        Card(14, "A", Suit.CLUB),
+    )
     PokerHandsTheme {
         Row {
             for ((i, sample) in previewCards.withIndex()) {

@@ -9,7 +9,7 @@ enum class Choice {
 
 class PokerAppState : AppState {
     private var hands: Pair<CardHand, CardHand> = deal()
-    override var expectedWinner = findWinner(hands)
+    override var expectedWinner = findWinner(hands.first, hands.second)
 
     override var hand1 by mutableStateOf(hands.first)
     override var hand2 by mutableStateOf(hands.second)
@@ -24,7 +24,7 @@ class PokerAppState : AppState {
     override var infoPanelHighlights by mutableStateOf(emptyList<List<Int>>())
 
     override fun explainWinner() {
-        val rankInfo = generateRankInfo(hands)
+        val rankInfo = generateRankInfo(hands.first, hands.second)
         hand1Highlights = rankInfo.map { it.first }
         hand2Highlights = rankInfo.map { it.second }
         infoPanelHighlights = rankInfo.map { it.third }
@@ -32,7 +32,7 @@ class PokerAppState : AppState {
 
     override fun reset() {
         hands = deal()
-        expectedWinner = findWinner(hands)
+        expectedWinner = findWinner(hands.first, hands.second)
         hand1 = hands.first
         hand2 = hands.second
         chosenHand = Winner.UNDECIDED

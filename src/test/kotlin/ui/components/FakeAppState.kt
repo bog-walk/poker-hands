@@ -11,7 +11,7 @@ class FakeAppState(
     private val hands: List<Pair<CardHand, CardHand>>
 ) : AppState {
     var currentIndex = 0
-    override var expectedWinner = findWinner(hands[currentIndex])
+    override var expectedWinner = findWinner(hands[currentIndex].first, hands[currentIndex].second)
     override var hand1 by mutableStateOf(hands[currentIndex].first)
     override var hand2 by mutableStateOf(hands[currentIndex].second)
 
@@ -25,7 +25,7 @@ class FakeAppState(
     override var infoPanelHighlights by mutableStateOf(emptyList<List<Int>>())
 
     override fun explainWinner() {
-        val rankInfo = generateRankInfo(hands[currentIndex])
+        val rankInfo = generateRankInfo(hands[currentIndex].first, hands[currentIndex].second)
         hand1Highlights = rankInfo.map { it.first }
         hand2Highlights = rankInfo.map { it.second }
         infoPanelHighlights = rankInfo.map { it.third }
@@ -33,7 +33,7 @@ class FakeAppState(
 
     override fun reset() {
         currentIndex++
-        expectedWinner = findWinner(hands[currentIndex])
+        expectedWinner = findWinner(hands[currentIndex].first, hands[currentIndex].second)
         hand1 = hands[currentIndex].first
         hand2 = hands[currentIndex].second
         chosenHand = Winner.UNDECIDED

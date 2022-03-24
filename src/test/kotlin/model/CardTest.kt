@@ -6,6 +6,11 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 internal class CardTest {
+    /**
+     * The createComposeRule() used in the test.ui package requires JUnit4, so a static approach
+     * is instead taken to share a test resource, instead of using JUnit5's
+     * @TestInstance(Lifecycle.PER_CLASS).
+     */
     companion object {
         lateinit var entireDeck: List<Card>
 
@@ -19,12 +24,22 @@ internal class CardTest {
     }
 
     @Test
+    fun `toString() correct`() {
+        for (i in 9..52 step 13) {
+            val expected1 = "9 of ${Suit.values()[i / 13]}S"
+            val expected2 = "JACK of ${Suit.values()[i / 13]}S"
+            assertEquals(expected1, entireDeck[i-2].toString())
+            assertEquals(expected2, entireDeck[i].toString())
+        }
+    }
+
+    @Test
     fun `getCard correct with all Integer inputs`() {
-        for (id in 1..52) {
-            if (id % 13 == 1) {
-                assertEquals(entireDeck[id + 11], getCard(id))
+        for (number in 1..52) {
+            if (number % 13 == 1) {
+                assertEquals(entireDeck[number + 11], getCard(number))
             } else {
-                assertEquals(entireDeck[id - 2], getCard(id))
+                assertEquals(entireDeck[number - 2], getCard(number))
             }
         }
     }

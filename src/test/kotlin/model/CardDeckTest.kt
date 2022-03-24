@@ -8,17 +8,24 @@ import org.junit.BeforeClass
 import kotlin.test.*
 
 internal class CardDeckTest {
+    /**
+     * The createComposeRule() used in the test.ui package requires JUnit4, so a static approach
+     * is instead taken to share test resources, instead of using JUnit5's
+     * @TestInstance(Lifecycle.PER_CLASS).
+     */
     companion object {
-        lateinit var samples: List<Triple<CardHand, CardHand, Int>>
-        lateinit var sampleInfo: List<Triple<CardHand, CardHand, List<Triple<List<Int>, List<Int>, List<Int>>>>>
+        lateinit var samples: List<Triple<CardHand, CardHand, Winner>>
+        lateinit var sampleInfo: List<Triple<CardHand, CardHand, List<RankInfo>>>
 
         @BeforeClass
         @JvmStatic
-        fun setUP() {
+        fun setUp() {
             samples = getTestResource(
                 "src/test/resources/poker_hands_sample"
             ).map(::convertTestGame)
-            sampleInfo = convertTestInfo(getTestResource("src/test/resources/poker_hands_info"))
+            sampleInfo = convertTestInfo(
+                getTestResource("src/test/resources/poker_hands_info")
+            )
         }
     }
 
@@ -53,12 +60,11 @@ internal class CardDeckTest {
 
     @Test
     fun `findWinner correct for huge samples resource`() {
-        val winOptions = Winner.values()
-        val expectedWins = intArrayOf(384, 634, 7) // player1, player2, tie
+        val expectedWins = intArrayOf(397, 641, 7) // player1, player2, tie
         val actualWins = IntArray(3)
         for ((i, sample) in samples.withIndex()) {
-            val winner = findWinner(sample.first to sample.second)
-            assertEquals(winOptions[sample.third], winner, "Error at line ${i+1}")
+            val winner = findWinner(sample.first, sample.second)
+            assertEquals(sample.third, winner, "Error at line ${i+1}")
             when (winner) {
                 Winner.PLAYER1 -> actualWins[0]++
                 Winner.PLAYER2 -> actualWins[1]++
@@ -75,8 +81,8 @@ internal class CardDeckTest {
             val hand1 = sample.first
             val hand2 = sample.second
             val expectedInfo = sample.third
-            val actualInfo = generateRankInfo(hand1 to hand2)
-            assertEquals(expectedInfo.size, actualInfo.size)
+            val actualInfo = generateRankInfo(hand1, hand2)
+            assertEquals(expectedInfo.size, actualInfo.size, "Error with ${hand1.cards}")
             for ((i, expected) in expectedInfo.withIndex()) {
                 assertContentEquals(expected.first, actualInfo[i].first)
                 assertContentEquals(expected.second, actualInfo[i].second)

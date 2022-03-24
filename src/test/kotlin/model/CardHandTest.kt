@@ -8,6 +8,11 @@ import kotlin.test.assertContentEquals
 import kotlin.test.assertTrue
 
 internal class CardHandTest {
+    /**
+     * The createComposeRule() used in the test.ui package requires JUnit4, so a static approach
+     * is instead taken to share test resources, instead of using JUnit5's
+     * @TestInstance(Lifecycle.PER_CLASS).
+     */
     companion object {
         lateinit var exampleHands: Map<Rank, CardHand>
         lateinit var examplesRanked: Map<Rank, List<List<Int>>>
@@ -35,7 +40,7 @@ internal class CardHandTest {
     @Test
     fun `compareTo orders all rank examples correctly`() {
         val expected = Rank.values().reversed()
-        val actual = exampleHands.keys.sortedDescending()
+        val actual = exampleHands.keys.sortedByDescending { exampleHands[it] }
         assertContentEquals(expected, actual)
     }
 

@@ -7,25 +7,25 @@ class CardHand(val cards: List<Card>) : Comparable<CardHand> {
     val ranked: List<List<Int>> = rankHand()
 
     /**
-     * Normalise hand into a 15-element List, with index 0 representing the presence of a flush
-     * (0 = false, 1 = true) and indices 1 to 14 representing the amount of cards with a pip
-     * equal to the index.
+     * Ranks a hand of Cards based on standard poker order (detailed in ascending order in the enum
+     * class Rank) & returns a list with each index representing a rank, with a nested list of
+     * potential high cards at index 0.
      *
-     * N.B. Aces are counted twice, as both high (index = 14) and low (index = 1).
+     * If the element at an index is empty, then no cards exist for that rank. Otherwise, all
+     * existing ranks are represented as their highest relevant card to allow potential ties
+     * between hands to be broken without needing to re-rank the entire hand.
      *
-     * e.g. [0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0] represents a hand with 2 fives, 1 six,
-     * 1 seven, and 1 King, without a suit flush.
+     *      e.g. ["4C", "4D", "4S", "9S", "9D"] is represented as:
+     *      [[], [9], [], [4], [], [], [4], [], [], []], evaluated from RtL ->
+     *      Full House with 3 Fours, then 3 Fours, then 2 Nines.
+     *
+     *      ["3D", "6D", "7H", "QD", "QS"] is represented as:
+     *      [[7, 6, 3], [12], [], [], [], [], [], [], [], []], evaluated from RtL ->
+     *      2 Queens, then High card 7, then 6, then 3.
+     *
+     * N.B. While the returned list must be processed in reverse order when comparisons are made,
+     * the high card list at index 0 is already sorted in descending order.
      */
-    private fun normalise(): List<Int> {
-        val normalised = MutableList(15) { 0 }
-        if (cards.map(Card::suit).toSet().size == 1) normalised[0] = 1
-        for (card in cards) {
-            normalised[card.pip]++
-            if (card.pip == 14) normalised[1]++
-        }
-        return normalised
-    }
-
     private fun rankHand(): List<List<Int>> {
         val ranks = MutableList(10) { emptyList<Int>() }
         val cardCount = normalise()
@@ -45,13 +45,10 @@ class CardHand(val cards: List<Card>) : Comparable<CardHand> {
                 }
                 2 -> {
                     if (pair > 0) {
+                        val previousPair = ranks[Rank.ONE_PAIR.ordinal].single()
                         // give the 2 pair ranking the higher value pair
-                        ranks[Rank.TWO_PAIR.ordinal] = listOf(
-                            maxOf(i, ranks[Rank.ONE_PAIR.ordinal].single())
-                        )
-                        ranks[Rank.ONE_PAIR.ordinal] = listOf(
-                            minOf(i, ranks[Rank.ONE_PAIR.ordinal].single())
-                        )
+                        ranks[Rank.TWO_PAIR.ordinal] = listOf(maxOf(i, previousPair))
+                        ranks[Rank.ONE_PAIR.ordinal] = listOf(minOf(i, previousPair))
                     } else {
                         ranks[Rank.ONE_PAIR.ordinal] = listOf(i)
                         pair = i
@@ -93,6 +90,41 @@ class CardHand(val cards: List<Card>) : Comparable<CardHand> {
         return ranks
     }
 
+    /**
+     * Normalises a list of Cards into a 15-element List, with index 0 representing the presence
+     * of a flush (0 = false, 1 = true) and indices 1 to 14 representing the amount of cards with
+     * a pip equal to the index.
+     *
+     * N.B. Aces are counted twice, as both high (index = 14) and low (index = 1).
+     *
+     *          e.g. [0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0] ->
+     *          a hand with 2 fives, 1 six, 1 seven, and 1 King, without a suit flush.
+     */
+    private fun normalise(): List<Int> {
+        val normalised = MutableList(15) { 0 }
+        if (cards.map(Card::suit).toSet().size == 1) normalised[0] = 1
+        for (card in cards) {
+            normalised[card.pip]++
+            if (card.pip == 14) normalised[1]++
+        }
+        return normalised
+    }
+
+    /**
+     * Some examples to detail rank comparisons:
+     *
+     *      e.g. Hand1: ["4C", "4D", "4S", "9S", "9D"] is represented as:
+     *      [[], [9], [], [4], [], [], [4], [], [], []]
+     *      Hand2: ["9H", "QH", "8H", "TH", "JH"] is represented as:
+     *      [[12, 11, 10, 9, 8], [], [], [], [12], [12], [], [], [12], []]
+     *      Hand2 wins immediately at index[8].
+     *
+     *      e.g. Hand1: ["3D", "6D", "7H", "QD", "QS"] is represented as:
+     *      [[7, 6, 3], [12], [], [], [], [], [], [], [], []]
+     *      Hand2: ["2D", "4C", "7D", "QC", "QH"] is represented as:
+     *      [[7, 4, 2], [12], [], [], [], [], [], [], [], []]
+     *      Hand1 wins at index[0][1] tie-breaker.
+     */
     override fun compareTo(other: CardHand): Int {
         for (i in 9 downTo 1) {
             val thisRank = ranked[i]
@@ -103,12 +135,10 @@ class CardHand(val cards: List<Card>) : Comparable<CardHand> {
             if (thisRank.single() == otherRank.single()) continue
             return if (thisRank.single() < otherRank.single()) -1 else 1
         }
-        for (j in ranked[0].indices) {
+        for (j in ranked[0].indices) { // compare high cards
             if (ranked[0][j] == other.ranked[0][j]) continue
             return if (ranked[0][j] < other.ranked[0][j]) -1 else 1
         }
-        return 0
+        return 0 // a tie
     }
 }
-
-val previewHand = CardHand(previewCards)

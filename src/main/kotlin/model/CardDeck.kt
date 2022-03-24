@@ -1,5 +1,7 @@
 package model
 
+typealias RankInfo = Triple<List<Int>, List<Int>, List<Int>>
+
 fun deal(): Pair<CardHand, CardHand> {
     var hand1: CardHand
     var hand2: CardHand
@@ -15,21 +17,32 @@ fun deal(): Pair<CardHand, CardHand> {
     return hand1 to hand2
 }
 
-fun findWinner(hands: Pair<CardHand, CardHand>): Winner {
-    val (player1Hand, player2Hand) = hands
-    return when {
-        player1Hand < player2Hand -> Winner.PLAYER2
-        player1Hand > player2Hand -> Winner.PLAYER1
+fun findWinner(player1Hand: CardHand, player2Hand: CardHand): Winner {
+    return when (player1Hand.compareTo(player2Hand)) {
+        -1 -> Winner.PLAYER2
+        1 -> Winner.PLAYER1
         else -> Winner.TIE
     }
 }
 
-fun generateRankInfo(
-    hands: Pair<CardHand, CardHand>
-): List<Triple<List<Int>, List<Int>, List<Int>>> {
-    val rankInfo = mutableListOf<Triple<List<Int>, List<Int>, List<Int>>>()
+/**
+ * Returns a list of Triples representing a mapping of each CardHand (size 5), as well as the enum
+ * class Rank list (size 10), for each rank involved in the assessment of the winning hand.
+ *
+ * This Triple will be used to map which Cards & Ranks should be highlighted (& how they should be
+ * highlighted) to visualise each step in the assessment (and/or tie-breakers).
+ *
+ *      e.g. Hand1: ["3D", "6D", "7H", "QD", "QS"], Hand2: ["2D", "4C", "7D", "QC", "QH"]
+ *      1st relevant rank = ONE_PAIR ->
+ *      Triple([0,0,0,1,1], [0,0,0,1,1], [0,1,0,0,0,0,0,0,0,0])
+ *      2nd relevant rank = HIGH_CARD ->
+ *      Triple([0,0,1,0,0], [0,0,1,0,0], [1,0,0,0,0,0,0,0,0,0])
+ *      3rd relevant rank = HIGH_CARD ->
+ *      Triple([0,1,0,0,0], [0,-1,0,0,0], [1,0,0,0,0,0,0,0,0,0])
+ */
+fun generateRankInfo(player1Hand: CardHand, player2Hand: CardHand): List<RankInfo> {
+    val rankInfo = mutableListOf<RankInfo>()
     val allRanks = Rank.values()
-    val (player1Hand, player2Hand) = hands
     val player1Ranked = player1Hand.ranked
     val player2Ranked = player2Hand.ranked
     var r = 9
@@ -71,53 +84,61 @@ fun generateRankInfo(
                 for (i in p1R.indices) {
                     val p1RPip = p1R[i]
                     val p2RPip = p2R[i]
-                    if (p1RPip > p2RPip) {
+                    if (p1RPip == p2RPip) {
                         player1Info = getRankInfo(player1Hand, currentRank, p1RPip)
-                        player2Info = getRankInfo(player2Hand, currentRank, p2RPip, false)
-                        rankInfo.add(Triple(player1Info, player2Info, info))
-                        break@outer
-                    } else if (p2RPip > p1RPip) {
-                        player1Info = getRankInfo(player1Hand, currentRank, p1RPip, false)
                         player2Info = getRankInfo(player2Hand, currentRank, p2RPip)
                         rankInfo.add(Triple(player1Info, player2Info, info))
-                        break@outer
                     } else {
-                        player1Info = getRankInfo(player1Hand, currentRank, p1RPip)
-                        player2Info = getRankInfo(player2Hand, currentRank, p2RPip)
+                        player1Info = getRankInfo(
+                            player1Hand, currentRank, p1RPip, p1RPip > p2RPip
+                        )
+                        player2Info = getRankInfo(
+                            player2Hand, currentRank, p2RPip, p2RPip > p1RPip
+                        )
                         rankInfo.add(Triple(player1Info, player2Info, info))
+                        break@outer
                     }
                 }
+                r--
             } else {
                 player1Info = getRankInfo(player1Hand, currentRank, p1R[0])
                 player2Info = getRankInfo(player2Hand, currentRank, p2R[0])
                 rankInfo.add(Triple(player1Info, player2Info, info))
-            }
-            r = when (r) {
-                4, 5, 8 -> 0
-                6 -> 3
-                else -> r - 1
+                r = if (r == 6) 3 else 0 // else branch only caused by r in [4, 5, 8]
             }
         }
     }
     return rankInfo
 }
 
+/**
+ * Returns a mapping of a CardHand to a list of Integers representing which Cards are involved in
+ * a winning (1) or losing (-1) rank. Cards will be represented as 0 if not involved in the
+ * current rank.
+ *
+ *      e.g. ["3D", "6D", "7H", "QD", "QS"] with current Rank as ONE_PAIR Queen ->
+ *      [0, 0, 0, 1, 1] if this CardHand wins (or ties) this rank.
+ *
+ *      e.g. ["3D", "6D", "7H", "QD", "QS"] with current Rank as HIGH_CARD 7 ->
+ *      [0, 0, -1, 0, 0] if this CardHand loses this rank.
+ */
 private fun getRankInfo(
     hand: CardHand,
     rank: Rank,
-    ranked: Int,
+    rankHigh: Int,
     isHigherRank: Boolean = true
 ): List<Int> {
     val x = if (isHigherRank) 1 else -1
     return when (rank) {
         Rank.HIGH_CARD, Rank.ONE_PAIR, Rank.THREE_KIND, Rank.FOUR_KIND -> {
-            hand.cards.map { if (it.pip == ranked) x else 0 }
+            hand.cards.map { if (it.pip == rankHigh) x else 0 }
         }
         Rank.TWO_PAIR -> {
-            // find non-pair card using bitwise xor
+            // find sole non-pair (repeated) card using bitwise XOR
             val single = hand.cards.map(Card::pip).reduce { acc, i -> acc xor i }
             hand.cards.map { if (it.pip != single) x else 0 }
         }
+        // all remaining ranks involve all 5 cards
         else -> List(5) { x }
     }
 }
