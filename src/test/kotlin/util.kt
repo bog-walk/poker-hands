@@ -1,6 +1,8 @@
 import model.*
 import java.io.File
 
+typealias TestPlay = Pair<CardHand, CardHand>
+
 fun getTestResource(
     filePath: String,
     lineTrim: CharArray = charArrayOf(' ', '\n'),
@@ -15,7 +17,7 @@ fun getTestResource(
     return resource
 }
 
-fun Pair<CardHand, CardHand>.checkValid(): Set<Card>? {
+fun TestPlay.checkValid(): Set<Card>? {
     val uniqueCards = first.cards.toSet() + second.cards.toSet()
     return if (uniqueCards.size == 10) uniqueCards else null
 }
@@ -52,24 +54,24 @@ fun convertTestRanked(input: String): List<List<Int>> {
  * The final element in the input list represents the expected winner as an integer in [0, 2],
  * which corresponds to the ordinal positions of the enum class Winner.
  */
-fun convertTestGame(input: List<String>): Triple<CardHand, CardHand, Winner> {
+fun convertTestGame(input: List<String>): Pair<TestPlay, Winner> {
     val player1 = CardHand(input.slice(0..4).map(::getCard))
     val player2 = CardHand(input.slice(5..9).map(::getCard))
     val winner = Winner.values()[input.last().toInt()]
-    return Triple(player1, player2, winner)
+    return Pair(player1 to player2, winner)
 }
 
 /**
  * Converts test resource into 2 CardHand instances for generation of rank info.
  *
- * The final element in the returned Triple represents the list of expected Triples of the
+ * The 2nd component in the returned Pair represents the list of expected Triples of the
  * involved cards in each hand, as well as the involved rank titles, for each relevant rank in
  * a play.
  */
 fun convertTestInfo(
     input: List<List<String>>
-): List<Triple<CardHand, CardHand, List<RankInfo>>> {
-    val sampleInfo = mutableListOf<Triple<CardHand, CardHand, List<RankInfo>>>()
+): List<Pair<TestPlay, List<RankInfo>>> {
+    val sampleInfo = mutableListOf<Pair<TestPlay, List<RankInfo>>>()
     var i = 0
     while (i < input.size) {
         val player1 = CardHand(input[i].slice(0..4).map(::getCard))
@@ -81,7 +83,7 @@ fun convertTestInfo(
             val rankTitles = input[i+3][j].split(",").map(String::toInt)
             info.add(Triple(player1Ranks, player2Ranks, rankTitles))
         }
-        sampleInfo.add(Triple(player1, player2, info))
+        sampleInfo.add(Pair(player1 to player2, info))
         i += 4
     }
     return sampleInfo

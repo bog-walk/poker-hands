@@ -2,9 +2,7 @@ package ui.components
 
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import model.Card
 import model.CardHand
-import model.Suit
 import model.getCard
 import org.junit.BeforeClass
 import org.junit.Rule
@@ -13,13 +11,12 @@ import ui.style.dealButtonText
 import ui.style.infoDescr
 import ui.style.playerButtonText
 import ui.style.playerRowTag
-import ui.util.AppState
 import kotlin.test.Test
 
 internal class PokerAppTest {
     companion object {
         private lateinit var testDeck: List<Pair<CardHand, CardHand>>
-        private lateinit var testState: AppState
+        private lateinit var testDealer: TestDealer
 
         @BeforeClass
         @JvmStatic
@@ -39,7 +36,7 @@ internal class PokerAppTest {
                 CardHand(it.map { s -> getCard(s) })
             }
             testDeck = fakeHands1.zip(fakeHands2)
-            testState = FakeAppState(testDeck)
+            testDealer = TestDealer(testDeck)
         }
     }
 
@@ -49,7 +46,7 @@ internal class PokerAppTest {
     @Test
     fun `PokerApp runs correctly`() {
         composeTestRule.setContent {
-            PokerHandsApp(testState)
+            PokerHandsApp()
         }
         composeTestRule.onNodeWithText(dealButtonText).assertIsNotEnabled()
         composeTestRule.onNodeWithText("${playerButtonText}1").assertIsEnabled()
@@ -58,8 +55,6 @@ internal class PokerAppTest {
         composeTestRule.onAllNodesWithTag(playerRowTag).assertCountEquals(2)
         // choose first correctly
         composeTestRule.onNodeWithText("${playerButtonText}1").performClick()
-        
-
     }
 }
 

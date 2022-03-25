@@ -8,12 +8,11 @@ import androidx.compose.ui.Modifier
 import model.Winner
 import ui.components.*
 import ui.style.PokerHandsTheme
-import ui.util.AppState
 import ui.util.PokerAppState
 
 @Composable
 @Preview
-fun PokerHandsApp(state: AppState = PokerAppState()) {
+fun PokerHandsApp(state: PokerAppState = PokerAppState()) {
     val pokerAppState = remember { state }
 
     Row(
