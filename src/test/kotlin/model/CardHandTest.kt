@@ -12,8 +12,8 @@ internal class CardHandTest {
      * @TestInstance(Lifecycle.PER_CLASS).
      */
     companion object {
-        lateinit var exampleHands: Map<Rank, CardHand>
-        lateinit var examplesRanked: Map<Rank, List<List<Int>>>
+        private lateinit var exampleHands: Map<Rank, CardHand>
+        private lateinit var examplesRanked: Map<Rank, List<List<Int>>>
 
         @BeforeClass
         @JvmStatic

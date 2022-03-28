@@ -10,12 +10,12 @@ internal class DealerTest {
      * @TestInstance(Lifecycle.PER_CLASS).
      */
     companion object {
-        lateinit var samples: List<Pair<TestPlay, Winner>>
-        lateinit var samplePlays: List<TestPlay>
-        lateinit var sampleInfo: List<Pair<TestPlay, List<RankInfo>>>
-        lateinit var sampleInfoPlays: List<TestPlay>
-        lateinit var sampleTies: List<Pair<TestPlay, Winner>>
-        lateinit var sampleTiePlays: List<TestPlay>
+        private lateinit var samples: List<Pair<TestPlay, Winner>>
+        private lateinit var samplePlays: List<TestPlay>
+        private lateinit var sampleInfo: List<Pair<TestPlay, List<RankInfo>>>
+        private lateinit var sampleInfoPlays: List<TestPlay>
+        private lateinit var sampleTies: List<Pair<TestPlay, Winner>>
+        private lateinit var sampleTiePlays: List<TestPlay>
 
         @BeforeClass
         @JvmStatic

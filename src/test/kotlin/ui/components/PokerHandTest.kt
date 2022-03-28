@@ -26,7 +26,7 @@ internal class PokerHandTest {
             PokerHand(previewHand, emptyList())
         }
         composeTestRule
-            .onAllNodes(hasTestTag(CARD_TEST_TAG))
+            .onAllNodesWithTag(CARD_TEST_TAG)
             .assertCountEquals(5)
             .assertAll(isNotFocusable() and !isSelectable())
     }

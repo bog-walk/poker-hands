@@ -11,7 +11,7 @@ internal class CardTest {
      * @TestInstance(Lifecycle.PER_CLASS).
      */
     companion object {
-        lateinit var entireDeck: List<Card>
+        private lateinit var entireDeck: List<Card>
 
         @BeforeClass
         @JvmStatic
