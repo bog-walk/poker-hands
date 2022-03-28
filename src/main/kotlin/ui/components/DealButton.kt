@@ -22,7 +22,7 @@ fun DealButton(choiceMade: Boolean, onDealRequest: () -> Unit) {
             enabled = choiceMade
         ) {
             Text(
-                text = dealButtonText,
+                text = DEAL_BUTTON_TEXT,
                 style = MaterialTheme.typography.button
             )
         }

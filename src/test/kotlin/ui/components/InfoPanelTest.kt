@@ -4,7 +4,7 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import org.junit.Rule
 import org.junit.Test
-import ui.style.infoPanelTag
+import ui.style.INFO_PANEL_TEST_TAG
 
 internal class InfoPanelTest {
     @get:Rule
@@ -16,7 +16,7 @@ internal class InfoPanelTest {
             InfoPanel(emptyList())
         }
         composeTestRule
-            .onNodeWithTag(infoPanelTag)
+            .onNodeWithTag(INFO_PANEL_TEST_TAG)
             .onChildren()
             .assertCountEquals(10)
     }

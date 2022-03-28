@@ -8,8 +8,8 @@ fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
         state = WindowState(size = DpSize(windowWidth, windowHeight)),
-        title = windowTitle,
-        icon = painterResource(pokerIcon),
+        title = WINDOW_TITLE,
+        icon = painterResource(POKER_HANDS_ICON),
         resizable = false
     ) {
         PokerHandsTheme {

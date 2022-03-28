@@ -39,7 +39,9 @@ fun PlayerOptions(
             visible = chosenHand == player,
             modifier = Modifier.zIndex(0f),
             enter = slideInHorizontally(
-                animationSpec = tween(infoAnimDuration, easing = LinearOutSlowInEasing)
+                animationSpec = tween(
+                    durationMillis = INFO_ENTER_ANIM_DURATION, easing = LinearOutSlowInEasing
+                )
             ) { contentWidth ->
                 -2 * contentWidth
             }
@@ -63,35 +65,8 @@ private fun PickButton(
         colors = getButtonColors(player, chosenHand, isCorrectChoice)
     ) {
         Text(
-            text = "$playerButtonText${(player.ordinal + 1)}",
+            text = "$PLAYER_BUTTON_TEXT${(player.ordinal + 1)}",
             style = MaterialTheme.typography.button
-        )
-    }
-}
-
-@Composable
-private fun InfoButton(
-    choseCorrectly: Choice,
-    onInfoRequest: () -> Unit
-) {
-    var alreadyClicked by remember { mutableStateOf(false) }
-
-    IconButton(
-        onClick = {
-            alreadyClicked = true
-            onInfoRequest()
-        },
-        modifier = Modifier.padding(start = componentPadding).requiredSize(iconSize),
-        enabled = !alreadyClicked
-    ) {
-        Icon(
-            painterResource(infoIcon),
-            contentDescription = infoDescr,
-            tint = when (choseCorrectly) {
-                Choice.CORRECT -> MaterialTheme.colors.secondary
-                Choice.INCORRECT -> MaterialTheme.colors.error
-                Choice.NONE -> MaterialTheme.colors.surface
-            }
         )
     }
 }
@@ -103,6 +78,8 @@ private fun getButtonColors(
     isCorrectChoice: Choice
 ): ButtonColors {
     return if (player != chosenHand) {
+        // user either has not yet picked a winning hand (enabled button defaults)
+        // or user picked the other hand (disabled button defaults)
         ButtonDefaults.buttonColors()
     } else {
         if (isCorrectChoice == Choice.CORRECT) {
@@ -116,6 +93,34 @@ private fun getButtonColors(
                     .compositeOver(MaterialTheme.colors.surface)
             )
         }
+    }
+}
+
+@Composable
+private fun InfoButton(
+    choseCorrectly: Choice,
+    onInfoRequest: () -> Unit
+) {
+    // InfoButton can only be clicked once to produce highlighted states
+    var alreadyClicked by remember { mutableStateOf(false) }
+
+    IconButton(
+        onClick = {
+            alreadyClicked = true
+            onInfoRequest()
+        },
+        modifier = Modifier.padding(start = componentPadding).requiredSize(iconSize),
+        enabled = !alreadyClicked
+    ) {
+        Icon(
+            painterResource(INFO_ICON),
+            contentDescription = INFO_DESCRIPTION,
+            tint = when (choseCorrectly) {
+                Choice.CORRECT -> MaterialTheme.colors.secondary // green
+                Choice.INCORRECT -> MaterialTheme.colors.error // red
+                Choice.NONE -> MaterialTheme.colors.surface // will not be visible
+            }
+        )
     }
 }
 

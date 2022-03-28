@@ -1,7 +1,6 @@
-package ui.components
+package model
 
 import TestPlay
-import model.Dealer
 
 class TestDealer(
     private val hands: List<TestPlay>

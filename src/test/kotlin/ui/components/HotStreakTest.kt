@@ -5,7 +5,7 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import org.junit.Rule
 import org.junit.Test
-import ui.style.hotStreakDescr
+import ui.style.STREAK_DESCRIPTION
 
 internal class HotStreakTest {
     @get:Rule
@@ -17,11 +17,11 @@ internal class HotStreakTest {
             HotStreak(0)
         }
         composeTestRule
-            .onNodeWithContentDescription(hotStreakDescr)
-            .assertExists()
+            .onNodeWithContentDescription(STREAK_DESCRIPTION)
+            .assertExists("HotStreak icon not found")
         composeTestRule
             .onNodeWithText("0")
-            .assertExists()
+            .assertExists("HotStreak counter not found")
     }
 
     @Test
@@ -32,14 +32,11 @@ internal class HotStreakTest {
         }
         composeTestRule
             .onNodeWithText(streak.value.toString())
-            .assertExists()
+            .assertExists("Correct counter not found")
         streak.value = 10
         composeTestRule.waitForIdle()
         composeTestRule
             .onNodeWithText(streak.value.toString())
-            .assertExists()
+            .assertExists("Correct counter not found")
     }
 }
-
-
-

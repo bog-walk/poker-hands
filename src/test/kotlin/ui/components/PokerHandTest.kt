@@ -7,7 +7,7 @@ import model.CardHand
 import model.Suit
 import org.junit.Rule
 import org.junit.Test
-import ui.style.cardSemanticsDescr
+import ui.style.CARD_TEST_TAG
 
 internal class PokerHandTest {
     @get:Rule
@@ -26,8 +26,8 @@ internal class PokerHandTest {
             PokerHand(previewHand, emptyList())
         }
         composeTestRule
-            .onAllNodes(hasStateDescription(cardSemanticsDescr))
+            .onAllNodes(hasTestTag(CARD_TEST_TAG))
             .assertCountEquals(5)
-            .assertAll(isNotFocusable() or !isSelectable())
+            .assertAll(isNotFocusable() and !isSelectable())
     }
 }

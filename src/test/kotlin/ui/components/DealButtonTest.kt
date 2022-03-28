@@ -6,7 +6,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
-import ui.style.dealButtonText
+import ui.style.DEAL_BUTTON_TEXT
 
 internal class DealButtonTest {
     @get:Rule
@@ -18,18 +18,18 @@ internal class DealButtonTest {
             DealButton(false) { }
         }
         composeTestRule
-            .onNodeWithText(dealButtonText)
+            .onNodeWithText(DEAL_BUTTON_TEXT)
             .assertExists("DealButton not found")
             .assertIsNotEnabled()
     }
 
     @Test
-    fun `DealButton is enabled once winner is chosen`() {
+    fun `DealButton is enabled once winning hand is chosen`() {
         composeTestRule.setContent {
             DealButton(true) { }
         }
         composeTestRule
-            .onNodeWithText(dealButtonText)
+            .onNodeWithText(DEAL_BUTTON_TEXT)
             .assertExists("DealButton not found")
             .assertIsEnabled()
     }

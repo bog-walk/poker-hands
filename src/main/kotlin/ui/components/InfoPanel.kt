@@ -14,13 +14,13 @@ import ui.style.*
 import ui.util.produceHighlightState
 
 @Composable
-fun InfoPanel(infoList: List<List<Int>>) {
+fun InfoPanel(highlightList: List<List<Int>>) {
     val highlights = produceHighlightState(
-        10, highlightDelay, infoList, MaterialTheme.colors.onError
+        10, HIGHLIGHT_DELAY, highlightList, MaterialTheme.colors.onError
     )
 
     Column(
-        modifier = Modifier.fillMaxHeight().testTag(infoPanelTag),
+        modifier = Modifier.fillMaxHeight().testTag(INFO_PANEL_TEST_TAG),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -30,7 +30,7 @@ fun InfoPanel(infoList: List<List<Int>>) {
                     text = rank.text,
                     modifier = Modifier.padding(
                         horizontal = componentPadding,
-                        vertical = cardPadding
+                        vertical = infoTextPadding
                     ),
                     color = highlights.value[rank.ordinal],
                     style = MaterialTheme.typography.body1
@@ -44,6 +44,9 @@ fun InfoPanel(infoList: List<List<Int>>) {
 @Composable
 private fun InfoPanelPreview() {
     PokerHandsTheme {
-        InfoPanel(emptyList())
+        Row {
+            InfoPanel(emptyList())
+            InfoPanel(listOf(listOf(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0)))
+        }
     }
 }

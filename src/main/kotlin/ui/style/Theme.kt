@@ -50,7 +50,7 @@ private val PokerTypography = Typography(
         fontWeight = FontWeight.Normal,
         letterSpacing = 0.5.sp,
         textAlign = TextAlign.Center,
-        lineHeight = 40.sp
+        lineHeight = 37.sp
     ),
     body1 = TextStyle(
         fontSize = 15.sp,

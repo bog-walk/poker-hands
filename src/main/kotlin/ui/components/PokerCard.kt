@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.semantics.testTag
 import model.Card
 import model.Suit
 import ui.style.*
@@ -27,7 +27,7 @@ fun PokerCard(card: Card, highlight: Color) {
             .padding(cardPadding)
             .clearAndSetSemantics {
                 contentDescription = "$card"
-                stateDescription = cardSemanticsDescr
+                testTag = CARD_TEST_TAG
             },
         backgroundColor = MaterialTheme.colors.onSurface,
         contentColor = when (card.suit) {
@@ -42,10 +42,10 @@ fun PokerCard(card: Card, highlight: Color) {
     ) {
         // no point in separating to another composable to reduce recomposition, as Column is
         // an inline function that does not get its own recompose scope.
-        // so if changed state causes recomposition, the invalidated scope will be the entire
+        // So if changed state causes recomposition, the invalidated scope will be the entire
         // Card content lambda, not just the Column content lambda.
         Column(
-            modifier = Modifier.padding(cardPadding).fillMaxSize(),
+            modifier = Modifier.padding(cardPadding),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -65,7 +65,7 @@ fun PokerCard(card: Card, highlight: Color) {
 
 @Preview
 @Composable
-fun PokerCardPreview() {
+private fun PokerCardPreview() {
     val previewCards = listOf(
         Card(14, "A", Suit.HEART), Card(3, "3", Suit.DIAMOND),
         Card(13, "K", Suit.HEART), Card(10, "10", Suit.SPADE),

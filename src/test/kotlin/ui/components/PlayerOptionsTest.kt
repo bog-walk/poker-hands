@@ -5,8 +5,8 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import model.Winner
 import org.junit.Rule
 import org.junit.Test
-import ui.style.infoDescr
-import ui.style.playerButtonText
+import ui.style.INFO_DESCRIPTION
+import ui.style.PLAYER_BUTTON_TEXT
 import ui.util.Choice
 
 internal class PlayerOptionsTest {
@@ -19,11 +19,11 @@ internal class PlayerOptionsTest {
             PlayerOptions(Winner.PLAYER1, Winner.UNDECIDED, Choice.NONE, {}, {})
         }
         composeTestRule
-            .onNodeWithText("${playerButtonText}1")
+            .onNodeWithText("${PLAYER_BUTTON_TEXT}1")
             .assertExists("PickButton not found")
             .assertIsEnabled()
         composeTestRule
-            .onNodeWithContentDescription(infoDescr)
+            .onNodeWithContentDescription(INFO_DESCRIPTION)
             .assertDoesNotExist()
     }
 
@@ -33,11 +33,11 @@ internal class PlayerOptionsTest {
             PlayerOptions(Winner.PLAYER1, Winner.PLAYER2, Choice.CORRECT, {}, {})
         }
         composeTestRule
-            .onNodeWithText("${playerButtonText}1")
+            .onNodeWithText("${PLAYER_BUTTON_TEXT}1")
             .assertExists("PickButton not found")
             .assertIsNotEnabled()
         composeTestRule
-            .onNodeWithContentDescription(infoDescr)
+            .onNodeWithContentDescription(INFO_DESCRIPTION)
             .assertDoesNotExist()
     }
 
@@ -47,12 +47,12 @@ internal class PlayerOptionsTest {
             PlayerOptions(Winner.PLAYER1, Winner.PLAYER1, Choice.CORRECT, {}, {})
         }
         composeTestRule
-            .onNodeWithText("${playerButtonText}1")
+            .onNodeWithText("${PLAYER_BUTTON_TEXT}1")
             .assertExists("PickButton not found")
             .assertIsNotEnabled()
         composeTestRule
-            .onNodeWithContentDescription(infoDescr)
-            .assertExists()
+            .onNodeWithContentDescription(INFO_DESCRIPTION)
+            .assertExists("InfoButton not found")
             .assertIsEnabled()
     }
 
@@ -62,21 +62,11 @@ internal class PlayerOptionsTest {
             PlayerOptions(Winner.PLAYER1, Winner.PLAYER1, Choice.CORRECT, {}, {})
         }
         composeTestRule
-            .onNodeWithContentDescription(infoDescr)
+            .onNodeWithContentDescription(INFO_DESCRIPTION)
             .performClick()
         composeTestRule.waitForIdle()
         composeTestRule
-            .onNodeWithContentDescription(infoDescr)
+            .onNodeWithContentDescription(INFO_DESCRIPTION)
             .assertIsNotEnabled()
     }
 }
-
-
-
-
-
-
-
-
-
-

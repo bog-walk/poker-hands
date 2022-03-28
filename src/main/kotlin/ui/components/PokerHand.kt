@@ -10,17 +10,17 @@ import model.CardHand
 import model.Suit
 import ui.style.PokerHandsTheme
 import ui.style.componentPadding
-import ui.style.highlightDelay
+import ui.style.HIGHLIGHT_DELAY
 import ui.util.produceHighlightState
 
 @Composable
-fun PokerHand(hand: CardHand, infoList: List<List<Int>>) {
-    val highlights = produceHighlightState(5, highlightDelay, infoList)
+fun PokerHand(hand: CardHand, highlightList: List<List<Int>>) {
+    val highlights = produceHighlightState(5, HIGHLIGHT_DELAY, highlightList)
 
     Row(
         modifier = Modifier.padding(componentPadding),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         for ((i, card) in hand.cards.withIndex()) {
             key(i) {
@@ -40,11 +40,10 @@ private fun PokerHandPreview() {
             Card(14, "A", Suit.CLUB),
         )
     )
-
     PokerHandsTheme {
         Column {
             PokerHand(previewHand, emptyList())
-            PokerHand(previewHand, emptyList())
+            PokerHand(previewHand, listOf(listOf(1,0,0,0,1)))
         }
     }
 }

@@ -26,7 +26,7 @@ fun Header(streak: Int) {
 @Composable
 private fun HeaderText() {
     Text(
-        text = headerAppText,
+        text = HEADER_TEXT,
         modifier = Modifier.requiredWidth(headerFooterWidth),
         textAlign = TextAlign.Center,
         style = MaterialTheme.typography.h4

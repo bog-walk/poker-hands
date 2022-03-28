@@ -13,14 +13,14 @@ import model.Winner
 import ui.style.PokerHandsTheme
 import ui.style.componentPadding
 import ui.style.playerRowPadding
-import ui.style.playerRowTag
+import ui.style.PLAYER_TEST_TAG
 import ui.util.Choice
 
 @Composable
 fun PlayerRow(
     player: Winner,
     hand: CardHand,
-    infoList: List<List<Int>>,
+    highlightList: List<List<Int>>,
     chosenHand: Winner,
     isCorrectChoice: Choice,
     onInfoRequest: () -> Unit,
@@ -31,11 +31,12 @@ fun PlayerRow(
             start = playerRowPadding,
             top = componentPadding,
             bottom = componentPadding
-        ).testTag(playerRowTag),
+        )
+            .testTag(PLAYER_TEST_TAG),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        PokerHand(hand, infoList)
+        PokerHand(hand, highlightList)
         PlayerOptions(
             player, chosenHand, isCorrectChoice, onInfoRequest, onPlayerChosen
         )
@@ -52,7 +53,6 @@ private fun PlayerRowPreview() {
             Card(14, "A", Suit.CLUB),
         )
     )
-
     PokerHandsTheme {
         Column {
             PlayerRow(

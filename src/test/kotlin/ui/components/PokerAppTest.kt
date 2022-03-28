@@ -3,14 +3,15 @@ package ui.components
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import model.CardHand
+import model.TestDealer
 import model.getCard
 import org.junit.BeforeClass
 import org.junit.Rule
 import ui.PokerHandsApp
-import ui.style.dealButtonText
-import ui.style.infoDescr
-import ui.style.playerButtonText
-import ui.style.playerRowTag
+import ui.style.DEAL_BUTTON_TEXT
+import ui.style.INFO_DESCRIPTION
+import ui.style.PLAYER_BUTTON_TEXT
+import ui.style.PLAYER_TEST_TAG
 import kotlin.test.Test
 
 internal class PokerAppTest {
@@ -48,13 +49,13 @@ internal class PokerAppTest {
         composeTestRule.setContent {
             PokerHandsApp()
         }
-        composeTestRule.onNodeWithText(dealButtonText).assertIsNotEnabled()
-        composeTestRule.onNodeWithText("${playerButtonText}1").assertIsEnabled()
-        composeTestRule.onNodeWithText("${playerButtonText}2").assertIsEnabled()
-        composeTestRule.onNodeWithContentDescription(infoDescr).assertDoesNotExist()
-        composeTestRule.onAllNodesWithTag(playerRowTag).assertCountEquals(2)
+        composeTestRule.onNodeWithText(DEAL_BUTTON_TEXT).assertIsNotEnabled()
+        composeTestRule.onNodeWithText("${PLAYER_BUTTON_TEXT}1").assertIsEnabled()
+        composeTestRule.onNodeWithText("${PLAYER_BUTTON_TEXT}2").assertIsEnabled()
+        composeTestRule.onNodeWithContentDescription(INFO_DESCRIPTION).assertDoesNotExist()
+        composeTestRule.onAllNodesWithTag(PLAYER_TEST_TAG).assertCountEquals(2)
         // choose first correctly
-        composeTestRule.onNodeWithText("${playerButtonText}1").performClick()
+        composeTestRule.onNodeWithText("${PLAYER_BUTTON_TEXT}1").performClick()
     }
 }
 

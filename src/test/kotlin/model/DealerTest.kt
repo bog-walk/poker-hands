@@ -6,7 +6,6 @@ import convertTestGame
 import convertTestInfo
 import getTestResource
 import org.junit.BeforeClass
-import ui.components.TestDealer
 import kotlin.test.*
 
 internal class DealerTest {

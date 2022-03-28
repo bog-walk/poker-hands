@@ -18,20 +18,24 @@ import ui.style.*
 @Composable
 fun HotStreak(streak: Int) {
     val transition = updateTransition(targetState = streak)
+
     val streakColor by transition.animateColor(
-        transitionSpec = { tween(hotStreakDuration, easing = FastOutSlowInEasing) }
+        transitionSpec = { tween(STREAK_ANIM_DURATION, easing = FastOutSlowInEasing) }
     ) { count ->
         when (count) {
             0 -> MaterialTheme.colors.onError
-            else -> MaterialTheme.colors.secondaryVariant
+            else -> MaterialTheme.colors.secondaryVariant // yellow
         }
     }
-    // AnimatedContent below uses this as targetState to force animation cycle through all
-    // numbers between initialState and updatedState (0) when streak is lost
+
+    // AnimatedContent below uses this as the targetState, which forces the animation cycle through
+    // all integers between initialState and updatedState (0) when a streak is lost.
+    // This creates the observable effect of the streak value decrementing quickly rather than
+    // simply changing to zero.
     val streakCount by transition.animateInt(
         transitionSpec = {
             if (targetState == 0) {
-                tween(hotStreakDuration, easing = FastOutSlowInEasing)
+                tween(STREAK_ANIM_DURATION, easing = FastOutSlowInEasing)
             } else {
                 snap()
             }
@@ -43,17 +47,20 @@ fun HotStreak(streak: Int) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            painter = painterResource(hotStreakIcon),
-            contentDescription = hotStreakDescr,
+            painter = painterResource(STREAK_ICON),
+            contentDescription = STREAK_DESCRIPTION,
             modifier = Modifier.requiredSize(iconSize),
             tint = streakColor
         )
         Spacer(modifier = Modifier.width(componentPadding))
+        // Sourced from the official Jetpack Compose Animation guide & adapted to create a quick
+        // scroll decrement animation when targetState < initialState.
+        // https://developer.android.com/jetpack/compose/animation
         AnimatedContent(
             targetState = streakCount,
             transitionSpec = {
                 if (targetState > initialState) {
-                    // count slides upwards by 1 increment
+                    // count slides upwards by 1 increment to replace previous count
                     slideInVertically { y -> y } + fadeIn() with
                             slideOutVertically { y -> -y } + fadeOut()
                 } else {
@@ -67,7 +74,7 @@ fun HotStreak(streak: Int) {
             }
         ) { targetStreak ->
             Text(
-                text = targetStreak.toString(),
+                text = "$targetStreak",
                 color = streakColor,
                 style = MaterialTheme.typography.body1
             )
