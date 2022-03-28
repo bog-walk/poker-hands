@@ -1,4 +1,5 @@
-import model.*
+package model
+
 import java.io.File
 
 typealias TestPlay = Pair<CardHand, CardHand>

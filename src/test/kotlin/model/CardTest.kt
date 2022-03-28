@@ -1,6 +1,5 @@
 package model
 
-import getTestResource
 import org.junit.BeforeClass
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -17,7 +16,7 @@ internal class CardTest {
         @BeforeClass
         @JvmStatic
         fun setUp() {
-            entireDeck = getTestResource("src/test/resources/deck_cards").map { args ->
+            entireDeck = getTestResource("src/test/resources/deck_cards.txt").map { args ->
                 Card(args[0].toInt(), args[1], Suit.valueOf(args[2]))
             }
         }

@@ -1,10 +1,5 @@
 package model
 
-import TestPlay
-import checkValid
-import convertTestGame
-import convertTestInfo
-import getTestResource
 import org.junit.BeforeClass
 import kotlin.test.*
 
@@ -19,23 +14,29 @@ internal class DealerTest {
         lateinit var samplePlays: List<TestPlay>
         lateinit var sampleInfo: List<Pair<TestPlay, List<RankInfo>>>
         lateinit var sampleInfoPlays: List<TestPlay>
+        lateinit var sampleTies: List<Pair<TestPlay, Winner>>
+        lateinit var sampleTiePlays: List<TestPlay>
 
         @BeforeClass
         @JvmStatic
         fun setUp() {
             samples = getTestResource(
-                "src/test/resources/poker_hands_sample"
+                "src/test/resources/poker_hands_sample.txt"
             ).map(::convertTestGame)
             samplePlays = samples.map { it.first }
             sampleInfo = convertTestInfo(
-                getTestResource("src/test/resources/poker_hands_info")
+                getTestResource("src/test/resources/poker_hands_info.txt")
             )
             sampleInfoPlays = sampleInfo.map { it.first }
+            sampleTies = getTestResource(
+                "src/test/resources/poker_hands_ties.txt"
+            ).map(::convertTestGame)
+            sampleTiePlays = sampleTies.map { it.first }
         }
     }
 
     @Test
-    fun `deal by PokerDealer does not return identical cards`() {
+    fun `deal by CardDealer does not return identical cards`() {
         val dealer = CardDealer()
         val dealt = mutableSetOf<Card>()
         var allCardsNotSeen = true
@@ -69,8 +70,8 @@ internal class DealerTest {
     @Test
     fun `findWinner correct for huge samples resource`() {
         val dealer = TestDealer(samplePlays)
-        val expectedWins = intArrayOf(397, 641, 7) // player1, player2, tie
-        val actualWins = IntArray(3)
+        val expectedWins = intArrayOf(397, 641) // player1, player2
+        val actualWins = IntArray(2)
         for ((i, sample) in samples.withIndex()) {
             dealer.deal()
             val winner = dealer.expectedWinner
@@ -78,11 +79,10 @@ internal class DealerTest {
             when (winner) {
                 Winner.PLAYER1 -> actualWins[0]++
                 Winner.PLAYER2 -> actualWins[1]++
-                Winner.TIE -> actualWins[2]++
-                Winner.UNDECIDED -> continue // sample winner will never be this value
+                else -> continue // sample winner will never be these value
             }
         }
-        dealer.deal()
+        dealer.deal() // to ensure no further sample plays
         assertContentEquals(expectedWins, actualWins)
     }
 
@@ -103,5 +103,18 @@ internal class DealerTest {
             }
         }
         dealer.deal()
+    }
+
+    @Test
+    fun `deal avoids composing CardHands that completely tie`() {
+        val dealer = TestDealer(sampleTiePlays)
+        while (dealer.playIndex < sampleTies.size) {
+            dealer.deal()
+            val winner = dealer.expectedWinner
+            assertNotEquals(Winner.TIE, winner, "Error at line ${dealer.playIndex - 1}")
+            val expected = sampleTies.indexOfFirst { it.second == winner }
+            assertEquals(expected, dealer.playIndex - 1)
+        }
+        dealer.deal() // to ensure no further sample plays
     }
 }

@@ -1,7 +1,5 @@
 package model
 
-import convertTestRanked
-import getTestResource
 import org.junit.BeforeClass
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
@@ -20,7 +18,7 @@ internal class CardHandTest {
         @BeforeClass
         @JvmStatic
         fun setUp() {
-            val hands = getTestResource("src/test/resources/all_rank_hands")
+            val hands = getTestResource("src/test/resources/all_rank_hands.txt")
             exampleHands = hands.associate { args ->
                 Rank.valueOf(args.first()) to CardHand(args.slice(1..5).map(::getCard))
             }

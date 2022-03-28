@@ -1,11 +1,15 @@
 package model
 
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
+
 typealias RankInfo = Triple<List<Int>, List<Int>, List<Int>>
 
 abstract class Dealer {
-    lateinit var player1Hand: CardHand
-    lateinit var player2Hand: CardHand
-    lateinit var expectedWinner: Winner
+    var player1Hand by mutableStateOf(CardHand(emptyList()))
+    var player2Hand by mutableStateOf(CardHand(emptyList()))
+    var expectedWinner by mutableStateOf(Winner.UNDECIDED)
 
     abstract fun deal()
 

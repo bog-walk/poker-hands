@@ -16,5 +16,6 @@ class CardDealer : Dealer() {
             player2Hand = CardHand(this.slice(5..9))
         }
         findWinner()
+        if (expectedWinner == Winner.TIE) deal()
     }
 }
