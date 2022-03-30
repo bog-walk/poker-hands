@@ -11,22 +11,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-// original palette
-//private val PokerBlue = Color(0xff8197fa)
-//private val PokerRed = Color(0xfffaa881)
-//private val PokerGreen = Color(0xffd4fa81)
-//private val PokerYellow = Color(0xfffae481)
-// 200-only palette (requires DarkGray on primary)
-//private val PokerBlue = Color(0xffbfdbfe)
-//private val PokerRed = Color(0xfffecaca)
-//private val PokerGreen = Color(0xffd9f99d)
-//private val PokerYellow = Color(0xfffef08a)
-// 300-only palette
-private val PokerBlue = Color(0xff93c5fd)
-private val PokerRed = Color(0xfffca5a5)
-// 300-green might be too saturated
-//private val PokerGreen = Color(0xffbef264)
+private val PokerBlue = Color(0xff8197fa)
 private val PokerGreen = Color(0xffd4fa81)
+private val PokerRed = Color(0xfffca5a5)
 private val PokerYellow = Color(0xfffde047)
 
 val PokerColors = darkColors(

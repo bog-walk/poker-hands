@@ -44,6 +44,7 @@ private fun PokerHandPreview() {
         Column {
             PokerHand(previewHand, emptyList())
             PokerHand(previewHand, listOf(listOf(1,0,0,0,1)))
+            PokerHand(previewHand, listOf(listOf(0,0,-1,-1,0)))
         }
     }
 }

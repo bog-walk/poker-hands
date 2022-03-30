@@ -1,7 +1,5 @@
 # Poker Hands :rocket: :hearts::clubs::diamonds::spades: :rocket:
 
-Poker hand rankings trainer built with Compose for Desktop. [About?]
-
 ![](poker-hands.gif)
 
 ### Features
