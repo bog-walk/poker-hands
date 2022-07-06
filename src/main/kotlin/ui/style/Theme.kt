@@ -11,10 +11,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-private val PokerBlue = Color(0xff8197fa)
+private val PokerBlue = Color(0xff9ab8ef)
 private val PokerGreen = Color(0xffd4fa81)
 private val PokerRed = Color(0xfffca5a5)
-private val PokerYellow = Color(0xfffde047)
+private val PokerYellow = Color(0xffffc400)
 
 val PokerColors = darkColors(
     primary = PokerBlue,
@@ -23,7 +23,7 @@ val PokerColors = darkColors(
     background = Color.DarkGray,
     surface = Color.DarkGray,
     error = PokerRed,
-    onPrimary = Color.White,
+    onPrimary = Color.DarkGray,
     onSecondary = Color.White,
     onBackground = Color.White,
     onSurface = Color.White,
