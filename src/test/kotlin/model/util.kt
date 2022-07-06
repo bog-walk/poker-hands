@@ -18,7 +18,7 @@ fun getTestResource(
     return resource
 }
 
-fun TestPlay.checkValid(): Set<Card>? {
+fun TestPlay.validated(): Set<Card>? {
     val uniqueCards = first.cards.toSet() + second.cards.toSet()
     return if (uniqueCards.size == 10) uniqueCards else null
 }
@@ -39,7 +39,7 @@ fun convertTestRanked(input: String): List<List<Int>> {
             it.startsWith('(') -> highCards = mutableListOf(it.drop(1).toInt())
             it.endsWith(')') -> {
                 highCards?.add(it.dropLast(1).toInt())
-                highCards?.let { highs -> ranked.add(highs.toList()) }
+                highCards?.let { highs -> ranked.add(highs) }
                 highCards = null
             }
             it == "0" -> ranked.add(emptyList())

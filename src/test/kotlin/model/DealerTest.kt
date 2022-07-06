@@ -43,7 +43,7 @@ internal class DealerTest {
         repeat(30) {
             dealer.deal()
             val hands = dealer.player1Hand to dealer.player2Hand
-            hands.checkValid().let { cardsDealt ->
+            hands.validated().let { cardsDealt ->
                 assertNotNull(cardsDealt, "Invalid deal: $cardsDealt")
                 dealt.addAll(cardsDealt)
             }
@@ -58,7 +58,20 @@ internal class DealerTest {
     fun `samples resource does not have invalid hands or duplicate plays`() {
         val uniquePlays = mutableSetOf<Set<Card>>()
         for ((hands, _) in samples) {
-            hands.checkValid().let { cardsDealt ->
+            hands.validated().let { cardsDealt ->
+                assertNotNull(cardsDealt, "Invalid deal: ${hands.first} ${hands.second}")
+                assertTrue("Duplicate found: $cardsDealt") {
+                    uniquePlays.add(cardsDealt)
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `ties resource does not have invalid hands or duplicate plays`() {
+        val uniquePlays = mutableSetOf<Set<Card>>()
+        for ((hands, _) in sampleTies) {
+            hands.validated().let { cardsDealt ->
                 assertNotNull(cardsDealt, "Invalid deal: ${hands.first} ${hands.second}")
                 assertTrue("Duplicate found: $cardsDealt") {
                     uniquePlays.add(cardsDealt)
@@ -70,7 +83,7 @@ internal class DealerTest {
     @Test
     fun `findWinner correct for huge samples resource`() {
         val dealer = TestDealer(samplePlays)
-        val expectedWins = intArrayOf(397, 641) // player1, player2
+        val expectedWins = intArrayOf(405, 646) // player1, player2
         val actualWins = IntArray(2)
         for ((i, sample) in samples.withIndex()) {
             dealer.deal()
@@ -79,7 +92,11 @@ internal class DealerTest {
             when (winner) {
                 Winner.PLAYER1 -> actualWins[0]++
                 Winner.PLAYER2 -> actualWins[1]++
-                else -> continue // sample winner will never be these value
+                else -> {
+                    // sample winner should never be TIE or UNDECIDED
+                    println("Error in samples resource: Line ${i+1}")
+                    continue
+                }
             }
         }
         dealer.deal() // to ensure no further sample plays
@@ -102,16 +119,16 @@ internal class DealerTest {
                 assertContentEquals(expected.third, actualInfo[i].third)
             }
         }
-        dealer.deal()
+        dealer.deal() // to ensure no further sample plays
     }
 
     @Test
-    fun `deal avoids composing CardHands that completely tie`() {
+    fun `deal avoids composing CardHands with unbreakable tie`() {
         val dealer = TestDealer(sampleTiePlays)
         while (dealer.playIndex < sampleTies.size) {
             dealer.deal()
             val winner = dealer.expectedWinner
-            assertNotEquals(Winner.TIE, winner, "Error at line ${dealer.playIndex - 1}")
+            assertNotEquals(Winner.TIE, winner, "Error at line ${dealer.playIndex}")
             val expected = sampleTies.indexOfFirst { it.second == winner }
             assertEquals(expected, dealer.playIndex - 1)
         }
