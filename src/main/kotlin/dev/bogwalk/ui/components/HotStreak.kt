@@ -12,9 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import dev.bogwalk.model.ui.style.*
 import dev.bogwalk.ui.style.*
-import ui.style.*
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable

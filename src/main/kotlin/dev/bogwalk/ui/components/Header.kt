@@ -8,9 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import dev.bogwalk.model.ui.style.*
 import dev.bogwalk.ui.style.*
-import ui.style.*
 
 @Composable
 fun Header(streak: Int) {

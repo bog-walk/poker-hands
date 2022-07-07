@@ -5,7 +5,7 @@
 Test your understanding of poker hand rankings with a single window desktop application built
 using **JetBrains** [Compose for Desktop](https://www.jetbrains.com/lp/compose-desktop/).
 
-### :memo: Game details
+## :memo: Game details
 
 This application is a simplified visual representation of 2 poker hands drawn from a single deck. It does not reflect the 
 resulting 5-card combinations (of any hole or community cards) in a typical Texas Hold'em showdown.
@@ -18,7 +18,7 @@ Ace can rank either high (e.g. royal flush) or low (e.g. steel wheel), but not b
 
 Game logic ensures that a pair of hands with an unbreakable tie will not be composed.
 
-### :briefcase: Application features
+## :briefcase: Features
 
 - Random generation of 2 valid poker hands from a 52-card deck (*k*-combination)
 - Ranking algorithm with documented examples
@@ -26,31 +26,23 @@ Game logic ensures that a pair of hands with an unbreakable tie will not be comp
 - Hot streak tracker, using Animations
 - Robust model and UI test suites
 
-### :computer: Run desktop application
+## :computer: Run desktop application
 
-Clone the repository then either:
+Clone the repository then pick an option:
 
-`./gradlew run` from an open terminal in the root of the project
+- `./gradlew run` from an open terminal in the root of the project
 
-OR
+- Open the project in IntelliJ IDEA and run `Main.kt`
 
-Open the project in IntelliJ IDEA and run `Main.kt`
+- Open the Gradle toolbar and select `poker-hands/Tasks/compose desktop/run`
 
-OR
+## :microscope: Run tests
 
-Open the Gradle toolbar and select `poker-hands/Tasks/compose desktop/run`
+Clone the repository then pick an option:
 
-### :microscope: Run tests
+- `./gradlew test` from an open terminal in the root of the project
 
-Clone the repository then either:
-
-`./gradlew test` from an open terminal in the root of the project
-
-OR
-
-Open the project in IntelliJ IDEA then choose specific tests using gutter icons or right-click the `src/test` folder and 
+- Open the project in IntelliJ IDEA then choose specific tests using gutter icons or right-click the `src/test` folder and 
 select `Run 'Tests in 'poker-hands.test''`
 
-OR
-
-Open the Gradle toolbar and select `poker-hands/Tasks/verification/test`
+- Open the Gradle toolbar and select `poker-hands/Tasks/verification/test`
