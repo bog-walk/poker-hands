@@ -14,7 +14,9 @@ import dev.bogwalk.ui.util.produceHighlightState
 import dev.bogwalk.ui.style.*
 
 @Composable
-fun InfoPanel(highlightList: List<List<Int>>) {
+fun InfoPanel(
+    highlightList: List<List<Int>>
+) {
     val highlights = produceHighlightState(
         10, HIGHLIGHT_DELAY, highlightList, MaterialTheme.colors.onError
     )

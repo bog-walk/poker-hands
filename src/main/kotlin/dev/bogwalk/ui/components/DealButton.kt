@@ -12,10 +12,12 @@ import dev.bogwalk.ui.style.DEAL_BUTTON_TEXT
 import dev.bogwalk.ui.style.PokerHandsTheme
 import dev.bogwalk.ui.style.componentPadding
 import dev.bogwalk.ui.style.headerFooterWidth
-import ui.style.*
 
 @Composable
-fun DealButton(choiceMade: Boolean, onDealRequest: () -> Unit) {
+fun DealButton(
+    choiceMade: Boolean,
+    onDealRequest: () -> Unit
+) {
     Row(
         modifier = Modifier.padding(componentPadding).requiredWidth(headerFooterWidth),
         horizontalArrangement = Arrangement.Center,
