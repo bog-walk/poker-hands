@@ -26,7 +26,7 @@ const val PLAYER_TEST_TAG = "player row"
 const val PLAYER_BUTTON_TEXT = "PLAYER "
 const val INFO_ICON = "materials_help_icon.svg"
 const val INFO_DESCRIPTION = "Information icon"
-val playerOptionsWidth = 150.dp
+val playerOptionsWidth = 160.dp
 val playerRowPadding = 25.dp
 const val INFO_ENTER_ANIM_DURATION = 500
 

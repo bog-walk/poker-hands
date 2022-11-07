@@ -2,12 +2,11 @@ package dev.bogwalk.ui.components
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import dev.bogwalk.ui.style.*
 
 @Composable
@@ -28,8 +27,7 @@ private fun HeaderText() {
     Text(
         text = HEADER_TEXT,
         modifier = Modifier.requiredWidth(headerFooterWidth),
-        textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.h4
+        style = MaterialTheme.typography.displaySmall
     )
 }
 

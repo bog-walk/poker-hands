@@ -1,6 +1,8 @@
 # :rocket: Poker Hands :hearts::clubs::diamonds::spades:
 
-![](screenshots/poker-hands-demo.gif)
+<div align="center">
+  <img src="screenshots/poker-hands-demo.gif" alt="Poker Hands demo gif"/>
+</div>
 
 Test your understanding of poker hand rankings with a single window desktop application built
 using **JetBrains** [Compose for Desktop](https://www.jetbrains.com/lp/compose-desktop/).

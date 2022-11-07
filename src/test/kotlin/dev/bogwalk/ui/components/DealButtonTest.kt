@@ -4,7 +4,6 @@ import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import dev.bogwalk.ui.components.DealButton
 import org.junit.Rule
 import org.junit.Test
 import dev.bogwalk.ui.style.DEAL_BUTTON_TEXT

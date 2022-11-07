@@ -2,8 +2,8 @@ package dev.bogwalk.ui.components
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -18,11 +18,11 @@ fun InfoPanel(
     highlightList: List<List<Int>>
 ) {
     val highlights = produceHighlightState(
-        10, HIGHLIGHT_DELAY, highlightList, MaterialTheme.colors.onError
+        10, HIGHLIGHT_DELAY, highlightList, MaterialTheme.colorScheme.onError
     )
 
     Column(
-        modifier = Modifier.fillMaxHeight().testTag(INFO_PANEL_TEST_TAG),
+        modifier = Modifier.testTag(INFO_PANEL_TEST_TAG).fillMaxHeight(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -35,7 +35,7 @@ fun InfoPanel(
                         vertical = infoTextPadding
                     ),
                     color = highlights.value[rank.ordinal],
-                    style = MaterialTheme.typography.body1
+                    style = MaterialTheme.typography.titleMedium
                 )
             }
         }

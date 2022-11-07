@@ -27,12 +27,12 @@ fun PlayerRow(
     onPlayerChosen: (Winner) -> Unit
 ) {
     Row(
-        modifier = Modifier.padding(
+        modifier = Modifier.testTag(PLAYER_TEST_TAG)
+            .padding(
             start = playerRowPadding,
             top = componentPadding,
             bottom = componentPadding
-        )
-            .testTag(PLAYER_TEST_TAG),
+        ),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {

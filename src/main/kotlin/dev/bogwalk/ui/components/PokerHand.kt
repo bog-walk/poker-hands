@@ -14,7 +14,7 @@ import dev.bogwalk.ui.style.HIGHLIGHT_DELAY
 import dev.bogwalk.ui.util.produceHighlightState
 
 @Composable
-fun PokerHand(
+internal fun PokerHand(
     hand: CardHand,
     highlightList: List<List<Int>>
 ) {

@@ -4,9 +4,9 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -16,15 +16,15 @@ import dev.bogwalk.ui.style.*
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun HotStreak(streak: Int) {
+internal fun HotStreak(streak: Int) {
     val transition = updateTransition(targetState = streak)
 
     val streakColor by transition.animateColor(
         transitionSpec = { tween(STREAK_ANIM_DURATION, easing = FastOutSlowInEasing) }
     ) { count ->
         when (count) {
-            0 -> MaterialTheme.colors.onError
-            else -> MaterialTheme.colors.secondaryVariant // yellow
+            0 -> MaterialTheme.colorScheme.onError
+            else -> MaterialTheme.colorScheme.tertiary
         }
     }
 
@@ -76,7 +76,7 @@ fun HotStreak(streak: Int) {
             Text(
                 text = "$targetStreak",
                 color = streakColor,
-                style = MaterialTheme.typography.body1
+                style = MaterialTheme.typography.titleMedium
             )
         }
     }

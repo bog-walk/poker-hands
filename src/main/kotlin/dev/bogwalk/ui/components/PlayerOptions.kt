@@ -6,7 +6,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,7 +22,7 @@ import dev.bogwalk.ui.util.Choice
 import dev.bogwalk.ui.style.*
 
 @Composable
-fun PlayerOptions(
+internal fun PlayerOptions(
     player: Winner,
     chosenHand: Winner,
     isCorrectChoice: Choice,
@@ -66,7 +66,7 @@ private fun PickButton(
     ) {
         Text(
             text = "$PLAYER_BUTTON_TEXT${(player.ordinal + 1)}",
-            style = MaterialTheme.typography.button
+            style = MaterialTheme.typography.labelMedium
         )
     }
 }
@@ -84,18 +84,19 @@ private fun getButtonColors(
     } else {
         if (isCorrectChoice == Choice.CORRECT) {
             ButtonDefaults.buttonColors(
-                disabledBackgroundColor = MaterialTheme.colors.secondary.copy(alpha = 0.12f)
-                    .compositeOver(MaterialTheme.colors.surface)
+                disabledContainerColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.12f)
+                    .compositeOver(MaterialTheme.colorScheme.surface)
             )
         } else {
             ButtonDefaults.buttonColors(
-                disabledBackgroundColor = MaterialTheme.colors.error.copy(alpha = 0.12f)
-                    .compositeOver(MaterialTheme.colors.surface)
+                disabledContainerColor = MaterialTheme.colorScheme.error.copy(alpha = 0.12f)
+                    .compositeOver(MaterialTheme.colorScheme.surface)
             )
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun InfoButton(
     choseCorrectly: Choice,
@@ -104,22 +105,26 @@ private fun InfoButton(
     // InfoButton can only be clicked once to produce highlighted states
     var alreadyClicked by remember { mutableStateOf(false) }
 
-    IconButton(
+    FilledIconButton(
         onClick = {
             alreadyClicked = true
             onInfoRequest()
         },
-        modifier = Modifier.padding(start = componentPadding).requiredSize(iconSize),
-        enabled = !alreadyClicked
+        modifier = Modifier.padding(start = componentPadding),
+        enabled = !alreadyClicked,
+        colors = IconButtonDefaults.filledIconButtonColors(
+            containerColor = when (choseCorrectly) {
+                Choice.CORRECT -> MaterialTheme.colorScheme.secondary // green
+                Choice.INCORRECT -> MaterialTheme.colorScheme.error // red
+                Choice.NONE -> MaterialTheme.colorScheme.surface // will not be visible
+            },
+            contentColor = MaterialTheme.colorScheme.surface
+        )
     ) {
         Icon(
-            painterResource(INFO_ICON),
+            painter = painterResource(INFO_ICON),
             contentDescription = INFO_DESCRIPTION,
-            tint = when (choseCorrectly) {
-                Choice.CORRECT -> MaterialTheme.colors.secondary // green
-                Choice.INCORRECT -> MaterialTheme.colors.error // red
-                Choice.NONE -> MaterialTheme.colors.surface // will not be visible
-            }
+            modifier = Modifier.requiredSize(playerRowPadding)
         )
     }
 }

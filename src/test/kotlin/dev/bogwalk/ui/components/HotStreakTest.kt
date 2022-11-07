@@ -3,7 +3,6 @@ package dev.bogwalk.ui.components
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import dev.bogwalk.ui.components.HotStreak
 import org.junit.Rule
 import org.junit.Test
 import dev.bogwalk.ui.style.STREAK_DESCRIPTION
