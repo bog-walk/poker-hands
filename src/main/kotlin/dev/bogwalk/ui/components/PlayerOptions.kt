@@ -96,7 +96,6 @@ private fun getButtonColors(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun InfoButton(
     choseCorrectly: Choice,

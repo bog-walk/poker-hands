@@ -16,7 +16,6 @@ import dev.bogwalk.model.Card
 import dev.bogwalk.model.Suit
 import dev.bogwalk.ui.style.*
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun PokerCard(card: Card, highlight: Color) {
     Card(

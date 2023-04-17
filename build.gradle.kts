@@ -1,13 +1,12 @@
 import org.jetbrains.compose.compose
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
-    kotlin("jvm") version "1.7.20"
-    id("org.jetbrains.compose") version "1.2.0"
+    kotlin("jvm") version "1.8.0"
+    id("org.jetbrains.compose") version "1.4.0"
 }
 
 group = "dev.bogwalk"
@@ -19,7 +18,6 @@ repositories {
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
 
-@OptIn(ExperimentalComposeLibrary::class)
 dependencies {
     implementation(compose.desktop.currentOs)
     implementation(compose.material3)
