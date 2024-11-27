@@ -6,13 +6,15 @@ import dev.bogwalk.model.CardHand
 import dev.bogwalk.model.TestDealer
 import dev.bogwalk.model.TestPlay
 import dev.bogwalk.model.getCard
-import org.junit.BeforeClass
-import org.junit.Rule
+import dev.bogwalk.poker_hands.generated.resources.*
 import dev.bogwalk.ui.PokerHandsApp
 import dev.bogwalk.ui.util.PokerAppState
-import dev.bogwalk.ui.style.*
+import org.jetbrains.compose.resources.stringResource
+import org.junit.BeforeClass
+import org.junit.Rule
 import kotlin.test.Test
 
+// consider trying androidx.test.core.app.ApplicationProvider to access resources
 internal class PokerAppTest {
     companion object {
         private lateinit var testDeck: List<TestPlay>
@@ -49,76 +51,92 @@ internal class PokerAppTest {
 
     @Test
     fun `PokerApp runs correctly`() {
+        var dealButtonText = ""
+        var playerButtonText = ""
+        var infoCd = ""
+        var playerTag = ""
+        var infoTag = ""
+        var cardTag = ""
+        var streakCd = ""
+
         composeTestRule.setContent {
+            dealButtonText = stringResource(Res.string.deal_button)
+            playerButtonText = stringResource(Res.string.player_button)
+            infoCd = stringResource(Res.string.info_cd)
+            playerTag = stringResource(Res.string.player_test_tag)
+            infoTag = stringResource(Res.string.info_panel_test_tag)
+            cardTag = stringResource(Res.string.card_test_tag)
+            streakCd = stringResource(Res.string.streak_cd)
+
             PokerHandsApp(testState)
         }
 
         // initial set up as expected
-        composeTestRule.onNodeWithText(DEAL_BUTTON_TEXT).assertIsNotEnabled()
-        composeTestRule.onNodeWithText("${PLAYER_BUTTON_TEXT}1").assertIsEnabled()
-        composeTestRule.onNodeWithText("${PLAYER_BUTTON_TEXT}2").assertIsEnabled()
-        composeTestRule.onNodeWithContentDescription(INFO_DESCRIPTION).assertDoesNotExist()
-        composeTestRule.onAllNodesWithTag(PLAYER_TEST_TAG).assertCountEquals(2)
-        composeTestRule.onAllNodesWithTag(INFO_PANEL_TEST_TAG).assertCountEquals(1)
-        composeTestRule.onAllNodesWithTag(CARD_TEST_TAG).assertCountEquals(10)
+        composeTestRule.onNodeWithText(dealButtonText).assertIsNotEnabled()
+        composeTestRule.onNodeWithText("${playerButtonText}1").assertIsEnabled()
+        composeTestRule.onNodeWithText("${playerButtonText}2").assertIsEnabled()
+        composeTestRule.onNodeWithContentDescription(infoCd).assertDoesNotExist()
+        composeTestRule.onAllNodesWithTag(playerTag).assertCountEquals(2)
+        composeTestRule.onAllNodesWithTag(infoTag).assertCountEquals(1)
+        composeTestRule.onAllNodesWithTag(cardTag).assertCountEquals(10)
         composeTestRule
-            .onNodeWithContentDescription(STREAK_DESCRIPTION)
+            .onNodeWithContentDescription(streakCd)
             .onSiblings()
             .assertAny(hasText("0"))
 
         // choose first winning hand correctly
-        composeTestRule.onNodeWithText("${PLAYER_BUTTON_TEXT}1").performClick()
+        composeTestRule.onNodeWithText("${playerButtonText}1").performClick()
         composeTestRule.waitForIdle()
-        composeTestRule.onNodeWithText(DEAL_BUTTON_TEXT).assertIsEnabled()
-        composeTestRule.onNodeWithText("${PLAYER_BUTTON_TEXT}1").assertIsNotEnabled()
-        composeTestRule.onNodeWithText("${PLAYER_BUTTON_TEXT}2").assertIsNotEnabled()
-        composeTestRule.onNodeWithContentDescription(INFO_DESCRIPTION).assertIsEnabled()
+        composeTestRule.onNodeWithText(dealButtonText).assertIsEnabled()
+        composeTestRule.onNodeWithText("${playerButtonText}1").assertIsNotEnabled()
+        composeTestRule.onNodeWithText("${playerButtonText}2").assertIsNotEnabled()
+        composeTestRule.onNodeWithContentDescription(infoCd).assertIsEnabled()
         composeTestRule
-            .onNodeWithContentDescription(STREAK_DESCRIPTION)
+            .onNodeWithContentDescription(streakCd)
             .onSiblings()
             .assertAny(hasTextExactly("1"))
 
         // deal new hands
-        composeTestRule.onNodeWithText(DEAL_BUTTON_TEXT).performClick()
+        composeTestRule.onNodeWithText(dealButtonText).performClick()
         composeTestRule.waitForIdle()
 
         // choose second winning hand incorrectly
-        composeTestRule.onNodeWithText("${PLAYER_BUTTON_TEXT}1").performClick()
+        composeTestRule.onNodeWithText("${playerButtonText}1").performClick()
         composeTestRule.waitForIdle()
-        composeTestRule.onNodeWithContentDescription(INFO_DESCRIPTION).assertIsEnabled()
+        composeTestRule.onNodeWithContentDescription(infoCd).assertIsEnabled()
         composeTestRule
-            .onNodeWithContentDescription(STREAK_DESCRIPTION)
+            .onNodeWithContentDescription(streakCd)
             .onSiblings()
             .assertAny(hasTextExactly("0"))
 
         // request explanation for winning hand
-        composeTestRule.onNodeWithContentDescription(INFO_DESCRIPTION).performClick()
+        composeTestRule.onNodeWithContentDescription(infoCd).performClick()
         composeTestRule.waitForIdle()
-        composeTestRule.onNodeWithContentDescription(INFO_DESCRIPTION).assertIsNotEnabled()
+        composeTestRule.onNodeWithContentDescription(infoCd).assertIsNotEnabled()
         composeTestRule
-            .onAllNodesWithTag(PLAYER_TEST_TAG)
-            .filterToOne(hasAnyDescendant(hasText("${PLAYER_BUTTON_TEXT}1")))
+            .onAllNodesWithTag(playerTag)
+            .filterToOne(hasAnyDescendant(hasText("${playerButtonText}1")))
             .onChildren()
             .onFirst().assertContentDescriptionEquals("2 of HEARTS")
         composeTestRule
-            .onAllNodesWithTag(PLAYER_TEST_TAG)
-            .filterToOne(hasAnyDescendant(hasText("${PLAYER_BUTTON_TEXT}2")))
+            .onAllNodesWithTag(playerTag)
+            .filterToOne(hasAnyDescendant(hasText("${playerButtonText}2")))
             .onChildren()
             .onFirst().assertContentDescriptionEquals("3 of HEARTS")
 
         // deal new hands
-        composeTestRule.onNodeWithText(DEAL_BUTTON_TEXT).performClick()
+        composeTestRule.onNodeWithText(dealButtonText).performClick()
         composeTestRule.waitForIdle()
 
         // tie (testDeck[2]) should be skipped
         composeTestRule
-            .onAllNodesWithTag(PLAYER_TEST_TAG)
-            .filterToOne(hasAnyDescendant(hasText("${PLAYER_BUTTON_TEXT}1")))
+            .onAllNodesWithTag(playerTag)
+            .filterToOne(hasAnyDescendant(hasText("${playerButtonText}1")))
             .onChildren()
             .onFirst().assertContentDescriptionEquals("8 of CLUBS")
         composeTestRule
-            .onAllNodesWithTag(PLAYER_TEST_TAG)
-            .filterToOne(hasAnyDescendant(hasText("${PLAYER_BUTTON_TEXT}2")))
+            .onAllNodesWithTag(playerTag)
+            .filterToOne(hasAnyDescendant(hasText("${playerButtonText}2")))
             .onChildren()
             .onFirst().assertContentDescriptionEquals("3 of HEARTS")
     }

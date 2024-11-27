@@ -5,7 +5,7 @@ import androidx.compose.runtime.Immutable
 @Immutable
 data class Card(val pip: Int, val value: String, val suit: Suit) {
     override fun toString(): String {
-        return "${if (pip >= 10) Court.values()[pip-10].name else value} of ${suit.name}S"
+        return "${if (pip >= 10) Court.entries[pip-10].name else value} of ${suit.name}S"
     }
 }
 
@@ -29,7 +29,7 @@ fun getCard(number: Int): Card {
         0 -> Pair(13, Court.KING.abbreviation)
         else -> Pair(numNorm, numNorm.toString())
     }
-    val suit = Suit.values()[(number - 1) / 13]
+    val suit = Suit.entries[(number - 1) / 13]
     return Card(pip, value, suit)
 }
 
@@ -45,10 +45,10 @@ fun getCard(input: String): Card {
     require(input.length == 2) { "Input string must be of 2 characters." }
     require(
         input.first() in '2'..'9' ||
-                input.first().toString() in Court.values().map(Court::abbreviation)
+                input.first().toString() in Court.entries.map(Court::abbreviation)
     ) { "First character must reference the pip." }
     require(
-        input.last().toString() in Suit.values().map(Suit::abbreviation)
+        input.last().toString() in Suit.entries.map(Suit::abbreviation)
     ) { "Second character must reference the suit." }
     val char1 = input.first()
     val pip = Court.ordOf(char1.toString())?.plus(10) ?: (char1.code - 48)

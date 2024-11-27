@@ -7,7 +7,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import dev.bogwalk.ui.style.*
+import dev.bogwalk.poker_hands.generated.resources.Res
+import dev.bogwalk.poker_hands.generated.resources.header_text
+import dev.bogwalk.ui.style.PokerHandsTheme
+import dev.bogwalk.ui.style.componentPadding
+import dev.bogwalk.ui.style.headerFooterWidth
+import dev.bogwalk.ui.style.intraSpacer
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun Header(streak: Int) {
@@ -25,7 +31,7 @@ fun Header(streak: Int) {
 @Composable
 private fun HeaderText() {
     Text(
-        text = HEADER_TEXT,
+        text = stringResource(Res.string.header_text),
         modifier = Modifier.requiredWidth(headerFooterWidth),
         style = MaterialTheme.typography.displaySmall
     )

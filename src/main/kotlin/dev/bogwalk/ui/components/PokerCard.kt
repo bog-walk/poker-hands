@@ -8,23 +8,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.testTag
 import dev.bogwalk.model.Card
 import dev.bogwalk.model.Suit
+import dev.bogwalk.poker_hands.generated.resources.*
 import dev.bogwalk.ui.style.*
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun PokerCard(card: Card, highlight: Color) {
     Card(
         modifier = Modifier
+            .testTag(stringResource(Res.string.card_test_tag))
             .requiredSize(cardWidth, cardHeight)
             .padding(cardPadding)
             .clearAndSetSemantics {
-                contentDescription = "$card"
-                testTag = CARD_TEST_TAG
+                contentDescription = card.toString()
             },
         shape = MaterialTheme.shapes.extraSmall,
         border = when (highlight) {
@@ -55,12 +58,20 @@ internal fun PokerCard(card: Card, highlight: Color) {
             )
             Spacer(modifier = Modifier.height(intraSpacer))
             Icon(
-                painter = painterResource(card.suit.svgPath),
+                painter = card.suit.svgPainter(),
                 contentDescription = card.suit.description,
                 modifier = Modifier.size(cardSuitSize)
             )
         }
     }
+}
+
+@Composable
+private fun Suit.svgPainter(): Painter = when (this) {
+    Suit.CLUB -> painterResource(Res.drawable.poker_club)
+    Suit.DIAMOND -> painterResource(Res.drawable.poker_diamond)
+    Suit.HEART -> painterResource(Res.drawable.poker_heart)
+    Suit.SPADE -> painterResource(Res.drawable.poker_spade)
 }
 
 @Preview

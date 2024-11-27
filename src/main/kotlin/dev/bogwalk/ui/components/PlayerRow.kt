@@ -1,7 +1,10 @@
 package dev.bogwalk.ui.components
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -10,11 +13,13 @@ import dev.bogwalk.model.Card
 import dev.bogwalk.model.CardHand
 import dev.bogwalk.model.Suit
 import dev.bogwalk.model.Winner
+import dev.bogwalk.poker_hands.generated.resources.Res
+import dev.bogwalk.poker_hands.generated.resources.player_test_tag
 import dev.bogwalk.ui.style.PokerHandsTheme
 import dev.bogwalk.ui.style.componentPadding
 import dev.bogwalk.ui.style.playerRowPadding
-import dev.bogwalk.ui.style.PLAYER_TEST_TAG
 import dev.bogwalk.ui.util.Choice
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun PlayerRow(
@@ -27,12 +32,13 @@ fun PlayerRow(
     onPlayerChosen: (Winner) -> Unit
 ) {
     Row(
-        modifier = Modifier.testTag(PLAYER_TEST_TAG)
+        modifier = Modifier
+            .testTag(stringResource(Res.string.player_test_tag))
             .padding(
-            start = playerRowPadding,
-            top = componentPadding,
-            bottom = componentPadding
-        ),
+                start = playerRowPadding,
+                top = componentPadding,
+                bottom = componentPadding
+            ),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {

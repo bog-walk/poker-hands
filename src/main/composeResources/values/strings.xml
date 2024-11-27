@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="window_title">Poker Hands</string>
+
+    <string name="header_text">CHOOSE THE WINNING HAND</string>
+
+    <string name="player_button">PLAYER </string>
+    <string name="deal_button">DEAL </string>
+
+    <!-- image/icon content descriptions -->
+    <string name="streak_cd">Hot streak icon</string>
+    <string name="info_cd">Information icon</string>
+
+    <!-- test tags -->
+    <string name="player_test_tag">player row</string>
+    <string name="card_test_tag">dealt</string>
+    <string name="info_panel_test_tag">rank titles</string>
+</resources>

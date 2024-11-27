@@ -58,7 +58,7 @@ fun convertTestRanked(input: String): List<List<Int>> {
 fun convertTestGame(input: List<String>): Pair<TestPlay, Winner> {
     val player1 = CardHand(input.slice(0..4).map(::getCard))
     val player2 = CardHand(input.slice(5..9).map(::getCard))
-    val winner = Winner.values()[input.last().toInt()]
+    val winner = Winner.entries[input.last().toInt()]
     return Pair(player1 to player2, winner)
 }
 

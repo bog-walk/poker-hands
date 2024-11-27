@@ -5,10 +5,13 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import dev.bogwalk.model.Card
 import dev.bogwalk.model.CardHand
 import dev.bogwalk.model.Suit
+import dev.bogwalk.poker_hands.generated.resources.Res
+import dev.bogwalk.poker_hands.generated.resources.card_test_tag
+import org.jetbrains.compose.resources.stringResource
 import org.junit.Rule
 import org.junit.Test
-import dev.bogwalk.ui.style.CARD_TEST_TAG
 
+// consider trying androidx.test.core.app.ApplicationProvider to access resources
 internal class PokerHandTest {
     @get:Rule
     val composeTestRule = createComposeRule()
@@ -22,11 +25,16 @@ internal class PokerHandTest {
                 Card(14, "A", Suit.CLUB),
             )
         )
+        var cardTag = ""
+
         composeTestRule.setContent {
+            cardTag = stringResource(Res.string.card_test_tag)
+
             PokerHand(previewHand, emptyList())
         }
+
         composeTestRule
-            .onAllNodesWithTag(CARD_TEST_TAG)
+            .onAllNodesWithTag(cardTag)
             .assertCountEquals(5)
             .assertAll(isNotFocusable() and !isSelectable())
     }

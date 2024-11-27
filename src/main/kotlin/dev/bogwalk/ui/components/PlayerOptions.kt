@@ -7,19 +7,20 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.compositeOver
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.zIndex
 import dev.bogwalk.model.Winner
-import dev.bogwalk.ui.util.Choice
+import dev.bogwalk.poker_hands.generated.resources.Res
+import dev.bogwalk.poker_hands.generated.resources.info_cd
+import dev.bogwalk.poker_hands.generated.resources.materials_help_icon
+import dev.bogwalk.poker_hands.generated.resources.player_button
 import dev.bogwalk.ui.style.*
+import dev.bogwalk.ui.util.Choice
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun PlayerOptions(
@@ -65,7 +66,7 @@ private fun PickButton(
         colors = getButtonColors(player, chosenHand, isCorrectChoice)
     ) {
         Text(
-            text = "$PLAYER_BUTTON_TEXT${(player.ordinal + 1)}",
+            text = "${stringResource(Res.string.player_button)}${(player.ordinal + 1)}",
             style = MaterialTheme.typography.labelMedium
         )
     }
@@ -121,8 +122,8 @@ private fun InfoButton(
         )
     ) {
         Icon(
-            painter = painterResource(INFO_ICON),
-            contentDescription = INFO_DESCRIPTION,
+            painter = painterResource(Res.drawable.materials_help_icon),
+            contentDescription = stringResource(Res.string.info_cd),
             modifier = Modifier.requiredSize(playerRowPadding)
         )
     }

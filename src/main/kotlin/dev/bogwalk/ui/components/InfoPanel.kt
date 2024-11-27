@@ -5,13 +5,19 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.*
+import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import dev.bogwalk.model.Rank
+import dev.bogwalk.poker_hands.generated.resources.Res
+import dev.bogwalk.poker_hands.generated.resources.info_panel_test_tag
+import dev.bogwalk.ui.style.HIGHLIGHT_DELAY
+import dev.bogwalk.ui.style.PokerHandsTheme
+import dev.bogwalk.ui.style.componentPadding
+import dev.bogwalk.ui.style.infoTextPadding
 import dev.bogwalk.ui.util.produceHighlightState
-import dev.bogwalk.ui.style.*
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun InfoPanel(
@@ -22,11 +28,13 @@ fun InfoPanel(
     )
 
     Column(
-        modifier = Modifier.testTag(INFO_PANEL_TEST_TAG).fillMaxHeight(),
+        modifier = Modifier
+            .testTag(stringResource(Res.string.info_panel_test_tag))
+            .fillMaxHeight(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        for (rank in Rank.values()) {
+        for (rank in Rank.entries) {
             key(rank.ordinal) {
                 Text(
                     text = rank.text,

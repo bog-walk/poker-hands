@@ -37,7 +37,7 @@ internal class CardHandTest {
 
     @Test
     fun `compareTo orders all rank examples correctly`() {
-        val expected = Rank.values().reversed()
+        val expected = Rank.entries.reversed()
         val actual = exampleHands.keys.sortedByDescending { exampleHands[it] }
         assertContentEquals(expected, actual)
     }

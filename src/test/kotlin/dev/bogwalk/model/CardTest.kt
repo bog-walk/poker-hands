@@ -25,8 +25,8 @@ internal class CardTest {
     @Test
     fun `toString() correct`() {
         for (i in 9..52 step 13) {
-            val expected1 = "9 of ${Suit.values()[i / 13]}S"
-            val expected2 = "JACK of ${Suit.values()[i / 13]}S"
+            val expected1 = "9 of ${Suit.entries[i / 13]}S"
+            val expected2 = "JACK of ${Suit.entries[i / 13]}S"
             assertEquals(expected1, entireDeck[i-2].toString())
             assertEquals(expected2, entireDeck[i].toString())
         }
@@ -45,8 +45,8 @@ internal class CardTest {
 
     @Test
     fun `getCard correct with all String inputs`() {
-        val suits = Suit.values().map(Suit::abbreviation)
-        val values = ('2'..'9').map(Char::toString) + Court.values().map(Court::abbreviation)
+        val suits = Suit.entries.map(Suit::abbreviation)
+        val values = ('2'..'9').map(Char::toString) + Court.entries.map(Court::abbreviation)
         val inputs = suits.flatMap { s -> values.map { v -> "$v$s" } }
         for ((i, input) in inputs.withIndex()) {
             assertEquals(entireDeck[i], getCard(input))

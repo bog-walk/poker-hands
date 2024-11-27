@@ -38,7 +38,7 @@ abstract class Dealer {
      */
     fun generateRankInfo(): List<RankInfo> {
         val rankInfo = mutableListOf<RankInfo>()
-        val allRanks = Rank.values()
+        val allRanks = Rank.entries.toTypedArray()
         val player1Ranked = player1Hand.ranked
         val player2Ranked = player2Hand.ranked
         var r = 9
